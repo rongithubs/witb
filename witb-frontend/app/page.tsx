@@ -14,9 +14,22 @@ export default function Home() {
   );
   const [query, setQuery] = useState("");
 
-  const filteredPlayers = players?.filter((p) =>
-    p.name.toLowerCase().includes(query.toLowerCase())
+  const filteredPlayers = players?.filter((player) => {
+  const q = query.toLowerCase();
+
+  // Match player name
+  const matchesPlayer = player.name.toLowerCase().includes(q);
+
+  // Match any WITB item fields
+  const matchesClub = player.witb_items?.some(
+    (club) =>
+      club.category.toLowerCase().includes(q) ||
+      club.brand.toLowerCase().includes(q) ||
+      club.model.toLowerCase().includes(q)
   );
+
+  return matchesPlayer || matchesClub;
+});
 
   return (
     <>
