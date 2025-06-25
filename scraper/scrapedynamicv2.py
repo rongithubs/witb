@@ -31,6 +31,7 @@ def discover_pga_player_urls(limit=12):
 
     soup = BeautifulSoup(resp.content, "html.parser")
     links = []
+    UNWANTED_KEYWORDS = ["time machine", "velocity", "shaft", "recap", "driver head", "ball speed"]
     for a in soup.select("a[href*='witb']"):
         title = a.get_text(strip=True)
         href = a["href"]
@@ -43,19 +44,18 @@ def discover_pga_player_urls(limit=12):
 
 def player_exists(name):
     try:
-        res = requests.get(f"{BASE_URL}/players/")
+        res = requests.get(f"{BASE_URL}/players/search", params={"name": name.strip()})
         if res.status_code == 200:
-            return any(p["name"].lower() == name.lower() for p in res.json())
-    except:
-        pass
+            return res.json().get("exists", False)
+    except Exception as e:
+        print(f"⚠️ Player check failed for {name}: {e}")
     return False
 
 def scrape_player_with_ai(name, country, tour, url):
     # Skip names that don't look like real player names
-    if len(name.split()) < 2:
-        print(f"⏭️ Skipping non-player name: {name}")
+    if player_exists(name):
+        print(f"⏭️ Skipping {name} — already exists in DB")
         return
-
     print(f"🤖 Scraping {name} using AI extraction...")
 
     ai_query = (
@@ -104,7 +104,7 @@ def scrape_player_with_ai(name, country, tour, url):
             print(f"❌ Failed to add {item['category']}: {res.text}")
 
 if __name__ == "__main__":
-    players = discover_pga_player_urls(limit=12)[4:]  # Skip first 4
+    players = discover_pga_player_urls(limit=50)[20:]  # Skip first 4
     for name, url in players:
         print(f"➡️ Scraping: {name} from {url}")
         scrape_player_with_ai(name=name, country="USA", tour="PGA", url=url)

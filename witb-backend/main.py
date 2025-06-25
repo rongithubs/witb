@@ -14,6 +14,7 @@ from fastapi import Request
 import traceback
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
+from fastapi import Query
 app = FastAPI()
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -51,6 +52,15 @@ async def get_players(db: AsyncSession = Depends(get_db)):
         select(models.Player).options(selectinload(models.Player.witb_items))
     )
     return result.scalars().all()
+
+@app.get("/players/search")
+async def search_player(name: str = Query(...), db: AsyncSession = Depends(get_db)):
+    result = await db.execute(
+        select(models.Player).where(models.Player.name.ilike(name.strip()))
+    )
+    player = result.scalars().first()
+    return {"exists": bool(player)}
+
 
 @app.get("/players/{player_id}", response_model=schemas.Player)
 async def get_player(player_id: str, db: AsyncSession = Depends(get_db)):
