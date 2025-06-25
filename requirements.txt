@@ -1,0 +1,25 @@
+#need to rerun -> source venv/bin/activate
+#need to load up DB -> uvicorn main:app --reload
+
+# FastAPI backend
+fastapi
+uvicorn[standard]
+
+# Database & ORM
+sqlalchemy>=2.0
+asyncpg  # if you're using PostgreSQL (e.g., Supabase)
+
+# HTTP requests & scraping
+httpx
+beautifulsoup4
+lxml
+scrapingbee
+
+# Environment config
+python-dotenv
+
+# Optional: pydantic v2 for validation (FastAPI v0.100+ uses pydantic v2+)
+pydantic>=2.0
+
+# Optional: for data parsing
+requests

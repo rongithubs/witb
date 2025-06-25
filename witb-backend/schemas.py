@@ -1,0 +1,34 @@
+from pydantic import BaseModel
+from typing import List, Optional
+from uuid import UUID
+
+class WITBItemBase(BaseModel):
+    category: str
+    brand: str
+    model: str
+    loft: Optional[str]
+    shaft: Optional[str]
+
+class WITBItem(WITBItemBase):
+    id: UUID
+    
+    class Config:
+        orm_mode = True
+
+class PlayerBase(BaseModel):
+    name: str
+    country: Optional[str]
+    tour: Optional[str]
+
+class Player(BaseModel):
+    id: UUID
+    name: str
+    country: Optional[str]
+    tour: Optional[str]
+    witb_items: List[WITBItem] = []
+
+    class Config:
+        orm_mode = True
+
+class PlayerCreate(PlayerBase):
+    pass
