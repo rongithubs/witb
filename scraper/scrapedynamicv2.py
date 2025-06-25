@@ -11,21 +11,17 @@ BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
 
 client = ScrapingBeeClient(api_key=SCRAPINGBEE_API_KEY)
 
-
 def clean_json(text):
     text = re.sub(r'\\(?![\"/bfnrtu])', '', text)
     return text
 
-
 def extract_name_from_title(title):
-    # Try to match patterns like: "Rory McIlroy WITB", "WITB: Rory McIlroy", etc.
     match = re.search(r"(?:WITB.*?[:\-–]?\s*)?([A-Z][a-z]+(?:\s[A-Z][a-z]+)+)", title)
     if match:
         return match.group(1).strip()
     return title.strip()
 
-
-def discover_pga_player_urls(limit=3):
+def discover_pga_player_urls(limit=12):
     print("🔍 Discovering PGA WITB posts...")
     url = "https://www.golfwrx.com/category/equipment/whats-in-the-bag-equipment/"
     resp = client.get(url, params={"render_js": "true"})
@@ -42,20 +38,24 @@ def discover_pga_player_urls(limit=3):
             full_url = href if href.startswith("http") else f"https://www.golfwrx.com{href}"
             name = extract_name_from_title(title)
             links.append((name, full_url))
-    return list(dict.fromkeys(links))[:limit]
 
+    return list(dict.fromkeys(links))[:limit]
 
 def player_exists(name):
     try:
-        res = requests.get(f"{BASE_URL}/players")
+        res = requests.get(f"{BASE_URL}/players/")
         if res.status_code == 200:
             return any(p["name"].lower() == name.lower() for p in res.json())
     except:
         pass
     return False
 
-
 def scrape_player_with_ai(name, country, tour, url):
+    # Skip names that don't look like real player names
+    if len(name.split()) < 2:
+        print(f"⏭️ Skipping non-player name: {name}")
+        return
+
     print(f"🤖 Scraping {name} using AI extraction...")
 
     ai_query = (
@@ -86,7 +86,7 @@ def scrape_player_with_ai(name, country, tour, url):
         return
 
     player_payload = {"name": name, "country": country, "tour": tour}
-    res = requests.post(f"{BASE_URL}/players", json=player_payload)
+    res = requests.post(f"{BASE_URL}/players/", json=player_payload)  # Note the slash!
     if res.status_code not in [200, 201]:
         print("❌ Failed to create player:", res.text)
         return
@@ -97,15 +97,14 @@ def scrape_player_with_ai(name, country, tour, url):
     for item in gear:
         if isinstance(item.get("loft"), list):
             item["loft"] = ", ".join(item["loft"])
-        res = requests.post(f"{BASE_URL}/players/{player_id}/witb_items", json=item)
+        res = requests.post(f"{BASE_URL}/players/{player_id}/witb_items/", json=item)
         if res.status_code in [200, 201]:
             print(f"✔️ Added: {item['category']} - {item['model']}")
         else:
             print(f"❌ Failed to add {item['category']}: {res.text}")
 
-
 if __name__ == "__main__":
-    players = discover_pga_player_urls(limit=5)
+    players = discover_pga_player_urls(limit=12)[4:]  # Skip first 4
     for name, url in players:
         print(f"➡️ Scraping: {name} from {url}")
         scrape_player_with_ai(name=name, country="USA", tour="PGA", url=url)

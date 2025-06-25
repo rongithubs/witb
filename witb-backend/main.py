@@ -12,17 +12,20 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from fastapi import Request
 import traceback
-
+from fastapi.middleware.cors import CORSMiddleware
+from typing import List
 app = FastAPI()
 
-# Optional: allow CORS if your frontend is on localhost:3000
+from fastapi.middleware.cors import CORSMiddleware
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # replace * with your frontend URL later
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 
 
@@ -42,6 +45,12 @@ async def create_player(player: schemas.PlayerCreate, db: AsyncSession = Depends
         raise HTTPException(status_code=400, detail="Player already exists")
     return new_player
 
+@app.get("/players", response_model=List[schemas.Player])
+async def get_players(db: AsyncSession = Depends(get_db)):
+    result = await db.execute(
+        select(models.Player).options(selectinload(models.Player.witb_items))
+    )
+    return result.scalars().all()
 
 @app.get("/players/{player_id}", response_model=schemas.Player)
 async def get_player(player_id: str, db: AsyncSession = Depends(get_db)):
