@@ -44,7 +44,7 @@ export default function Home() {
         {filteredPlayers?.map((player) => (
           <Card key={player.id} className="p-3 shadow-sm border rounded-md text-sm">
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xs">
+              <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xs font-medium shrink-0">
                 {player.name.split(' ').map(n => n[0]).join('')}
               </div>
               <div>
