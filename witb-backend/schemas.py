@@ -19,12 +19,14 @@ class PlayerBase(BaseModel):
     name: str
     country: Optional[str]
     tour: Optional[str]
+    photo_url: Optional[str] = None
 
 class Player(BaseModel):
     id: UUID
     name: str
     country: Optional[str]
     tour: Optional[str]
+    photo_url: Optional[str] = None
     witb_items: List[WITBItem] = []
 
     class Config:

@@ -11,6 +11,7 @@ class Player(Base):
     name = Column(String, nullable=False)
     country = Column(String)
     tour = Column(String)
+    photo_url = Column(String)
     witb_items = relationship(
         "WITBItem", back_populates="player", lazy="selectin"
     )
