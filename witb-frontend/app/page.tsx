@@ -15,21 +15,25 @@ export default function Home() {
   const [query, setQuery] = useState("");
 
   const filteredPlayers = players?.filter((player) => {
-  const q = query.toLowerCase();
-
-  // Match player name
-  const matchesPlayer = player.name.toLowerCase().includes(q);
-
-  // Match any WITB item fields
-  const matchesClub = player.witb_items?.some(
-    (club) =>
-      club.category.toLowerCase().includes(q) ||
-      club.brand.toLowerCase().includes(q) ||
-      club.model.toLowerCase().includes(q)
-  );
-
-  return matchesPlayer || matchesClub;
-});
+    if (!query.trim()) return true;
+    
+    const searchTerms = query.toLowerCase().trim().split(/\s+/);
+    
+    return searchTerms.every(term => {
+      // Match player name
+      const matchesPlayer = player.name.toLowerCase().includes(term);
+      
+      // Match any WITB item fields
+      const matchesClub = player.witb_items?.some(
+        (club) =>
+          club.category.toLowerCase().includes(term) ||
+          club.brand.toLowerCase().includes(term) ||
+          club.model.toLowerCase().includes(term)
+      );
+      
+      return matchesPlayer || matchesClub;
+    });
+  });
 
   return (
     <>
@@ -39,8 +43,15 @@ export default function Home() {
         {error && <div className="text-red-500">Failed to load</div>}
         {filteredPlayers?.map((player) => (
           <Card key={player.id} className="p-3 shadow-sm border rounded-md text-sm">
-            <h2 className="text-base font-semibold">{player.name}</h2>
-            <p className="text-xs text-gray-500">{player.tour} • {player.country}</p>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xs">
+                {player.name.split(' ').map(n => n[0]).join('')}
+              </div>
+              <div>
+                <h2 className="text-base font-semibold">{player.name}</h2>
+                <p className="text-xs text-gray-500">{player.tour} • {player.country}</p>
+              </div>
+            </div>
             <CardContent className="mt-2 space-y-1">
               {player.witb_items.length === 0 ? (
                 <p className="text-gray-400 italic text-xs">No clubs available</p>
