@@ -64,7 +64,7 @@ export default function Home() {
 
       <div className="grid grid-cols-12 gap-4 py-4 min-h-[80vh]">
         <div className="col-span-12 md:col-span-4 lg:col-span-3">
-          <div className="bg-white border rounded-lg shadow-sm h-full flex flex-col">
+          <div className="bg-white border rounded-lg shadow-sm h-full flex flex-col transition-all duration-300 animate-in fade-in slide-in-from-bottom-4">
             <div className="p-4 border-b space-y-4">
               <h2 className="text-lg font-semibold">Players</h2>
               <Select value={selectedTour} onValueChange={handleTourFilter}>
