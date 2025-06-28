@@ -11,6 +11,7 @@ export type Player = {
   name: string;
   country: string;
   tour: string;
+  age?: number;
   photo_url?: string;
   witb_items: WITBItem[];
 };

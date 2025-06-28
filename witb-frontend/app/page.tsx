@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Player } from "@/types/schemas";
 import { useState, useCallback } from "react";
+import { getCountryFlag, formatAgeCompact, formatAge } from "@/utils/countryFlags";
 
 export default function Home() {
   const { data: players, error, isLoading } = useSWR<Player[]>(
@@ -130,8 +131,13 @@ export default function Home() {
                           <h3 className="text-sm font-medium text-gray-900 truncate">
                             {player.name}
                           </h3>
-                          <p className="text-xs text-gray-500">
-                            {player.tour} • {player.country}
+                          <p className="text-xs text-gray-500 flex items-center gap-1">
+                            {player.tour} • 
+                            <span className="flex items-center gap-1">
+                              <span className="text-sm">{getCountryFlag(player.country)}</span>
+                              {player.country}
+                            </span>
+                            {player.age && <span>• {formatAgeCompact(player.age)}</span>}
                           </p>
                           <p className="text-xs text-gray-400 mt-1">
                             {player.witb_items.length} clubs
@@ -160,8 +166,13 @@ export default function Home() {
                         <h1 className="text-2xl font-bold text-gray-900">
                           {selectedPlayer.name}
                         </h1>
-                        <p className="text-gray-600">
-                          {selectedPlayer.tour} • {selectedPlayer.country}
+                        <p className="text-gray-600 flex items-center gap-2">
+                          {selectedPlayer.tour} • 
+                          <span className="flex items-center gap-1">
+                            <span className="text-lg">{getCountryFlag(selectedPlayer.country)}</span>
+                            {selectedPlayer.country}
+                          </span>
+                          {selectedPlayer.age && <span>• {formatAge(selectedPlayer.age)}</span>}
                         </p>
                         <p className="text-sm text-gray-500 mt-1">
                           {selectedPlayer.witb_items.length} clubs in bag
