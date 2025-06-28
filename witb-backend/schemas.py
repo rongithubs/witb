@@ -20,6 +20,7 @@ class PlayerBase(BaseModel):
     country: Optional[str]
     tour: Optional[str]
     age: Optional[int]
+    ranking: Optional[int]
     photo_url: Optional[str] = None
 
 class Player(BaseModel):
@@ -28,6 +29,7 @@ class Player(BaseModel):
     country: Optional[str]
     tour: Optional[str]
     age: Optional[int]
+    ranking: Optional[int]
     photo_url: Optional[str] = None
     witb_items: List[WITBItem] = []
 

@@ -7,7 +7,16 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Player } from "@/types/schemas";
 import { useState, useCallback } from "react";
-import { getCountryFlag, formatAgeCompact, formatAge } from "@/utils/countryFlags";
+import { getCountryFlag, formatAge } from "@/utils/countryFlags";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Badge } from "@/components/ui/badge";
 
 export default function Home() {
   const { data: players, error, isLoading } = useSWR<Player[]>(
@@ -24,285 +33,162 @@ export default function Home() {
 
   const handleTourFilter = useCallback((tour: string) => {
     setSelectedTour(tour);
-    setSelectedPlayer(null); // Clear selection when changing filter
+    setSelectedPlayer(null);
   }, []);
 
-  // Get unique tours for the dropdown
-  const availableTours = players ? [
-    "All Tours",
-    ...Array.from(new Set(players.map(player => player.tour))).sort()
-  ] : ["All Tours"];
+  const availableTours = players
+    ? ["All Tours", ...Array.from(new Set(players.map((p) => p.tour))).sort()]
+    : ["All Tours"];
 
   const filteredPlayers = players?.filter((player) => {
-    // Filter by tour first
     const matchesTour = selectedTour === "All Tours" || player.tour === selectedTour;
-    
-    // Then filter by search query
     if (!query.trim()) return matchesTour;
-    
-    const searchTerms = query.toLowerCase().trim().split(/\s+/);
-    
-    const matchesSearch = searchTerms.every(term => {
-      // Match player name
-      const matchesPlayer = player.name.toLowerCase().includes(term);
-      
-      // Match any WITB item fields
-      const matchesClub = player.witb_items?.some(
-        (club) =>
-          club.category.toLowerCase().includes(term) ||
-          club.brand.toLowerCase().includes(term) ||
-          club.model.toLowerCase().includes(term)
-      );
-      
-      return matchesPlayer || matchesClub;
-    });
-    
-    return matchesTour && matchesSearch;
+    const terms = query.toLowerCase().trim().split(/\s+/);
+    const matches = terms.every((term) =>
+      player.name.toLowerCase().includes(term) ||
+      player.witb_items?.some((club) =>
+        club.category.toLowerCase().includes(term) ||
+        club.brand.toLowerCase().includes(term) ||
+        club.model.toLowerCase().includes(term)
+      )
+    );
+    return matchesTour && matches;
   });
 
   return (
-    <>
+    <div className="max-w-7xl mx-auto px-4">
       <Header onSearch={setQuery} />
-      
-      {/* Tournament Winner - Full Width */}
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="my-4">
         <TournamentWinner />
       </div>
 
-      {/* Main Layout - Sidebar + Detail View */}
-      <div className="max-w-7xl mx-auto px-4 py-4">
-        <div className="grid grid-cols-12 gap-6" style={{ height: 'calc(100vh - 220px)' }}>
-          
-          {/* Left Sidebar - Player List */}
-          <div className="col-span-12 md:col-span-4 lg:col-span-3">
-            <div className="bg-white border rounded-lg shadow-sm h-full flex flex-col">
-              <div className="p-4 border-b">
-                <div className="flex items-center justify-between mb-3">
-                  <h2 className="text-lg font-semibold text-gray-900">Players</h2>
-                </div>
-                
-                {/* Tour Filter Dropdown */}
-                <div className="mb-3">
-                  <select
-                    value={selectedTour}
-                    onChange={(e) => handleTourFilter(e.target.value)}
-                    className="w-full text-sm border border-gray-300 rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    {availableTours.map((tour) => (
-                      <option key={tour} value={tour}>
-                        {tour}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                
-                <p className="text-sm text-gray-500">
-                  {filteredPlayers?.length || 0} players
-                  {selectedTour !== "All Tours" && (
-                    <span className="text-blue-600 ml-1">in {selectedTour}</span>
-                  )}
-                </p>
-              </div>
-              
-              <div className="flex-1 overflow-y-scroll" style={{ maxHeight: 'calc(100vh - 320px)' }}>
-                {isLoading && (
-                  <div className="p-4 text-center text-gray-500">Loading...</div>
-                )}
-                {error && (
-                  <div className="p-4 text-center text-red-500">Failed to load</div>
-                )}
-                
-                <div className="space-y-1 p-2 pb-4">
-                  {filteredPlayers?.map((player) => (
-                    <div
-                      key={player.id}
-                      onClick={() => handlePlayerSelect(player)}
-                      className={`p-3 rounded-lg cursor-pointer transition-all hover:bg-blue-50 ${
-                        selectedPlayer?.id === player.id 
-                          ? 'bg-blue-100 border-blue-200 border' 
-                          : 'hover:shadow-sm'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-xs font-medium shrink-0">
-                          {player.name.split(' ').map(n => n[0]).join('')}
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <h3 className="text-sm font-medium text-gray-900 truncate">
-                            {player.name}
-                          </h3>
-                          <p className="text-xs text-gray-500 flex items-center gap-1">
-                            {player.tour} • 
-                            <span className="flex items-center gap-1">
-                              <span className="text-sm">{getCountryFlag(player.country)}</span>
-                              {player.country}
-                            </span>
-                            {player.age && <span>• {formatAgeCompact(player.age)}</span>}
-                          </p>
-                          <p className="text-xs text-gray-400 mt-1">
-                            {player.witb_items.length} clubs
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+      <div className="grid grid-cols-12 gap-4 py-4 min-h-[80vh]">
+        <div className="col-span-12 md:col-span-4 lg:col-span-3">
+          <div className="bg-white border rounded-lg shadow-sm h-full flex flex-col">
+            <div className="p-4 border-b space-y-4">
+              <h2 className="text-lg font-semibold">Players</h2>
+              <Select value={selectedTour} onValueChange={handleTourFilter}>
+                <SelectTrigger className="w-full text-sm">
+                  <SelectValue placeholder="Select a tour" />
+                </SelectTrigger>
+                <SelectContent className="text-sm">
+                  {availableTours.map((tour) => (
+                    <SelectItem key={tour} value={tour}>
+                      {tour}
+                    </SelectItem>
                   ))}
-                </div>
-              </div>
+                </SelectContent>
+              </Select>
+              <p className="text-sm text-gray-500">
+                {filteredPlayers?.length || 0} players
+                {selectedTour !== "All Tours" && ` in ${selectedTour}`}
+              </p>
             </div>
-          </div>
 
-          {/* Right Side - Player Detail View */}
-          <div className="col-span-12 md:col-span-8 lg:col-span-9">
-            <div className="bg-white border rounded-lg shadow-sm h-full">
-              {selectedPlayer ? (
-                <div className="h-full flex flex-col">
-                  {/* Player Header */}
-                  <div className="p-6 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-full bg-blue-200 flex items-center justify-center text-blue-700 text-xl font-bold">
-                        {selectedPlayer.name.split(' ').map(n => n[0]).join('')}
+            <ScrollArea className="flex-1" style={{ maxHeight: "calc(100vh - 320px)" }}>
+              <div className="p-2 space-y-1">
+                {isLoading && <div className="p-2 text-gray-500">Loading...</div>}
+                {error && <p className="text-red-500">Failed to load players.</p>}
+                {filteredPlayers?.map((player) => (
+                  <div
+                    key={player.id}
+                    onClick={() => handlePlayerSelect(player)}
+                    className={`p-3 rounded-md cursor-pointer transition-colors hover:bg-blue-50 ${
+                      selectedPlayer?.id === player.id ? "bg-blue-100 border border-blue-200" : "hover:shadow-sm"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium">
+                        {player.name.split(" ").map((n) => n[0]).join("")}
                       </div>
-                      <div>
-                        <h1 className="text-2xl font-bold text-gray-900">
-                          {selectedPlayer.name}
-                        </h1>
-                        <p className="text-gray-600 flex items-center gap-2">
-                          {selectedPlayer.tour} • 
-                          <span className="flex items-center gap-1">
-                            <span className="text-lg">{getCountryFlag(selectedPlayer.country)}</span>
-                            {selectedPlayer.country}
-                          </span>
-                          {selectedPlayer.age && <span>• {formatAge(selectedPlayer.age)}</span>}
-                        </p>
-                        <p className="text-sm text-gray-500 mt-1">
-                          {selectedPlayer.witb_items.length} clubs in bag
-                        </p>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-sm font-medium truncate">{player.name}</h3>
+                          {player.ranking && (
+                            <Badge className="text-xs px-2 py-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 text-white">
+                              #{player.ranking}
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-xs text-gray-500">{player.tour}</p>
+                        <p className="text-xs text-gray-400 mt-1">{player.witb_items.length} clubs</p>
                       </div>
                     </div>
                   </div>
+                ))}
+              </div>
+            </ScrollArea>
+          </div>
+        </div>
 
-                  {/* WITB Items */}
-                  <div className="flex-1 overflow-y-auto p-6">
-                    <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                      What's In The Bag
-                    </h2>
-                    
-                    {selectedPlayer.witb_items.length === 0 ? (
-                      <div className="text-center py-12">
-                        <div className="text-gray-400 text-4xl mb-4">⛳</div>
-                        <p className="text-gray-500">No equipment data available</p>
-                      </div>
-                    ) : (
-                      <div className="grid gap-3">
-                        {(() => {
-                          // Group clubs by type for better display
-                          const groupedClubs: { [key: string]: any[] } = {};
-                          const ironCategories = ['4-Iron', '5-Iron', '6-Iron', '7-Iron', '8-Iron', '9-Iron', 'Pitching Wedge'];
-                          
-                          selectedPlayer.witb_items.forEach(club => {
-                            if (ironCategories.includes(club.category)) {
-                              if (!groupedClubs['Irons']) {
-                                groupedClubs['Irons'] = [];
-                              }
-                              groupedClubs['Irons'].push(club);
-                            } else {
-                              groupedClubs[club.category] = [club];
-                            }
-                          });
-                          
-                          return Object.entries(groupedClubs).map(([category, clubs]) => (
-                            <Card key={category} className="p-4 hover:shadow-md transition-shadow">
-                              <div className="flex justify-between items-start">
-                                <div className="flex-1">
-                                  <h3 className="font-semibold text-gray-900 text-base">
-                                    {category === 'Irons' ? (() => {
-                                      // Determine iron range for display
-                                      const ironCategories = ['4-Iron', '5-Iron', '6-Iron', '7-Iron', '8-Iron', '9-Iron', 'Pitching Wedge'];
-                                      const presentIrons = clubs.map(club => club.category).filter(cat => ironCategories.includes(cat));
-                                      const sortedIrons = presentIrons.sort((a, b) => ironCategories.indexOf(a) - ironCategories.indexOf(b));
-                                      
-                                      if (sortedIrons.length === 0) return 'Irons';
-                                      
-                                      const firstIron = sortedIrons[0].replace('-Iron', '');
-                                      const lastIron = sortedIrons[sortedIrons.length - 1];
-                                      const lastDisplay = lastIron === 'Pitching Wedge' ? 'P' : lastIron.replace('-Iron', '');
-                                      
-                                      return `Irons (${firstIron}-${lastDisplay})`;
-                                    })() : category}
-                                  </h3>
-                                  
-                                  {category === 'Irons' ? (
-                                    // Special handling for iron sets
-                                    <div className="mt-2">
-                                      <p className="text-blue-600 font-medium">
-                                        {clubs[0]?.brand} {clubs[0]?.model}
-                                      </p>
-                                      <div className="mt-2">
-                                        <div className="text-sm text-gray-600 mb-2">
-                                          <span className="bg-gray-100 px-2 py-1 rounded mr-2">
-                                            {clubs[0]?.shaft}
-                                          </span>
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-1 text-xs">
-                                          {clubs
-                                            .sort((a, b) => {
-                                              const order = ['4-Iron', '5-Iron', '6-Iron', '7-Iron', '8-Iron', '9-Iron', 'Pitching Wedge'];
-                                              return order.indexOf(a.category) - order.indexOf(b.category);
-                                            })
-                                            .map((iron, idx) => (
-                                              <span key={idx} className="text-gray-600">
-                                                {iron.category.replace('-Iron', '').replace('Pitching Wedge', 'PW')}: {iron.loft}
-                                              </span>
-                                            ))}
-                                        </div>
-                                      </div>
-                                    </div>
-                                  ) : (
-                                    // Regular club display
-                                    <div className="mt-1">
-                                      <p className="text-blue-600 font-medium">
-                                        {clubs[0]?.brand} {clubs[0]?.model}
-                                      </p>
-                                      <div className="flex gap-4 mt-2 text-sm text-gray-600">
-                                        {clubs[0]?.loft && (
-                                          <span className="bg-gray-100 px-2 py-1 rounded">
-                                            {clubs[0].loft}
-                                          </span>
-                                        )}
-                                        {clubs[0]?.shaft && (
-                                          <span className="bg-gray-100 px-2 py-1 rounded">
-                                            {clubs[0].shaft}
-                                          </span>
-                                        )}
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            </Card>
-                          ));
-                        })()}
-                      </div>
-                    )}
+        <div className="col-span-12 md:col-span-8 lg:col-span-9">
+          {selectedPlayer ? (
+            <div className="bg-white border rounded-lg shadow-sm h-full flex flex-col">
+              <div className="p-6 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-full bg-blue-200 flex items-center justify-center text-blue-700 text-xl font-bold">
+                    {selectedPlayer.name.split(" ").map(n => n[0]).join("")}
                   </div>
-                </div>
-              ) : (
-                <div className="h-full flex items-center justify-center text-center">
                   <div>
-                    <div className="text-gray-300 text-6xl mb-4">⛳</div>
-                    <h2 className="text-xl font-semibold text-gray-600 mb-2">
-                      Select a Player
-                    </h2>
-                    <p className="text-gray-500">
-                      Choose a player from the list to view their equipment
+                    <h1 className="text-2xl font-bold text-gray-900">
+                      {selectedPlayer.ranking && `#${selectedPlayer.ranking} `}{selectedPlayer.name}
+                    </h1>
+                    <p className="text-gray-600 flex items-center gap-2">
+                      {selectedPlayer.tour} • 
+                      <span className="flex items-center gap-1">
+                        <span className="text-lg">{getCountryFlag(selectedPlayer.country)}</span>
+                        {selectedPlayer.country}
+                      </span>
+                      {selectedPlayer.age && <span>• {formatAge(selectedPlayer.age)}</span>}
+                    </p>
+                    <p className="text-sm text-gray-500 mt-1">
+                      {selectedPlayer.witb_items.length} clubs in bag
                     </p>
                   </div>
                 </div>
-              )}
+              </div>
+              <div className="flex-1 overflow-y-auto p-6">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">What's In The Bag</h2>
+                {selectedPlayer.witb_items.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="text-gray-400 text-4xl mb-4">⛳</div>
+                    <p className="text-gray-500">No equipment data available</p>
+                  </div>
+                ) : (
+                  <div className="grid gap-3">
+                    {selectedPlayer.witb_items.map((club, index) => (
+                      <Card key={index} className="p-4 hover:shadow-md transition-shadow">
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-gray-900 text-base">{club.category}</h3>
+                            <p className="text-blue-600 font-medium">{club.brand} {club.model}</p>
+                            <div className="flex gap-4 mt-2 text-sm text-gray-600">
+                              {club.loft && (
+                                <span className="bg-gray-100 px-2 py-1 rounded">{club.loft}</span>
+                              )}
+                              {club.shaft && (
+                                <span className="bg-gray-100 px-2 py-1 rounded">{club.shaft}</span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="h-full flex items-center justify-center text-center">
+              <div>
+                <div className="text-gray-300 text-6xl mb-4">⛳</div>
+                <h2 className="text-xl font-semibold text-gray-600 mb-2">Select a Player</h2>
+                <p className="text-gray-500">Choose a player from the list to view their equipment</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
