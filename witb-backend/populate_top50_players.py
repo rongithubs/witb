@@ -44,12 +44,13 @@ async def populate_top50_players():
                     skipped_count += 1
                     continue
                 
-                # Create new player (excluding age and earnings/events for now)
+                # Create new player with age data
                 new_player = Player(
                     id=uuid.uuid4(),
                     name=player_data['name'],
                     country=player_data.get('country'),
                     tour=player_data.get('tour'),
+                    age=player_data.get('age'),
                     photo_url=None  # We don't have photo URLs from the scraper yet
                 )
                 
