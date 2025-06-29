@@ -1,5 +1,5 @@
 #need to rerun -> source venv/bin/activate
-#need to load up DB -> uvicorn main:app --reload
+#need to load up DB /witb-backend-> uvicorn main:app --reload
 #when need all the modules --> pip install -r requirements.txt
 
 # FastAPI backend
@@ -9,6 +9,7 @@ greenlet
 # Database & ORM
 sqlalchemy>=2.0
 asyncpg  # if you're using PostgreSQL (e.g., Supabase)
+aiosqlite  # for async SQLite support
 
 # HTTP requests & scraping
 httpx
