@@ -1,0 +1,169 @@
+[
+  {
+    "name": "Scottie Scheffler",
+    "country": "United States",
+    "tour": "PGA Tour",
+    "ranking": 1,
+    "player_id": "a326a7d145434643bbb64e7a317d9680",
+    "source_url": "https://www.pgaclubtracker.com/players/scottie-scheffler-witb-whats-in-the-bag",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "TaylorMade",
+        "model": "Qi10",
+        "loft": "8 degrees @8.25, D4 swingweight",
+        "shaft": "Fujikura Ventus Black 7 X"
+      },
+      {
+        "category": "3-Wood",
+        "brand": "TaylorMade",
+        "model": "Qi10",
+        "loft": "15 degrees @14.75, D3 swingweight",
+        "shaft": "Fujikura Ventus Black 8 X"
+      },
+      {
+        "category": "7-Wood",
+        "brand": "TaylorMade",
+        "model": "Qi35",
+        "loft": "21 degrees",
+        "shaft": "Fujikura Ventus Black 9 X"
+      },
+      {
+        "category": "Iron",
+        "brand": "Srixon",
+        "model": "Z U85",
+        "loft": "4",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+      },
+      {
+        "category": "Iron",
+        "brand": "TaylorMade",
+        "model": "P7TW",
+        "loft": "5-PW",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+      },
+      {
+        "category": "Wedge",
+        "brand": "Titleist",
+        "model": "Vokey Design SM8",
+        "loft": "50-12F, 56-14F",
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "category": "Wedge",
+        "brand": "Titleist",
+        "model": "Vokey Design SM10 WedgeWorks",
+        "loft": "60-06K",
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "category": "Putter",
+        "brand": "TaylorMade",
+        "model": "Spider Tour X",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grip",
+        "brand": "Golf Pride",
+        "model": "Pro Only",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grip",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Rory McIlroy",
+    "country": "Northern Ireland",
+    "tour": "PGA Tour",
+    "ranking": 2,
+    "player_id": "02fd51be97534cf09f5db8cc94e3e7fc",
+    "source_url": "https://www.pgaclubtracker.com/players/rory-mcilroy-witb-whats-in-the-bag",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "TaylorMade",
+        "model": "Qi10",
+        "loft": "\u201cDot\u201d, 9 degrees @8.25",
+        "shaft": "Fujikura Ventus Black 6 X"
+      },
+      {
+        "category": "3-Wood",
+        "brand": "TaylorMade",
+        "model": "Qi10",
+        "loft": "15 degrees",
+        "shaft": "Fujikura Ventus Black 8 X"
+      },
+      {
+        "category": "5-Wood",
+        "brand": "TaylorMade",
+        "model": "Qi10",
+        "loft": "18 degrees",
+        "shaft": "Fujikura Ventus Black 9 X"
+      },
+      {
+        "category": "Iron",
+        "brand": "TaylorMade",
+        "model": "P770 Proto",
+        "loft": "4",
+        "shaft": "True Temper Project X HZRDUS Black 105 HY TX"
+      },
+      {
+        "category": "Iron",
+        "brand": "TaylorMade",
+        "model": "Rors Proto",
+        "loft": "5-9",
+        "shaft": "True Temper Project X 7.0"
+      },
+      {
+        "category": "Wedge",
+        "brand": "TaylorMade",
+        "model": "MG4",
+        "loft": "46-09SB, 50-09SB, 54-11SB, 60-08LB @61",
+        "shaft": "True Temper Project X 6.5"
+      },
+      {
+        "category": "Putter",
+        "brand": "TaylorMade",
+        "model": "Spider Tour X",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grip",
+        "brand": "SuperStroke",
+        "model": "Zenergy Pistol Tour",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grip",
+        "brand": "Golf Pride",
+        "model": "MCC",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "TaylorMade",
+        "model": "TP5",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  }
+]
