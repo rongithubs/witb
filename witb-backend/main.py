@@ -9,6 +9,7 @@ from typing import List
 import traceback
 import models, schemas
 from database import SessionLocal, engine
+from brand_urls import get_brand_url
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scraper'))
@@ -40,6 +41,13 @@ async def get_db():
     async with SessionLocal() as session:
         yield session
 
+def enrich_witb_items_with_urls(items):
+    """Add brand URLs to WITB items that don't have specific product URLs"""
+    for item in items:
+        if not item.product_url and item.brand:
+            item.product_url = get_brand_url(item.brand)
+    return items
+
 @app.post("/players/", response_model=schemas.Player)
 async def create_player(player: schemas.PlayerCreate, db: AsyncSession = Depends(get_db)):
     new_player = models.Player(**player.model_dump())
@@ -57,7 +65,13 @@ async def get_players(db: AsyncSession = Depends(get_db)):
     result = await db.execute(
         select(models.Player).options(selectinload(models.Player.witb_items))
     )
-    return result.scalars().all()
+    players = result.scalars().all()
+    
+    # Enrich WITB items with brand URLs
+    for player in players:
+        enrich_witb_items_with_urls(player.witb_items)
+    
+    return players
 
 @app.get("/players/search")
 async def search_player(name: str = Query(...), db: AsyncSession = Depends(get_db)):
@@ -78,12 +92,16 @@ async def get_player(player_id: str, db: AsyncSession = Depends(get_db)):
     player = result.scalars().first()
     if not player:
         raise HTTPException(status_code=404, detail="Player not found")
+    
+    # Enrich WITB items with brand URLs
+    enrich_witb_items_with_urls(player.witb_items)
+    
     return player
 
 @app.post("/players/{player_id}/witb_items/", response_model=schemas.WITBItem)
 async def add_witb_item(
     player_id: str,
-    item: schemas.WITBItemBase,
+    item: schemas.WITBItemCreate,
     db: AsyncSession = Depends(get_db)
 ):
     try:
