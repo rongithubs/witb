@@ -28,4 +28,5 @@ class WITBItem(Base):
     model = Column(String)
     loft = Column(String)
     shaft = Column(String)
+    product_url = Column(String)
     player = relationship("Player", back_populates="witb_items")

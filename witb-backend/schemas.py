@@ -8,12 +8,16 @@ class WITBItemBase(BaseModel):
     model: str
     loft: Optional[str]
     shaft: Optional[str]
+    product_url: Optional[str] = None
 
 class WITBItem(WITBItemBase):
     id: UUID
     
     class Config:
         orm_mode = True
+
+class WITBItemCreate(WITBItemBase):
+    pass
 
 class PlayerBase(BaseModel):
     name: str
