@@ -4,6 +4,7 @@ export type WITBItem = {
   model: string;
   loft?: string;
   shaft?: string;
+  product_url?: string;
 };
 
 export type Player = {
