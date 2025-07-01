@@ -63,9 +63,9 @@ export default function Home() {
         <TournamentWinner />
       </div>
 
-      <div className="grid grid-cols-12 gap-4 py-4 min-h-[80vh]">
+      <div className="grid grid-cols-12 gap-4 py-4">
         <div className="col-span-12 md:col-span-4 lg:col-span-3">
-          <div className="bg-white border rounded-lg shadow-sm h-full flex flex-col transition-all duration-300 animate-in fade-in slide-in-from-bottom-4">
+          <div className="bg-white border rounded-lg shadow-sm h-[80vh] flex flex-col transition-all duration-300 animate-in fade-in slide-in-from-bottom-4">
             <div className="p-4 border-b space-y-4">
               <h2 className="text-lg font-semibold">Players</h2>
               <Select value={selectedTour} onValueChange={handleTourFilter}>
@@ -86,7 +86,7 @@ export default function Home() {
               </p>
             </div>
 
-            <ScrollArea className="flex-1" style={{ maxHeight: "calc(100vh - 320px)" }}>
+            <ScrollArea className="flex-1" style={{ maxHeight: "calc(80vh - 160px)" }}>
               <div className="p-2 space-y-1">
                 {isLoading && <div className="p-2 text-gray-500">Loading...</div>}
                 {error && <p className="text-red-500">Failed to load players.</p>}
@@ -124,7 +124,7 @@ export default function Home() {
 
         <div className="col-span-12 md:col-span-8 lg:col-span-9">
           {selectedPlayer ? (
-            <div className="bg-white border rounded-lg shadow-sm h-full flex flex-col">
+            <div className="bg-white border rounded-lg shadow-sm flex flex-col">
               <div className="p-6 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-full bg-blue-200 flex items-center justify-center text-blue-700 text-xl font-bold">
