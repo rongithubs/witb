@@ -6,7 +6,7 @@ import TournamentWinner from "@/components/TournamentWinner";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Player } from "@/types/schemas";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { getCountryFlag, formatAge } from "@/utils/countryFlags";
 import {
   Select,
@@ -18,6 +18,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 export default function Home() {
   const { data: players, error, isLoading } = useSWR<Player[]>(
@@ -27,15 +28,32 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [selectedTour, setSelectedTour] = useState<string>("All Tours");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handlePlayerSelect = useCallback((player: Player) => {
     setSelectedPlayer(player);
+    setIsMobileMenuOpen(false); // Close mobile menu when player is selected
   }, []);
 
   const handleTourFilter = useCallback((tour: string) => {
     setSelectedTour(tour);
     setSelectedPlayer(null);
   }, []);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isMobileMenuOpen) {
+        const target = event.target as Element;
+        if (!target.closest('.mobile-menu') && !target.closest('.hamburger-button')) {
+          setIsMobileMenuOpen(false);
+        }
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isMobileMenuOpen]);
 
   const availableTours = players
     ? ["All Tours", ...Array.from(new Set(players.map((p) => p.tour))).sort()]
@@ -58,16 +76,35 @@ export default function Home() {
 
   return (
     <div className="max-w-7xl mx-auto px-4">
-      <Header onSearch={setQuery} />
+      <Header 
+        onSearch={setQuery} 
+        isMobileMenuOpen={isMobileMenuOpen}
+        onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+      />
+      
       <div className="my-4">
         <TournamentWinner />
       </div>
 
       <div className="grid grid-cols-12 gap-4 py-4">
-        <div className="col-span-12 md:col-span-4 lg:col-span-3">
-          <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm h-[80vh] flex flex-col transition-all duration-300 animate-in fade-in slide-in-from-bottom-4">
-            <div className="p-4 border-b border-gray-200 dark:border-gray-700 space-y-4">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Players</h2>
+        
+        {/* Players Sidebar */}
+        <div className={`col-span-12 md:col-span-4 lg:col-span-3 ${
+          isMobileMenuOpen 
+            ? 'fixed top-0 left-0 bottom-0 z-40 w-80 md:relative md:inset-auto md:w-auto mobile-menu transform translate-x-0 transition-transform duration-300 ease-in-out' 
+            : 'fixed top-0 left-0 bottom-0 z-40 w-80 md:relative md:inset-auto md:w-auto transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:block'
+        }`}>
+          <div className="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 md:border md:rounded-lg shadow-2xl md:shadow-sm h-full md:h-[80vh] flex flex-col">
+            <div className="p-4 md:p-4 border-b border-gray-200 dark:border-gray-700 space-y-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 md:bg-none">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Players</h2>
+                <button 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="md:hidden p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <X size={20} className="text-gray-500 dark:text-gray-400" />
+                </button>
+              </div>
               <Select value={selectedTour} onValueChange={handleTourFilter}>
                 <SelectTrigger className="w-full text-sm">
                   <SelectValue placeholder="Select a tour" />
@@ -86,7 +123,7 @@ export default function Home() {
               </p>
             </div>
 
-            <ScrollArea className="flex-1" style={{ maxHeight: "calc(80vh - 160px)" }}>
+            <ScrollArea className="flex-1 overflow-hidden">
               <div className="p-2 space-y-1">
                 {isLoading && <div className="p-2 text-gray-500 dark:text-gray-400">Loading...</div>}
                 {error && <p className="text-red-500 dark:text-red-400">Failed to load players.</p>}
@@ -122,7 +159,10 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="col-span-12 md:col-span-8 lg:col-span-9">
+        {/* Main Content Area */}
+        <div className={`col-span-12 md:col-span-8 lg:col-span-9 ${
+          isMobileMenuOpen ? 'md:block hidden' : ''
+        }`}>
           {selectedPlayer ? (
             <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex flex-col">
               <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
@@ -192,11 +232,13 @@ export default function Home() {
               </div>
             </div>
           ) : (
-            <div className="h-full flex items-center justify-center text-center">
-              <div>
-                <div className="text-gray-300 dark:text-gray-600 text-6xl mb-4">⛳</div>
-                <h2 className="text-xl font-semibold text-gray-600 dark:text-gray-300 mb-2">Select a Player</h2>
-                <p className="text-gray-500 dark:text-gray-400">Choose a player from the list to view their equipment</p>
+            <div className="h-full flex flex-col">
+              <div className="flex-1 flex items-center justify-center text-center">
+                <div>
+                  <div className="text-gray-300 dark:text-gray-600 text-6xl mb-4">⛳</div>
+                  <h2 className="text-xl font-semibold text-gray-600 dark:text-gray-300 mb-2">Select a Player</h2>
+                  <p className="text-gray-500 dark:text-gray-400">Choose a player from the list to view their equipment</p>
+                </div>
               </div>
             </div>
           )}
