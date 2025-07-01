@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const { data: players, error, isLoading } = useSWR<Player[]>(
@@ -171,6 +172,18 @@ export default function Home() {
                               )}
                             </div>
                           </div>
+                          {club.product_url && (
+                            <div className="ml-4">
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => window.open(club.product_url, '_blank')}
+                                className="text-xs"
+                              >
+                                View Product
+                              </Button>
+                            </div>
+                          )}
                         </div>
                       </Card>
                     ))}
