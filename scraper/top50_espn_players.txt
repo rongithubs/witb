@@ -260,94 +260,94 @@
    Earnings: N/A
    Events: N/A
 
-38. Sam Stevens
-   Country: United States
-   Tour: PGA Tour
-   Age: 28
-   Earnings: N/A
-   Events: N/A
-
-39. Jordan Spieth
-   Country: United States
-   Tour: PGA Tour
-   Age: 31
-   Earnings: N/A
-   Events: N/A
-
-40. Si Woo Kim
-   Country: South Korea
-   Tour: PGA Tour
-   Age: 29
-   Earnings: N/A
-   Events: N/A
-
-41. Min Woo Lee
+38. Min Woo Lee
    Country: Australia
    Tour: PGA Tour
    Age: 26
    Earnings: N/A
    Events: N/A
 
-42. Ryan Gerard
+39. Sam Stevens
    Country: United States
    Tour: PGA Tour
-   Age: 25
+   Age: 28
    Earnings: N/A
    Events: N/A
 
-43. Bud Cauley
-   Country: United States
-   Tour: PGA Tour
-   Age: 35
-   Earnings: N/A
-   Events: N/A
-
-44. Joe Highsmith
-   Country: United States
-   Tour: PGA Tour
-   Age: 25
-   Earnings: N/A
-   Events: N/A
-
-45. Aaron Rai
-   Country: England
-   Tour: PGA Tour
-   Age: 30
-   Earnings: N/A
-   Events: N/A
-
-46. J.T. Poston
-   Country: United States
-   Tour: PGA Tour
-   Age: 32
-   Earnings: N/A
-   Events: N/A
-
-47. Stephan Jaeger
-   Country: Germany
-   Tour: PGA Tour
-   Age: 36
-   Earnings: N/A
-   Events: N/A
-
-48. Tony Finau
-   Country: United States
-   Tour: PGA Tour
-   Age: 35
-   Earnings: N/A
-   Events: N/A
-
-49. Xander Schauffele
+40. Jordan Spieth
    Country: United States
    Tour: PGA Tour
    Age: 31
    Earnings: N/A
    Events: N/A
 
-50. Davis Riley
+41. Aldrich Potgieter
+   Country: South Africa
+   Tour: PGA Tour
+   Age: 20
+   Earnings: N/A
+   Events: N/A
+
+42. Si Woo Kim
+   Country: South Korea
+   Tour: PGA Tour
+   Age: 30
+   Earnings: N/A
+   Events: N/A
+
+43. Ryan Gerard
    Country: United States
    Tour: PGA Tour
-   Age: 28
+   Age: 25
+   Earnings: N/A
+   Events: N/A
+
+44. Max Greyserman
+   Country: United States
+   Tour: PGA Tour
+   Age: 30
+   Earnings: N/A
+   Events: N/A
+
+45. Joe Highsmith
+   Country: United States
+   Tour: PGA Tour
+   Age: 25
+   Earnings: N/A
+   Events: N/A
+
+46. Bud Cauley
+   Country: United States
+   Tour: PGA Tour
+   Age: 35
+   Earnings: N/A
+   Events: N/A
+
+47. Aaron Rai
+   Country: England
+   Tour: PGA Tour
+   Age: 30
+   Earnings: N/A
+   Events: N/A
+
+48. Harry Hall
+   Country: England
+   Tour: PGA Tour
+   Age: 27
+   Earnings: N/A
+   Events: N/A
+
+49. J.T. Poston
+   Country: United States
+   Tour: PGA Tour
+   Age: 32
+   Earnings: N/A
+   Events: N/A
+
+50. Stephan Jaeger
+   Country: Germany
+   Tour: PGA Tour
+   Age: 36
    Earnings: N/A
    Events: N/A
 
