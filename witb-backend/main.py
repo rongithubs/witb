@@ -12,6 +12,7 @@ from database import SessionLocal, engine
 from brand_urls import get_brand_url
 import sys
 import os
+import uuid
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scraper'))
 from tournament_scraper import simple_tournament_scraper
 
@@ -84,9 +85,15 @@ async def search_player(name: str = Query(...), db: AsyncSession = Depends(get_d
 
 @app.get("/players/{player_id}", response_model=schemas.Player)
 async def get_player(player_id: str, db: AsyncSession = Depends(get_db)):
+    try:
+        # Convert string to UUID
+        player_uuid = uuid.UUID(player_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid player ID format")
+    
     result = await db.execute(
         select(models.Player)
-        .where(models.Player.id == player_id)
+        .where(models.Player.id == player_uuid)
         .options(selectinload(models.Player.witb_items))
     )
     player = result.scalars().first()
@@ -105,7 +112,13 @@ async def add_witb_item(
     db: AsyncSession = Depends(get_db)
 ):
     try:
-        result = await db.execute(select(models.Player).where(models.Player.id == player_id))
+        # Convert string to UUID
+        try:
+            player_uuid = uuid.UUID(player_id)
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid player ID format")
+            
+        result = await db.execute(select(models.Player).where(models.Player.id == player_uuid))
         player = result.scalars().first()
         if not player:
             raise HTTPException(status_code=404, detail="Player not found")
