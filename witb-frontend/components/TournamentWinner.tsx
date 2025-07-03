@@ -2,8 +2,8 @@
 
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { useState } from "react";
-import { Player, PaginatedPlayersResponse } from "@/types/schemas";
+import { useState, memo } from "react";
+import { PaginatedPlayersResponse } from "@/types/schemas";
 import { TournamentWinnerSkeleton } from "@/components/skeletons";
 
 type TournamentWinner = {
@@ -13,7 +13,7 @@ type TournamentWinner = {
   score: string;
 };
 
-export default function TournamentWinner() {
+const TournamentWinner = memo(function TournamentWinner() {
   const [isExpanded, setIsExpanded] = useState(false);
   const { data: winnerData, error, isLoading } = useSWR<TournamentWinner>(
     "/tournament-winner",
@@ -108,4 +108,6 @@ export default function TournamentWinner() {
       )}
     </div>
   );
-}
+});
+
+export default TournamentWinner;
