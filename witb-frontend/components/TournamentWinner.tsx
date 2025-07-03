@@ -3,7 +3,7 @@
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { useState } from "react";
-import { Player } from "@/types/schemas";
+import { Player, PaginatedPlayersResponse } from "@/types/schemas";
 
 type TournamentWinner = {
   winner: string;
@@ -15,18 +15,18 @@ type TournamentWinner = {
 export default function TournamentWinner() {
   const [isExpanded, setIsExpanded] = useState(false);
   const { data: winnerData, error, isLoading } = useSWR<TournamentWinner>(
-    "http://localhost:8000/tournament-winner",
+    "/tournament-winner",
     fetcher
   );
 
   // Fetch all players to find the winner's equipment
-  const { data: players } = useSWR<Player[]>(
-    "http://localhost:8000/players",
+  const { data: playersResponse } = useSWR<PaginatedPlayersResponse>(
+    "/players?per_page=100",
     fetcher
   );
 
   // Find the winner's player data
-  const winnerPlayer = players?.find(player => 
+  const winnerPlayer = playersResponse?.items?.find(player => 
     player.name.toLowerCase() === winnerData?.winner.toLowerCase()
   );
 

@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import func
 from typing import List
 import traceback
 import models, schemas
@@ -29,7 +30,7 @@ app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],
+    allow_origins=os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:3001").split(","),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -61,10 +62,25 @@ async def create_player(player: schemas.PlayerCreate, db: AsyncSession = Depends
         raise HTTPException(status_code=400, detail="Player already exists")
     return new_player
 
-@app.get("/players", response_model=List[schemas.Player])
-async def get_players(db: AsyncSession = Depends(get_db)):
+@app.get("/players", response_model=schemas.PaginatedPlayersResponse)
+async def get_players(
+    page: int = Query(1, ge=1, description="Page number"),
+    per_page: int = Query(10, ge=1, le=100, description="Items per page"),
+    db: AsyncSession = Depends(get_db)
+):
+    # Calculate offset
+    offset = (page - 1) * per_page
+    
+    # Get total count
+    total_result = await db.execute(select(func.count(models.Player.id)))
+    total = total_result.scalar()
+    
+    # Get paginated players
     result = await db.execute(
-        select(models.Player).options(selectinload(models.Player.witb_items))
+        select(models.Player)
+        .options(selectinload(models.Player.witb_items))
+        .offset(offset)
+        .limit(per_page)
     )
     players = result.scalars().all()
     
@@ -72,7 +88,16 @@ async def get_players(db: AsyncSession = Depends(get_db)):
     for player in players:
         enrich_witb_items_with_urls(player.witb_items)
     
-    return players
+    # Calculate total pages
+    total_pages = (total + per_page - 1) // per_page
+    
+    return schemas.PaginatedPlayersResponse(
+        items=players,
+        total=total,
+        page=page,
+        per_page=per_page,
+        total_pages=total_pages
+    )
 
 @app.get("/players/search")
 async def search_player(name: str = Query(...), db: AsyncSession = Depends(get_db)):
