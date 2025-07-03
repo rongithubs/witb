@@ -4,6 +4,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { useState } from "react";
 import { Player, PaginatedPlayersResponse } from "@/types/schemas";
+import { TournamentWinnerSkeleton } from "@/components/skeletons";
 
 type TournamentWinner = {
   winner: string;
@@ -31,16 +32,7 @@ export default function TournamentWinner() {
   );
 
   if (isLoading) {
-    return (
-      <div className="bg-green-50 dark:bg-green-900/20 border-l-4 border-green-400 dark:border-green-500 p-4 mb-6">
-        <div className="flex items-center">
-          <div className="animate-pulse">
-            <div className="h-4 bg-green-200 dark:bg-green-700 rounded w-48 mb-2"></div>
-            <div className="h-3 bg-green-100 dark:bg-green-800 rounded w-32"></div>
-          </div>
-        </div>
-      </div>
-    );
+    return <TournamentWinnerSkeleton />;
   }
 
   if (error || !winnerData) {

@@ -19,6 +19,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { PlayerListSkeleton, PlayerDetailsSkeleton } from "@/components/skeletons";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
 export default function Home() {
   const [page, setPage] = useState(1);
@@ -133,10 +135,22 @@ export default function Home() {
             </div>
 
             <ScrollArea className="flex-1 overflow-hidden">
-              <div className="p-2 space-y-1">
-                {isLoading && <div className="p-2 text-gray-500 dark:text-gray-400">Loading...</div>}
-                {error && <p className="text-red-500 dark:text-red-400">Failed to load players.</p>}
-                {filteredPlayers?.map((player) => (
+              <div className="relative">
+                {isLoading && playersResponse && (
+                  <div className="absolute inset-0 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm z-10 flex items-center justify-center">
+                    <LoadingSpinner size="md" />
+                  </div>
+                )}
+                {isLoading && !playersResponse ? (
+                  <PlayerListSkeleton />
+                ) : error ? (
+                  <div className="p-4 text-center">
+                    <p className="text-red-500 dark:text-red-400">Failed to load players.</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Please try again later</p>
+                  </div>
+                ) : (
+                  <div className="p-2 space-y-1">
+                    {filteredPlayers?.map((player) => (
                   <div
                     key={player.id}
                     onClick={() => handlePlayerSelect(player)}
@@ -162,7 +176,9 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                ))}
+                    ))}
+                  </div>
+                )}
               </div>
             </ScrollArea>
             
@@ -174,20 +190,22 @@ export default function Home() {
                     variant="outline"
                     size="sm"
                     onClick={() => setPage(page - 1)}
-                    disabled={page <= 1}
+                    disabled={page <= 1 || isLoading}
+                    className="disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Previous
+                    {isLoading ? "..." : "Previous"}
                   </Button>
                   <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {page} / {playersResponse.total_pages}
+                    {isLoading ? "Loading..." : `${page} / ${playersResponse.total_pages}`}
                   </span>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setPage(page + 1)}
-                    disabled={page >= playersResponse.total_pages}
+                    disabled={page >= playersResponse.total_pages || isLoading}
+                    className="disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Next
+                    {isLoading ? "..." : "Next"}
                   </Button>
                 </div>
               </div>
@@ -199,7 +217,9 @@ export default function Home() {
         <div className={`col-span-12 md:col-span-8 lg:col-span-9 ${
           isMobileMenuOpen ? 'md:block hidden' : ''
         }`}>
-          {selectedPlayer ? (
+          {isLoading ? (
+            <PlayerDetailsSkeleton />
+          ) : selectedPlayer ? (
             <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex flex-col">
               <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
                 <div className="flex items-center gap-4">
