@@ -14,7 +14,7 @@ class WITBItem(WITBItemBase):
     id: UUID
     
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class WITBItemCreate(WITBItemBase):
     pass
@@ -38,7 +38,14 @@ class Player(BaseModel):
     witb_items: List[WITBItem] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class PlayerCreate(PlayerBase):
     pass
+
+class PaginatedPlayersResponse(BaseModel):
+    items: List[Player]
+    total: int
+    page: int
+    per_page: int
+    total_pages: int

@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import TournamentWinner from "@/components/TournamentWinner";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { Player } from "@/types/schemas";
+import { Player, PaginatedPlayersResponse } from "@/types/schemas";
 import { useState, useCallback, useEffect } from "react";
 import { getCountryFlag, formatAge } from "@/utils/countryFlags";
 import {
@@ -21,14 +21,18 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
 export default function Home() {
-  const { data: players, error, isLoading } = useSWR<Player[]>(
-    "http://localhost:8000/players",
-    fetcher
-  );
+  const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [selectedTour, setSelectedTour] = useState<string>("All Tours");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  const { data: playersResponse, error, isLoading } = useSWR<PaginatedPlayersResponse>(
+    `/players?page=${page}&per_page=20`,
+    fetcher
+  );
+  
+  const players = playersResponse?.items || [];
 
   const handlePlayerSelect = useCallback((player: Player) => {
     setSelectedPlayer(player);
@@ -120,6 +124,11 @@ export default function Home() {
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {filteredPlayers?.length || 0} players
                 {selectedTour !== "All Tours" && ` in ${selectedTour}`}
+                {playersResponse && (
+                  <span className="block text-xs mt-1">
+                    Page {playersResponse.page} of {playersResponse.total_pages} ({playersResponse.total} total)
+                  </span>
+                )}
               </p>
             </div>
 
@@ -156,6 +165,33 @@ export default function Home() {
                 ))}
               </div>
             </ScrollArea>
+            
+            {/* Pagination Controls */}
+            {playersResponse && playersResponse.total_pages > 1 && (
+              <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex justify-between items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPage(page - 1)}
+                    disabled={page <= 1}
+                  >
+                    Previous
+                  </Button>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                    {page} / {playersResponse.total_pages}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPage(page + 1)}
+                    disabled={page >= playersResponse.total_pages}
+                  >
+                    Next
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

@@ -17,3 +17,11 @@ export type Player = {
   photo_url?: string;
   witb_items: WITBItem[];
 };
+
+export type PaginatedPlayersResponse = {
+  items: Player[];
+  total: number;
+  page: number;
+  per_page: number;
+  total_pages: number;
+};
