@@ -91,8 +91,8 @@ export default function Home() {
         {/* Players Sidebar */}
         <div className={`col-span-12 md:col-span-4 lg:col-span-3 ${
           isMobileMenuOpen 
-            ? 'fixed top-0 left-0 bottom-0 z-40 w-80 md:relative md:inset-auto md:w-auto mobile-menu transform translate-x-0 transition-transform duration-300 ease-in-out' 
-            : 'fixed top-0 left-0 bottom-0 z-40 w-80 md:relative md:inset-auto md:w-auto transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:block'
+            ? 'fixed top-16 left-0 bottom-0 z-40 w-80 md:relative md:top-auto md:inset-auto md:w-auto mobile-menu transform translate-x-0 transition-transform duration-300 ease-in-out' 
+            : 'fixed top-16 left-0 bottom-0 z-40 w-80 md:relative md:top-auto md:inset-auto md:w-auto transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:block'
         }`}>
           <div className="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 md:border md:rounded-lg shadow-2xl md:shadow-sm h-full md:h-[80vh] flex flex-col">
             <div className="p-4 md:p-4 border-b border-gray-200 dark:border-gray-700 space-y-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 md:bg-none">
