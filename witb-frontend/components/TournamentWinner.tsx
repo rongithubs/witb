@@ -2,7 +2,8 @@
 
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { useState } from "react";
+import { useState, memo } from "react";
+import { TournamentWinnerSkeleton } from "@/components/skeletons";
 
 type TournamentWinner = {
   winner: string;
@@ -18,10 +19,10 @@ type TournamentWinner = {
   }[];
 };
 
-export default function TournamentWinner() {
+const TournamentWinner = memo(function TournamentWinner() {
   const [isExpanded, setIsExpanded] = useState(false);
   const { data: winnerData, error, isLoading } = useSWR<TournamentWinner>(
-    "http://localhost:8000/tournament-winner",
+    "/tournament-winner",
     fetcher
   );
 
@@ -29,16 +30,7 @@ export default function TournamentWinner() {
   const hasWitbData = winnerData?.witb_items && winnerData.witb_items.length > 0;
 
   if (isLoading) {
-    return (
-      <div className="bg-green-50 dark:bg-green-900/20 border-l-4 border-green-400 dark:border-green-500 p-4 mb-6">
-        <div className="flex items-center">
-          <div className="animate-pulse">
-            <div className="h-4 bg-green-200 dark:bg-green-700 rounded w-48 mb-2"></div>
-            <div className="h-3 bg-green-100 dark:bg-green-800 rounded w-32"></div>
-          </div>
-        </div>
-      </div>
-    );
+    return <TournamentWinnerSkeleton />;
   }
 
   if (error || !winnerData) {
@@ -110,4 +102,6 @@ export default function TournamentWinner() {
       )}
     </div>
   );
-}
+});
+
+export default TournamentWinner;

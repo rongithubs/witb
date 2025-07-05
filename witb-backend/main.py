@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import func
 from typing import List
 import traceback
 import models, schemas
@@ -12,6 +13,7 @@ from database import SessionLocal, engine
 from brand_urls import get_brand_url
 import sys
 import os
+import uuid
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scraper'))
 from tournament_scraper import simple_tournament_scraper
 
@@ -28,7 +30,7 @@ app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],
+    allow_origins=os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:3001").split(","),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -60,10 +62,25 @@ async def create_player(player: schemas.PlayerCreate, db: AsyncSession = Depends
         raise HTTPException(status_code=400, detail="Player already exists")
     return new_player
 
-@app.get("/players", response_model=List[schemas.Player])
-async def get_players(db: AsyncSession = Depends(get_db)):
+@app.get("/players", response_model=schemas.PaginatedPlayersResponse)
+async def get_players(
+    page: int = Query(1, ge=1, description="Page number"),
+    per_page: int = Query(10, ge=1, le=100, description="Items per page"),
+    db: AsyncSession = Depends(get_db)
+):
+    # Calculate offset
+    offset = (page - 1) * per_page
+    
+    # Get total count
+    total_result = await db.execute(select(func.count(models.Player.id)))
+    total = total_result.scalar()
+    
+    # Get paginated players
     result = await db.execute(
-        select(models.Player).options(selectinload(models.Player.witb_items))
+        select(models.Player)
+        .options(selectinload(models.Player.witb_items))
+        .offset(offset)
+        .limit(per_page)
     )
     players = result.scalars().all()
     
@@ -71,7 +88,16 @@ async def get_players(db: AsyncSession = Depends(get_db)):
     for player in players:
         enrich_witb_items_with_urls(player.witb_items)
     
-    return players
+    # Calculate total pages
+    total_pages = (total + per_page - 1) // per_page
+    
+    return schemas.PaginatedPlayersResponse(
+        items=players,
+        total=total,
+        page=page,
+        per_page=per_page,
+        total_pages=total_pages
+    )
 
 @app.get("/players/search")
 async def search_player(name: str = Query(...), db: AsyncSession = Depends(get_db)):
@@ -84,9 +110,15 @@ async def search_player(name: str = Query(...), db: AsyncSession = Depends(get_d
 
 @app.get("/players/{player_id}", response_model=schemas.Player)
 async def get_player(player_id: str, db: AsyncSession = Depends(get_db)):
+    try:
+        # Convert string to UUID
+        player_uuid = uuid.UUID(player_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid player ID format")
+    
     result = await db.execute(
         select(models.Player)
-        .where(models.Player.id == player_id)
+        .where(models.Player.id == player_uuid)
         .options(selectinload(models.Player.witb_items))
     )
     player = result.scalars().first()
@@ -105,7 +137,13 @@ async def add_witb_item(
     db: AsyncSession = Depends(get_db)
 ):
     try:
-        result = await db.execute(select(models.Player).where(models.Player.id == player_id))
+        # Convert string to UUID
+        try:
+            player_uuid = uuid.UUID(player_id)
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid player ID format")
+            
+        result = await db.execute(select(models.Player).where(models.Player.id == player_uuid))
         player = result.scalars().first()
         if not player:
             raise HTTPException(status_code=404, detail="Player not found")
