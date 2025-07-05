@@ -3,7 +3,6 @@
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { useState, memo } from "react";
-import { PaginatedPlayersResponse } from "@/types/schemas";
 import { TournamentWinnerSkeleton } from "@/components/skeletons";
 
 type TournamentWinner = {
@@ -11,6 +10,13 @@ type TournamentWinner = {
   tournament: string;
   date: string;
   score: string;
+  witb_items?: {
+    category: string;
+    brand: string;
+    model: string;
+    loft: string;
+    shaft: string;
+  }[];
 };
 
 const TournamentWinner = memo(function TournamentWinner() {
@@ -20,16 +26,8 @@ const TournamentWinner = memo(function TournamentWinner() {
     fetcher
   );
 
-  // Fetch all players to find the winner's equipment
-  const { data: playersResponse } = useSWR<PaginatedPlayersResponse>(
-    "/players?per_page=100",
-    fetcher
-  );
-
-  // Find the winner's player data
-  const winnerPlayer = playersResponse?.items?.find(player => 
-    player.name.toLowerCase() === winnerData?.winner.toLowerCase()
-  );
+  // WITB data is now included directly in the tournament winner response
+  const hasWitbData = winnerData?.witb_items && winnerData.witb_items.length > 0;
 
   if (isLoading) {
     return <TournamentWinnerSkeleton />;
@@ -67,7 +65,7 @@ const TournamentWinner = memo(function TournamentWinner() {
           </div>
         </div>
         
-        {winnerPlayer && winnerPlayer.witb_items.length > 0 && (
+        {hasWitbData && (
           <div className="flex items-center gap-2">
             <span className="text-xs text-green-700 dark:text-green-300">See what&apos;s in their bag</span>
             <button
@@ -87,22 +85,18 @@ const TournamentWinner = memo(function TournamentWinner() {
         )}
       </div>
       
-      {isExpanded && winnerPlayer && (
+      {isExpanded && hasWitbData && (
         <div className="mt-4 pt-4 border-t border-green-200 dark:border-green-700">
           <h4 className="text-sm font-medium text-green-800 dark:text-green-200 mb-3">What&apos;s In The Bag</h4>
           <div className="space-y-2">
-            {winnerPlayer.witb_items.length === 0 ? (
-              <p className="text-green-600 dark:text-green-400 italic text-xs">No equipment data available</p>
-            ) : (
-              winnerPlayer.witb_items.map((club, index) => (
-                <div key={index} className="border border-green-200 dark:border-green-700 p-3 rounded bg-green-25 dark:bg-green-900/30">
-                  <div className="font-medium text-green-800 dark:text-green-200 text-sm">{club.category}</div>
-                  <div className="text-green-700 dark:text-green-300 text-sm">{club.brand} {club.model}</div>
-                  {club.loft && <div className="text-green-600 dark:text-green-400 text-xs">Loft: {club.loft}</div>}
-                  {club.shaft && <div className="text-green-600 dark:text-green-400 text-xs">Shaft: {club.shaft}</div>}
-                </div>
-              ))
-            )}
+            {winnerData.witb_items!.map((club, index) => (
+              <div key={index} className="border border-green-200 dark:border-green-700 p-3 rounded bg-green-25 dark:bg-green-900/30">
+                <div className="font-medium text-green-800 dark:text-green-200 text-sm">{club.category}</div>
+                <div className="text-green-700 dark:text-green-300 text-sm">{club.brand} {club.model}</div>
+                {club.loft && <div className="text-green-600 dark:text-green-400 text-xs">Loft: {club.loft}</div>}
+                {club.shaft && <div className="text-green-600 dark:text-green-400 text-xs">Shaft: {club.shaft}</div>}
+              </div>
+            ))}
           </div>
         </div>
       )}
