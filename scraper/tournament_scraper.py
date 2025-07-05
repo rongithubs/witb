@@ -1,7 +1,6 @@
 import requests
 from datetime import datetime
 from typing import Dict, List
-import asyncio
 from sqlalchemy import text
 import sys
 import os
@@ -9,6 +8,7 @@ import os
 # Add the backend directory to path for database access
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'witb-backend'))
 from database import engine
+from brand_urls import get_brand_url
 
 class SimpleTournamentScraper:
     
@@ -94,13 +94,16 @@ class SimpleTournamentScraper:
                     witb_items = []
                     for row in rows:
                         if row[2]:  # If there's equipment data
-                            witb_items.append({
+                            brand = row[3]
+                            witb_item = {
                                 "category": row[2],
-                                "brand": row[3],
+                                "brand": brand,
                                 "model": row[4],
                                 "loft": row[5] or "",
-                                "shaft": row[6] or ""
-                            })
+                                "shaft": row[6] or "",
+                                "product_url": get_brand_url(brand) if brand else None
+                            }
+                            witb_items.append(witb_item)
                     
                     print(f"Found WITB data for {winner_name}: {len(witb_items)} items")
                     return witb_items
