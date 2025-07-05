@@ -371,18 +371,15 @@ async def populate_lpga_players():
                     # Insert new player with UUID
                     player_id = str(uuid.uuid4())
                     await conn.execute(text("""
-                        INSERT INTO players (id, name, country, tour, age, ranking, average_points, total_points, events_played)
-                        VALUES (:id, :name, :country, :tour, :age, :ranking, :average_points, :total_points, :events_played)
+                        INSERT INTO players (id, name, country, tour, age, ranking)
+                        VALUES (:id, :name, :country, :tour, :age, :ranking)
                     """), {
                         "id": player_id,
                         "name": player_data["name"],
                         "country": player_data["country"],
                         "tour": player_data["tour"],
                         "age": player_data.get("age"),
-                        "ranking": player_data["rank"],
-                        "average_points": player_data["average_points"],
-                        "total_points": player_data["total_points"],
-                        "events_played": player_data["events_played"]
+                        "ranking": player_data["rank"]
                     })
                 
                 # Add WITB items if provided
