@@ -8,6 +8,7 @@ import { Player, PaginatedPlayersResponse } from "@/types/schemas";
 import { PlayerListSkeleton } from "@/components/skeletons";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { PlayerFilters } from "./PlayerFilters";
+import { playerListClasses } from "@/lib/utils";
 
 interface PlayerListProps {
   players: Player[];
@@ -46,11 +47,7 @@ export const PlayerList = memo(function PlayerList({
   };
 
   return (
-    <div className={`col-span-12 md:col-span-4 lg:col-span-3 ${
-      isMobileMenuOpen 
-        ? 'fixed top-16 left-0 bottom-0 z-40 w-80 md:relative md:top-auto md:inset-auto md:w-auto mobile-menu transform translate-x-0 transition-transform duration-300 ease-in-out' 
-        : 'fixed top-16 left-0 bottom-0 z-40 w-80 md:relative md:top-auto md:inset-auto md:w-auto transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:block'
-    }`}>
+    <div className={playerListClasses(isMobileMenuOpen)}>
       <div className="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 md:border md:rounded-lg shadow-2xl md:shadow-sm h-full md:h-[80vh] flex flex-col">
         <PlayerFilters
           selectedTour={selectedTour}

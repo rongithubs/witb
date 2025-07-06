@@ -25,3 +25,17 @@ export type PaginatedPlayersResponse = {
   per_page: number;
   total_pages: number;
 };
+
+export type AsyncState<T> = {
+  data: T | null;
+  error: Error | null;
+  isLoading: boolean;
+};
+
+export type DataHookReturn<T> = {
+  data: T | null;
+  error: Error | null;
+  isLoading: boolean;
+  isEmpty: boolean;
+  refetch: () => void;
+};
