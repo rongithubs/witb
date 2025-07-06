@@ -2,9 +2,7 @@
 
 import Header from "@/components/ui/Header";
 import TournamentWinner from "@/components/TournamentWinner";
-import useSWR from "swr";
-import { fetcher } from "@/lib/fetcher";
-import { Player, PaginatedPlayersResponse } from "@/types/schemas";
+import { Player } from "@/types/schemas";
 import { useState } from "react";
 import { PlayerList } from "@/components/PlayerList";
 import { PlayerDetails } from "@/components/PlayerDetails";
@@ -14,6 +12,7 @@ import { usePlayerSearch } from "@/hooks/usePlayerSearch";
 import { usePagination } from "@/hooks/usePagination";
 import { useMobileMenu } from "@/hooks/useMobileMenu";
 import { useTourFilter } from "@/hooks/useTourFilter";
+import { usePlayersData } from "@/hooks/usePlayersData";
 
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -24,12 +23,7 @@ export default function Home() {
   const { isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } = useMobileMenu();
   
   // Data fetching
-  const { data: playersResponse, error, isLoading } = useSWR<PaginatedPlayersResponse>(
-    `/players?page=${page}&per_page=20`,
-    fetcher
-  );
-  
-  const players = playersResponse?.items || [];
+  const { playersResponse, players, error, isLoading } = usePlayersData(page);
   
   // Tour filtering
   const { selectedTour, availableTours, handleTourFilter } = useTourFilter(players);
@@ -90,7 +84,6 @@ export default function Home() {
               <PlayerDetails
                 selectedPlayer={selectedPlayer}
                 isLoading={isLoading}
-                isMobileMenuOpen={isMobileMenuOpen}
               />
             </ErrorBoundary>
           </div>

@@ -15,9 +15,8 @@ interface PlayerDetailsProps {
 
 export const PlayerDetails = memo(function PlayerDetails({
   selectedPlayer,
-  isLoading,
-  isMobileMenuOpen
-}: PlayerDetailsProps) {
+  isLoading
+}: Omit<PlayerDetailsProps, 'isMobileMenuOpen'>) {
   if (isLoading) {
     return <PlayerDetailsSkeleton />;
   }
