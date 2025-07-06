@@ -75,10 +75,11 @@ async def get_players(
     total_result = await db.execute(select(func.count(models.Player.id)))
     total = total_result.scalar()
     
-    # Get paginated players
+    # Get paginated players sorted by ranking
     result = await db.execute(
         select(models.Player)
         .options(selectinload(models.Player.witb_items))
+        .order_by(models.Player.ranking.nulls_last())
         .offset(offset)
         .limit(per_page)
     )
