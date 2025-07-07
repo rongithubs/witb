@@ -1,13 +1,7 @@
 "use client";
 
 import { memo } from 'react';
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { X } from "lucide-react";
 
 interface PlayerFiltersProps {
@@ -45,18 +39,15 @@ export const PlayerFilters = memo(function PlayerFilters({
         )}
       </div>
       
-      <Select value={selectedTour} onValueChange={onTourChange}>
-        <SelectTrigger className="w-full text-sm">
-          <SelectValue placeholder="Select a tour" />
-        </SelectTrigger>
-        <SelectContent className="text-sm">
+      <Tabs value={selectedTour} onValueChange={onTourChange}>
+        <TabsList variant="pills" className="grid w-full grid-cols-3">
           {availableTours.map((tour) => (
-            <SelectItem key={tour} value={tour}>
+            <TabsTrigger key={tour} value={tour} variant="pills" className="text-sm">
               {tour}
-            </SelectItem>
+            </TabsTrigger>
           ))}
-        </SelectContent>
-      </Select>
+        </TabsList>
+      </Tabs>
       
       <p className="text-sm text-gray-500 dark:text-gray-400">
         {playerCount} players

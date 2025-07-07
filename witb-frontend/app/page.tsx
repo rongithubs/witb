@@ -90,7 +90,6 @@ export default function Home() {
               <PlayerDetails
                 selectedPlayer={selectedPlayer}
                 isLoading={isLoading}
-                isMobileMenuOpen={isMobileMenuOpen}
               />
             </ErrorBoundary>
           </div>

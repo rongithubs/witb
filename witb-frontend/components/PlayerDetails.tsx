@@ -10,13 +10,11 @@ import { PlayerDetailsSkeleton } from "@/components/skeletons";
 interface PlayerDetailsProps {
   selectedPlayer: Player | null;
   isLoading: boolean;
-  isMobileMenuOpen: boolean;
 }
 
 export const PlayerDetails = memo(function PlayerDetails({
   selectedPlayer,
-  isLoading,
-  isMobileMenuOpen
+  isLoading
 }: PlayerDetailsProps) {
   if (isLoading) {
     return <PlayerDetailsSkeleton />;
