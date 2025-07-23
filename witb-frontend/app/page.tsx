@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/ui/Header";
-import TournamentWinner from "@/components/TournamentWinner";
+import TournamentWinnerWithBag from "@/components/TournamentWinnerWithBag";
 import { Player } from "@/types/schemas";
 import { useState } from "react";
 import { PlayerList } from "@/components/PlayerList";
@@ -52,9 +52,9 @@ export default function Home() {
           onToggleMobileMenu={toggleMobileMenu}
         />
         
-        <div className="my-4">
+        <div className="my-6">
           <ErrorBoundary>
-            <TournamentWinner />
+            <TournamentWinnerWithBag />
           </ErrorBoundary>
         </div>
 
