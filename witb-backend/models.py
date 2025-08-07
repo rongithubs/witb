@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, ForeignKey, Integer
+from sqlalchemy import Column, String, ForeignKey, Integer, case
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_base, relationship
 import uuid
@@ -15,7 +15,9 @@ class Player(Base):
     ranking = Column(Integer)
     photo_url = Column(String)
     witb_items = relationship(
-        "WITBItem", back_populates="player", lazy="selectin"
+        "WITBItem", 
+        back_populates="player", 
+        lazy="selectin"
     )
 
 

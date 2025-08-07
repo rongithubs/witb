@@ -11,7 +11,6 @@ import { usePlayerSelection } from "@/hooks/usePlayerSelection";
 import { usePlayerSearch } from "@/hooks/usePlayerSearch";
 import { usePagination } from "@/hooks/usePagination";
 import { useMobileMenu } from "@/hooks/useMobileMenu";
-import { useTourFilter } from "@/hooks/useTourFilter";
 import { usePlayersData } from "@/hooks/usePlayersData";
 
 export default function Home() {
@@ -19,23 +18,14 @@ export default function Home() {
   
   // Custom hooks for state management
   const { page, setPage } = usePagination();
-  const { selectedPlayer, handlePlayerSelect, clearSelection } = usePlayerSelection();
+  const { selectedPlayer, handlePlayerSelect } = usePlayerSelection();
   const { isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } = useMobileMenu();
   
-  // Data fetching
-  const { playersResponse, players, error, isLoading } = usePlayersData(page);
+  // Data fetching - only OGWR data
+  const { playersResponse, players, error, isLoading } = usePlayersData(page, "OGWR");
   
-  // Tour filtering
-  const { selectedTour, availableTours, handleTourFilter } = useTourFilter(players);
-  
-  // Player search and filtering
-  const filteredPlayers = usePlayerSearch(players, query, selectedTour);
-  
-  // Handle tour filter change
-  const handleTourChange = (tour: string) => {
-    handleTourFilter(tour);
-    clearSelection();
-  };
+  // Player search
+  const filteredPlayers = usePlayerSearch(players, query);
   
   // Handle player selection
   const handlePlayerClick = (player: Player) => {
@@ -67,9 +57,6 @@ export default function Home() {
               isLoading={isLoading}
               error={error}
               playersResponse={playersResponse}
-              selectedTour={selectedTour}
-              availableTours={availableTours}
-              onTourChange={handleTourChange}
               isMobileMenuOpen={isMobileMenuOpen}
               onCloseMobileMenu={closeMobileMenu}
               page={page}

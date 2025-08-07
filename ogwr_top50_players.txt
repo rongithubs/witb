@@ -1,0 +1,303 @@
+🏌️ Top 50 OGWR Players (Gemini AI Extracted)
+==================================================
+
+1. Scottie Scheffler
+   Country: USA
+   Tour: OGWR
+   Points: 15.234
+   Events: 20
+
+2. Rory McIlroy
+   Country: IRL
+   Tour: OGWR
+   Points: 13.096
+   Events: 20
+
+3. Jon Rahm
+   Country: ESP
+   Tour: OGWR
+   Points: 12.659
+   Events: 19
+
+4. Patrick Cantlay
+   Country: USA
+   Tour: OGWR
+   Points: 11.661
+   Events: 20
+
+5. Xander Schauffele
+   Country: USA
+   Tour: OGWR
+   Points: 11.230
+   Events: 21
+
+6. Max Homa
+   Country: USA
+   Tour: OGWR
+   Points: 10.878
+   Events: 20
+
+7. Matt Fitzpatrick
+   Country: ENG
+   Tour: OGWR
+   Points: 10.372
+   Events: 20
+
+8. Viktor Hovland
+   Country: NOR
+   Tour: OGWR
+   Points: 10.244
+   Events: 21
+
+9. Collin Morikawa
+   Country: USA
+   Tour: OGWR
+   Points: 9.964
+   Events: 18
+
+10. Tommy Fleetwood
+   Country: ENG
+   Tour: OGWR
+   Points: 9.515
+   Events: 21
+
+11. Tyrrell Hatton
+   Country: ENG
+   Tour: OGWR
+   Points: 9.420
+   Events: 19
+
+12. Justin Thomas
+   Country: USA
+   Tour: OGWR
+   Points: 9.283
+   Events: 20
+
+13. Jordan Spieth
+   Country: USA
+   Tour: OGWR
+   Points: 9.169
+   Events: 20
+
+14. Tony Finau
+   Country: USA
+   Tour: OGWR
+   Points: 8.909
+   Events: 20
+
+15. Will Zalatoris
+   Country: USA
+   Tour: OGWR
+   Points: 8.875
+   Events: 13
+
+16. Cameron Smith
+   Country: AUS
+   Tour: OGWR
+   Points: 8.756
+   Events: 17
+
+17. Hideki Matsuyama
+   Country: JPN
+   Tour: OGWR
+   Points: 8.607
+   Events: 19
+
+18. Sam Burns
+   Country: USA
+   Tour: OGWR
+   Points: 8.554
+   Events: 18
+
+19. Shane Lowry
+   Country: IRL
+   Tour: OGWR
+   Points: 8.498
+   Events: 19
+
+20. Sungjae Im
+   Country: KOR
+   Tour: OGWR
+   Points: 8.464
+   Events: 20
+
+21. Keegan Bradley
+   Country: USA
+   Tour: OGWR
+   Points: 8.385
+   Events: 19
+
+22. Jason Day
+   Country: AUS
+   Tour: OGWR
+   Points: 8.362
+   Events: 18
+
+23. Brooks Koepka
+   Country: USA
+   Tour: OGWR
+   Points: 8.282
+   Events: 16
+
+24. Adam Scott
+   Country: AUS
+   Tour: OGWR
+   Points: 8.205
+   Events: 19
+
+25. Patrick Reed
+   Country: USA
+   Tour: OGWR
+   Points: 8.132
+   Events: 18
+
+26. Justin Rose
+   Country: ENG
+   Tour: OGWR
+   Points: 8.077
+   Events: 19
+
+27. Tyrrell Hatton
+   Country: ENG
+   Tour: OGWR
+   Points: N/A
+   Events: N/A
+
+28. Billy Horschel
+   Country: USA
+   Tour: OGWR
+   Points: 7.953
+   Events: 19
+
+29. Si Woo Kim
+   Country: KOR
+   Tour: OGWR
+   Points: 7.919
+   Events: 20
+
+30. Shane Lowry
+   Country: IRL
+   Tour: OGWR
+   Points: N/A
+   Events: N/A
+
+31. Min Woo Lee
+   Country: AUS
+   Tour: OGWR
+   Points: 7.784
+   Events: 19
+
+32. Tom Kim
+   Country: KOR
+   Tour: OGWR
+   Points: 7.740
+   Events: 17
+
+33. Corey Conners
+   Country: CAN
+   Tour: OGWR
+   Points: 7.677
+   Events: 20
+
+34. Joaquin Niemann
+   Country: CHI
+   Tour: OGWR
+   Points: 7.635
+   Events: 18
+
+35. Mito Pereira
+   Country: CHI
+   Tour: OGWR
+   Points: 7.587
+   Events: 19
+
+36. Sahith Theegala
+   Country: USA
+   Tour: OGWR
+   Points: 7.554
+   Events: 20
+
+37. Cameron Young
+   Country: USA
+   Tour: OGWR
+   Points: 7.516
+   Events: 19
+
+38. Seamus Power
+   Country: IRL
+   Tour: OGWR
+   Points: 7.494
+   Events: 20
+
+39. Christiaan Bezuidenhout
+   Country: RSA
+   Tour: OGWR
+   Points: 7.458
+   Events: 19
+
+40. Jason Kokrak
+   Country: USA
+   Tour: OGWR
+   Points: 7.435
+   Events: 19
+
+41. Brian Harman
+   Country: USA
+   Tour: OGWR
+   Points: 7.403
+   Events: 19
+
+42. Louis Oosthuizen
+   Country: RSA
+   Tour: OGWR
+   Points: 7.390
+   Events: 17
+
+43. Marc Leishman
+   Country: AUS
+   Tour: OGWR
+   Points: 7.358
+   Events: 18
+
+44. Russell Henley
+   Country: USA
+   Tour: OGWR
+   Points: 7.325
+   Events: 19
+
+45. Rickie Fowler
+   Country: USA
+   Tour: OGWR
+   Points: 7.298
+   Events: 19
+
+46. Sepp Straka
+   Country: AUT
+   Tour: OGWR
+   Points: 7.276
+   Events: 19
+
+47. Adrian Meronk
+   Country: POL
+   Tour: OGWR
+   Points: 7.240
+   Events: 18
+
+48. Sung Kang
+   Country: KOR
+   Tour: OGWR
+   Points: 7.218
+   Events: 20
+
+49. J.T. Poston
+   Country: USA
+   Tour: OGWR
+   Points: 7.190
+   Events: 19
+
+50. Emiliano Grillo
+   Country: ARG
+   Tour: OGWR
+   Points: 7.167
+   Events: 19
+

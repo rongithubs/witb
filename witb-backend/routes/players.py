@@ -1,4 +1,5 @@
 """Player routes following CLAUDE.md O-4 (thin route handlers)."""
+from typing import Optional
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -23,11 +24,12 @@ async def create_player(
 async def get_players(
     page: int = Query(1, ge=1, description="Page number"),
     per_page: int = Query(10, ge=1, le=100, description="Items per page"),
+    tour: Optional[str] = Query(None, description="Filter by tour (e.g., 'PGA Tour', 'OGWR', 'LPGA Tour')"),
     db: AsyncSession = Depends(get_db)
 ):
-    """Get paginated players."""
+    """Get paginated players with optional tour filter."""
     service = PlayerService(db)
-    return await service.get_players_paginated(page, per_page)
+    return await service.get_players_paginated(page, per_page, tour)
 
 
 @router.get("/search")

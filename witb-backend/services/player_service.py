@@ -56,12 +56,13 @@ class PlayerService:
     async def get_players_paginated(
         self, 
         page: int, 
-        per_page: int
+        per_page: int,
+        tour: Optional[str] = None
     ) -> schemas.PaginatedPlayersResponse:
-        """Get paginated players with enriched WITB items."""
+        """Get paginated players with optional tour filter and enriched WITB items."""
         offset = (page - 1) * per_page
         
-        players, total = await self.player_repo.get_players_paginated(offset, per_page)
+        players, total = await self.player_repo.get_players_paginated(offset, per_page, tour)
         
         # Enrich WITB items with brand URLs
         for player in players:
