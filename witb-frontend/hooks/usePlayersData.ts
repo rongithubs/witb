@@ -2,14 +2,16 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { PaginatedPlayersResponse } from "@/types/schemas";
 
-export function usePlayersData(page: number = 1) {
+export function usePlayersData(page: number = 1, tour?: string) {
+  const tourParam = tour && tour !== "All Tours" ? `&tour=${encodeURIComponent(tour)}` : "";
+  
   const {
     data: playersResponse,
     error,
     isLoading,
     mutate,
   } = useSWR<PaginatedPlayersResponse>(
-    `/players?page=${page}&per_page=20`,
+    `/players?page=${page}&per_page=20${tourParam}`,
     fetcher,
   );
 
