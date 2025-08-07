@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Player, PaginatedPlayersResponse } from "@/types/schemas";
 import { PlayerListSkeleton } from "@/components/skeletons";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
-import { PlayerFilters } from "./PlayerFilters";
 import { playerListClasses } from "@/lib/utils";
 
 interface PlayerListProps {
@@ -17,9 +16,6 @@ interface PlayerListProps {
   isLoading: boolean;
   error: Error | null;
   playersResponse?: PaginatedPlayersResponse;
-  selectedTour: string;
-  availableTours: string[];
-  onTourChange: (tour: string) => void;
   isMobileMenuOpen: boolean;
   onCloseMobileMenu: () => void;
   page: number;
@@ -33,9 +29,6 @@ export const PlayerList = memo(function PlayerList({
   isLoading,
   error,
   playersResponse,
-  selectedTour,
-  availableTours,
-  onTourChange,
   isMobileMenuOpen,
   onCloseMobileMenu,
   page,
@@ -49,16 +42,17 @@ export const PlayerList = memo(function PlayerList({
   return (
     <div className={playerListClasses(isMobileMenuOpen)}>
       <div className="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 md:border md:rounded-lg shadow-2xl md:shadow-sm h-full md:h-[80vh] flex flex-col">
-        <PlayerFilters
-          selectedTour={selectedTour}
-          availableTours={availableTours}
-          onTourChange={onTourChange}
-          playerCount={players.length}
-          totalPlayers={playersResponse?.total}
-          currentPage={playersResponse?.page}
-          totalPages={playersResponse?.total_pages}
-          onCloseMobileMenu={onCloseMobileMenu}
-        />
+        {/* OGWR Header */}
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
+          <div className="text-center">
+            <Badge className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-base px-4 py-2">
+              Official World Golf Ranking
+            </Badge>
+            <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+             TOP {playersResponse?.total || players.length} players • Page {playersResponse?.page || page} of {playersResponse?.total_pages || 1}
+            </p>
+          </div>
+        </div>
 
         <ScrollArea className="flex-1 overflow-hidden">
           <div className="relative">
@@ -97,7 +91,7 @@ export const PlayerList = memo(function PlayerList({
                             </Badge>
                           )}
                         </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">{player.tour}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{player.country}</p>
                         <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{player.witb_items.length} clubs</p>
                       </div>
                     </div>
