@@ -1,6 +1,9 @@
-#need to rerun -> source venv/bin/activate
-#need to load up DB /witb-backend-> uvicorn main:app --reload
-#when need all the modules --> pip install -r requirements.txt
+# To set up development environment:
+# cd witb-backend
+# source venv/bin/activate
+# pip install -r ../requirements.txt
+# pip install -r requirements-dev.txt
+# uvicorn main:app --reload
 
 # FastAPI backend
 fastapi
