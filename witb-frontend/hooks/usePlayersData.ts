@@ -11,7 +11,7 @@ export function usePlayersData(page: number = 1, tour?: string) {
     isLoading,
     mutate,
   } = useSWR<PaginatedPlayersResponse>(
-    `/players?page=${page}&per_page=20${tourParam}`,
+    `/players?page=${page}&per_page=25${tourParam}`,
     fetcher,
   );
 

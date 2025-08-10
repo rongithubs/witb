@@ -2,16 +2,12 @@
 
 import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
 
 type HeaderProps = {
   onSearch: (query: string) => void;
-  isMobileMenuOpen?: boolean;
-  onToggleMobileMenu?: () => void;
 };
 
-export default function Header({ onSearch, isMobileMenuOpen, onToggleMobileMenu }: HeaderProps) {
+export default function Header({ onSearch }: HeaderProps) {
   const [query, setQuery] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,21 +18,8 @@ export default function Header({ onSearch, isMobileMenuOpen, onToggleMobileMenu 
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 p-4 shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center gap-4">
-        {/* Left section: Logo and hamburger menu */}
+        {/* Left section: Logo */}
         <div className="flex items-center gap-3 flex-shrink-0">
-          {/* Mobile Hamburger Button */}
-          {onToggleMobileMenu && (
-            <div className="md:hidden">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={onToggleMobileMenu}
-                className="hamburger-button flex items-center gap-2"
-              >
-                {isMobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
-              </Button>
-            </div>
-          )}
           <h1 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white truncate">WITB</h1>
         </div>
         
