@@ -22,7 +22,11 @@ type TournamentWinner = {
   witb_items?: WITBItem[];
 };
 
-const TournamentWinnerWithBag = memo(function TournamentWinnerWithBag() {
+interface TournamentWinnerProps {
+  isCollapsed?: boolean;
+}
+
+const TournamentWinnerWithBag = memo(function TournamentWinnerWithBag({ isCollapsed = false }: TournamentWinnerProps) {
   const [showEquipment, setShowEquipment] = useState(false);
   const {
     data: winnerData,
@@ -126,14 +130,20 @@ const TournamentWinnerWithBag = memo(function TournamentWinnerWithBag() {
 
   if (isLoading) {
     return (
-      <div className="mb-12">
-        <div className="relative w-full h-80 md:h-96 lg:h-[28rem] rounded-3xl overflow-hidden mb-8">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 animate-pulse"></div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center space-y-4">
-              <div className="h-8 w-64 bg-slate-300 dark:bg-slate-600 rounded animate-pulse"></div>
-              <div className="h-12 w-80 bg-slate-300 dark:bg-slate-600 rounded animate-pulse"></div>
-              <div className="h-6 w-48 bg-slate-300 dark:bg-slate-600 rounded animate-pulse"></div>
+      <div className="mb-8">
+        <div className="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 animate-pulse">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+              <div>
+                <div className="h-4 w-24 bg-gray-300 dark:bg-gray-600 rounded mb-2"></div>
+                <div className="h-6 w-32 bg-gray-300 dark:bg-gray-600 rounded mb-1"></div>
+                <div className="h-4 w-40 bg-gray-300 dark:bg-gray-600 rounded"></div>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="h-4 w-20 bg-gray-300 dark:bg-gray-600 rounded"></div>
+              <div className="h-8 w-32 bg-gray-300 dark:bg-gray-600 rounded-lg"></div>
             </div>
           </div>
         </div>
@@ -146,98 +156,171 @@ const TournamentWinnerWithBag = memo(function TournamentWinnerWithBag() {
   }
 
   return (
-    <div className="mb-12">
-      {/* Hero Banner */}
-      <div className="relative w-full h-80 md:h-96 lg:h-[28rem] rounded-3xl overflow-hidden mb-8 shadow-2xl">
-        {/* Background with gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 via-green-700 to-teal-800"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+    <div className={`transition-all duration-500 ease-in-out ${isCollapsed ? "mb-4" : "mb-12"}`}>
+      {/* Single morphing banner */}
+      <div 
+        className={`relative w-full overflow-hidden shadow-2xl transition-all duration-1000 cubic-bezier(0.4, 0.0, 0.2, 1) ${
+          isCollapsed 
+            ? 'h-40 sm:h-32 md:h-24 rounded-xl bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 border border-emerald-200 dark:border-emerald-700' 
+            : 'h-64 sm:h-80 md:h-96 lg:h-[28rem] rounded-xl sm:rounded-3xl bg-gradient-to-br from-emerald-600 via-green-700 to-teal-800'
+        }`}
+        style={{
+          transition: 'height 1000ms cubic-bezier(0.4, 0.0, 0.2, 1), background 800ms cubic-bezier(0.4, 0.0, 0.2, 1) 200ms, border-radius 800ms cubic-bezier(0.4, 0.0, 0.2, 1) 100ms'
+        }}
+      >
+        {/* Background overlay for collapsed state */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"
+          style={{
+            opacity: isCollapsed ? 0 : 1,
+            transition: 'opacity 600ms cubic-bezier(0.4, 0.0, 0.2, 1) 400ms'
+          }}
+        />
 
-        {/* Decorative elements */}
-        <div className="absolute top-8 right-8 opacity-10">
+        {/* Decorative elements - fade out when collapsed */}
+        <div 
+          className="absolute top-8 right-8"
+          style={{
+            opacity: isCollapsed ? 0 : 0.1,
+            transform: isCollapsed ? 'scale(0.7)' : 'scale(1)',
+            transition: 'opacity 500ms cubic-bezier(0.4, 0.0, 0.2, 1) 300ms, transform 600ms cubic-bezier(0.4, 0.0, 0.2, 1) 200ms'
+          }}
+        >
           <Trophy size={120} className="text-white" />
         </div>
-        <div className="absolute bottom-8 left-8 opacity-5">
+        <div 
+          className="absolute bottom-8 left-8"
+          style={{
+            opacity: isCollapsed ? 0 : 0.05,
+            transform: isCollapsed ? 'scale(0.7)' : 'scale(1)',
+            transition: 'opacity 500ms cubic-bezier(0.4, 0.0, 0.2, 1) 350ms, transform 600ms cubic-bezier(0.4, 0.0, 0.2, 1) 250ms'
+          }}
+        >
           <div className="w-32 h-32 rounded-full border-4 border-white"></div>
         </div>
 
-        {/* Content */}
-        <div className="absolute inset-0 flex items-center justify-center z-10">
-          <div className="text-center text-white px-6 max-w-4xl relative z-20">
-            {/* Winner Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full mb-6">
-              <Trophy size={16} className="text-yellow-300" />
-              <span className="text-sm font-medium">
-                Latest Tournament Winner
-              </span>
-            </div>
+        {/* Content container */}
+        <div 
+          className={`absolute inset-0 flex items-center z-10 ${
+            isCollapsed ? 'px-4 py-2 sm:px-10 sm:py-0' : 'px-4 sm:px-6'
+          }`}
+          style={{
+            justifyContent: isCollapsed ? 'flex-start' : 'center',
+            transition: 'justify-content 800ms cubic-bezier(0.4, 0.0, 0.2, 1) 100ms, padding 800ms cubic-bezier(0.4, 0.0, 0.2, 1) 100ms'
+          }}
+        >
+          <div 
+            className={`w-full transition-all duration-700 ease-in-out ${
+              isCollapsed 
+                ? 'flex flex-col items-center justify-center gap-2 text-center sm:flex-row sm:justify-between sm:items-center sm:text-left' 
+                : 'flex flex-col items-center justify-center gap-0 text-center text-white'
+            }`}
+          >
+            {/* Winner Info Section */}
+            <div className={`flex items-center transition-all duration-700 ease-in-out ${isCollapsed ? 'gap-3 sm:gap-5' : 'gap-3 flex-col'}`}>
+              {/* Trophy Icon */}
+              <div 
+                className={`flex-shrink-0 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center transition-all duration-700 ease-in-out ${
+                  isCollapsed ? 'w-10 h-10' : 'w-16 h-16 mb-6'
+                }`}
+              >
+                <Trophy size={isCollapsed ? 16 : 20} className="text-white" />
+              </div>
 
-            {/* Player Name */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
-              {winnerData.winner}
-            </h1>
-
-            {/* Tournament Name */}
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-medium text-white/90 mb-6">
-              {winnerData.tournament}
-            </h2>
-
-            {/* Details Row */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-white/80">
-              {winnerData.date && (
-                <div className="flex items-center gap-2">
-                  <Calendar size={18} />
-                  <span className="text-base md:text-lg font-medium">
-                    {winnerData.date}
+              {/* Text Content */}
+              <div className={`transition-all duration-700 ease-in-out ${isCollapsed ? 'text-left' : 'text-center'}`}>
+                {/* Badge */}
+                <div className={`inline-flex items-center gap-2 rounded-full transition-all duration-700 ease-in-out ${
+                  isCollapsed 
+                    ? 'px-3 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/30 mb-1' 
+                    : 'px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 text-sm font-medium text-white mb-6'
+                }`}>
+                  {!isCollapsed && <Trophy size={16} className="text-yellow-300" />}
+                  <span>
+                    {isCollapsed ? 'LATEST WINNER' : 'Latest Tournament Winner'}
                   </span>
                 </div>
-              )}
-              {winnerData.score && (
-                <div className="flex items-center gap-2">
-                  <Target size={18} />
-                  <span className="text-base md:text-lg font-medium">
-                    {winnerData.score}
-                  </span>
-                </div>
-              )}
+
+                {/* Player Name */}
+                <h1 
+                  className={`font-bold tracking-tight transition-all duration-700 ease-in-out ${
+                    isCollapsed 
+                      ? 'text-lg text-gray-900 dark:text-white mb-1.5' 
+                      : 'text-4xl md:text-5xl lg:text-6xl text-white mb-4'
+                  }`}
+                >
+                  {winnerData.winner}
+                </h1>
+
+                {/* Tournament Name */}
+                <h2 
+                  className={`font-medium transition-all duration-700 ease-in-out ${
+                    isCollapsed 
+                      ? 'text-xs text-gray-600 dark:text-gray-300' 
+                      : 'text-xl md:text-2xl lg:text-3xl text-white/90 mb-6'
+                  }`}
+                >
+                  {winnerData.tournament}
+                </h2>
+              </div>
             </div>
 
-            {/* Equipment Toggle Button */}
-            {witbItems.length > 0 && (
-              <div className="mt-8 relative z-30">
+            {/* Stats and Button Section */}
+            <div 
+              className={`flex items-center gap-2 transition-all duration-700 ease-in-out ${
+                isCollapsed ? 'flex-col justify-center w-full sm:w-auto sm:flex-row' : 'flex-col sm:flex-row justify-center mt-6'
+              }`}
+            >
+              {/* Stats */}
+              <div 
+                className={`flex items-center gap-4 transition-all duration-700 ease-in-out ${
+                  isCollapsed ? 'text-xs text-gray-600 dark:text-gray-400' : 'text-white/80'
+                }`}
+              >
+                {winnerData.date && (
+                  <div className="flex items-center gap-1">
+                    <Calendar size={isCollapsed ? 12 : 18} />
+                    <span className={isCollapsed ? 'text-xs' : 'text-base md:text-lg font-medium'}>
+                      {winnerData.date}
+                    </span>
+                  </div>
+                )}
+                {winnerData.score && (
+                  <div className="flex items-center gap-1">
+                    <Target size={isCollapsed ? 12 : 18} />
+                    <span className={isCollapsed ? 'text-xs' : 'text-base md:text-lg font-medium'}>
+                      {winnerData.score}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Equipment Toggle Button */}
+              {witbItems.length > 0 && (
                 <button
                   type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log("Button clicked! Current showEquipment:", showEquipment);
-                    handleToggleEquipment();
-                  }}
-                  className="relative z-40 inline-flex items-center gap-3 px-8 py-4 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full hover:bg-white/30 active:bg-white/25 transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-white/50 shadow-lg cursor-pointer"
+                  onClick={handleToggleEquipment}
+                  className={`inline-flex items-center gap-2 font-medium rounded-lg transition-all duration-300 flex-shrink-0 ${
+                    isCollapsed
+                      ? 'px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs'
+                      : 'px-8 py-4 bg-white/20 backdrop-blur-sm border border-white/30 hover:bg-white/30 text-white text-base rounded-full hover:scale-105 focus:ring-2 focus:ring-white/50 shadow-lg mt-2'
+                  }`}
                 >
-                  <span className="text-base font-medium pointer-events-none">
-                    {showEquipment ? "Hide Equipment" : "View Equipment"}
-                  </span>
+                  <span>{showEquipment ? "Hide Equipment" : "View Equipment"}</span>
                   {showEquipment ? (
-                    <ChevronUp
-                      size={20}
-                      className="transition-transform duration-300 pointer-events-none"
-                    />
+                    <ChevronUp size={isCollapsed ? 14 : 20} />
                   ) : (
-                    <ChevronDown
-                      size={20}
-                      className="transition-transform duration-300 pointer-events-none"
-                    />
+                    <ChevronDown size={isCollapsed ? 14 : 20} />
                   )}
                 </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Glass reflection effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none z-5"></div>
-        <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-white/5 to-transparent pointer-events-none z-5"></div>
+        {/* Glass reflection effects - fade out when collapsed */}
+        <div className={`absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none transition-opacity duration-700 ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}></div>
+        <div className={`absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-white/5 to-transparent pointer-events-none transition-opacity duration-700 ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}></div>
       </div>
 
       {/* Equipment Section */}
