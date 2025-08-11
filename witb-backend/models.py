@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, ForeignKey, Integer, case
+from sqlalchemy import Column, String, ForeignKey, Integer, DateTime, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_base, relationship
 import uuid
@@ -14,6 +14,7 @@ class Player(Base):
     age = Column(Integer)
     ranking = Column(Integer)
     photo_url = Column(String)
+    last_updated = Column(DateTime, default=func.now())  # Only set on creation, WITB scraper will update manually
     witb_items = relationship(
         "WITBItem", 
         back_populates="player", 
@@ -31,4 +32,14 @@ class WITBItem(Base):
     loft = Column(String)
     shaft = Column(String)
     product_url = Column(String)
+    source_url = Column(String, nullable=True)
+    last_updated = Column(DateTime, default=func.now())
     player = relationship("Player", back_populates="witb_items")
+
+
+class SystemUpdate(Base):
+    __tablename__ = "system_updates"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    update_type = Column(String, nullable=False)  # "owgr", "witb", etc.
+    last_updated = Column(DateTime, default=func.now())
+    details = Column(String, nullable=True)  # JSON string with update details

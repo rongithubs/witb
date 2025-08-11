@@ -1,10 +1,15 @@
 """Player service for business logic following CLAUDE.md O-4."""
+
 from typing import Optional, List
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException
-from exceptions import PlayerNotFoundError, InvalidPlayerIdError, PlayerAlreadyExistsError
+from exceptions import (
+    PlayerNotFoundError,
+    InvalidPlayerIdError,
+    PlayerAlreadyExistsError,
+)
 
 import schemas
 import models
@@ -16,13 +21,15 @@ from custom_types import PlayerId
 
 class PlayerService:
     """Service for player business logic."""
-    
+
     def __init__(self, db: AsyncSession):
         self.player_repo = PlayerRepository(db)
         self.witb_repo = WITBRepository(db)
         self.db = db
 
-    def _enrich_witb_items_with_urls(self, items: List[models.WITBItem]) -> List[models.WITBItem]:
+    def _enrich_witb_items_with_urls(
+        self, items: List[models.WITBItem]
+    ) -> List[models.WITBItem]:
         """Add brand URLs to WITB items that don't have specific product URLs."""
         for item in items:
             if not item.product_url and item.brand:
@@ -43,41 +50,75 @@ class PlayerService:
             player_uuid = UUID(player_id)
         except ValueError:
             raise InvalidPlayerIdError(player_id)
-        
+
         player = await self.player_repo.get_player_by_id(PlayerId(player_uuid))
         if not player:
             raise PlayerNotFoundError(player_id)
-        
+
         # Enrich WITB items with brand URLs
         self._enrich_witb_items_with_urls(player.witb_items)
-        
+
         return schemas.Player.model_validate(player)
 
     async def get_players_paginated(
-        self, 
-        page: int, 
-        per_page: int,
-        tour: Optional[str] = None
+        self, page: int, per_page: int, tour: Optional[str] = None
     ) -> schemas.PaginatedPlayersResponse:
         """Get paginated players with optional tour filter and enriched WITB items."""
         offset = (page - 1) * per_page
-        
-        players, total = await self.player_repo.get_players_paginated(offset, per_page, tour)
-        
+
+        players, total = await self.player_repo.get_players_paginated(
+            offset, per_page, tour
+        )
+
         # Enrich WITB items with brand URLs
         for player in players:
             self._enrich_witb_items_with_urls(player.witb_items)
-        
+
+        # Get OWGR system info
+        system_info = await self._get_system_info()
+
         # Calculate total pages
         total_pages = (total + per_page - 1) // per_page
-        
+
         return schemas.PaginatedPlayersResponse(
             items=[schemas.Player.model_validate(p) for p in players],
             total=total,
             page=page,
             per_page=per_page,
-            total_pages=total_pages
+            total_pages=total_pages,
+            system_info=system_info,
         )
+
+    async def _get_system_info(self) -> Optional[schemas.SystemInfo]:
+        """Get OWGR system update information."""
+        from sqlalchemy import select
+        import json
+        
+        try:
+            result = await self.db.execute(
+                select(models.SystemUpdate).filter(models.SystemUpdate.update_type == "owgr")
+            )
+            owgr_update = result.scalar_one_or_none()
+            
+            if not owgr_update:
+                return None
+            
+            details = {}
+            if owgr_update.details:
+                try:
+                    details = json.loads(owgr_update.details)
+                except json.JSONDecodeError:
+                    pass
+            
+            return schemas.SystemInfo(
+                owgr_last_updated=owgr_update.last_updated,
+                owgr_updated_count=details.get("updated_count", 0),
+                owgr_total_processed=details.get("total_processed", 0),
+            )
+        except Exception:
+            # If there's any error fetching system info, return None
+            # Don't let system info errors break the main player API
+            return None
 
     async def search_player_exists(self, name: str) -> bool:
         """Check if player exists by name."""
@@ -85,16 +126,14 @@ class PlayerService:
         return bool(player)
 
     async def add_witb_item(
-        self, 
-        player_id: str, 
-        item_data: schemas.WITBItemCreate
+        self, player_id: str, item_data: schemas.WITBItemCreate
     ) -> schemas.WITBItem:
         """Add WITB item to player."""
         try:
             player_uuid = UUID(player_id)
         except ValueError:
             raise HTTPException(status_code=400, detail="Invalid player ID format")
-        
+
         # Verify player exists
         player = await self.player_repo.get_player_by_id(PlayerId(player_uuid))
         if not player:
@@ -102,8 +141,7 @@ class PlayerService:
 
         try:
             db_item = await self.witb_repo.create_witb_item(
-                PlayerId(player_uuid), 
-                item_data.model_dump()
+                PlayerId(player_uuid), item_data.model_dump()
             )
             return schemas.WITBItem.model_validate(db_item)
         except Exception as e:
