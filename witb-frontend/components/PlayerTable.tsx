@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { useOWGRInfo } from "@/hooks/useOWGRInfo";
 
 interface PlayerTableProps {
   players: Player[];
@@ -18,6 +19,7 @@ interface PlayerTableProps {
 
 export function PlayerTable({ players, isLoading, error, playersResponse, page, onPageChange, onWitbExpansionChange }: PlayerTableProps) {
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
+  const { owgrInfo, formatLastUpdated } = useOWGRInfo(playersResponse?.system_info);
 
   const toggleRowExpansion = (playerId: string) => {
     const newExpanded = new Set(expandedRows);
@@ -55,13 +57,13 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
       .sort(([,a], [,b]) => b - a)[0]?.[0] || "N/A";
   };
 
-  const getLastUpdated = (playerId: string) => {
-    // Mock data for now - replace with actual update dates when available
-    // Use player ID to generate consistent random date per player
-    const seed = playerId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const randomDays = (seed % 30) + 1; // 1-30 days ago
-    return new Date(Date.now() - randomDays * 24 * 60 * 60 * 1000)
-      .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const getLastUpdated = (player: Player) => {
+    if (player.last_updated) {
+      return new Date(player.last_updated).toLocaleDateString('en-US', { 
+        month: 'short', day: 'numeric', year: 'numeric' 
+      });
+    }
+    return 'Not updated';
   };
 
   if (isLoading) {
@@ -97,6 +99,31 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
         <div className="col-span-2">Updated</div>
         <div className="col-span-1">Actions</div>
       </div>
+
+      {/* OWGR Update Info Subheader - Mobile */}
+      {owgrInfo && (
+        <div className="md:hidden bg-blue-50 dark:bg-blue-950/30 border-b border-blue-200 dark:border-blue-800 px-4 py-3">
+          <div className="text-center text-sm text-blue-700 dark:text-blue-300">
+            <div className="font-medium">OWGR Rankings</div>
+            <div className="text-xs mt-1">Last updated {formatLastUpdated}</div>
+          </div>
+        </div>
+      )}
+
+      {/* OWGR Update Info Subheader - Desktop */}
+      {owgrInfo && (
+        <div className="hidden md:block bg-blue-50 dark:bg-blue-950/30 border-b border-blue-200 dark:border-blue-800 px-4 py-3">
+          <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center gap-2 text-blue-700 dark:text-blue-300">
+              <span className="font-medium">OWGR Rankings:</span>
+              <span>Last updated {formatLastUpdated}</span>
+            </div>
+            <div className="flex items-center gap-4 text-xs text-blue-600 dark:text-blue-400">
+              <span>{owgrInfo.updated_count} players updated</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Table Body */}
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -150,7 +177,7 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
                 {/* Bottom Row - Updated & Action */}
                 <div className="flex items-center justify-between pl-1 pr-2">
                   <span className="text-xs text-gray-600 dark:text-gray-400">
-                    {getLastUpdated(player.id)}
+                    {getLastUpdated(player)}
                   </span>
                   <Button
                     onClick={() => toggleRowExpansion(player.id)}
@@ -220,7 +247,7 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
                 {/* Updated */}
                 <div className="col-span-2 flex items-center">
                   <span className="text-sm text-gray-600 dark:text-gray-400">
-                    {getLastUpdated(player.id)}
+                    {getLastUpdated(player)}
                   </span>
                 </div>
 
@@ -438,10 +465,10 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
         </div>
       )}
 
-      {/* Prototype Disclaimer */}
+      {/* Data Source Disclaimer */}
       <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-900/30">
         <p className="text-sm text-gray-500 dark:text-gray-400 italic text-center">
-          Prototype UI — replace demo data with your backend when ready.
+          Equipment data scraped from PGA Club Tracker with intelligent sync technology.
         </p>
       </div>
 

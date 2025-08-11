@@ -1,6 +1,7 @@
 import requests
+import aiohttp
 from datetime import datetime
-from typing import Dict, List
+from typing import Dict, List, Optional
 from sqlalchemy import text
 import sys
 import os
@@ -12,21 +13,34 @@ from brand_urls import get_brand_url
 
 class SimpleTournamentScraper:
     
-    # Recent tournament winners (update quarterly)
-    RECENT_WINNERS = [
-        ("Aldrich Potgieter", "Rocket Classic"),  # Most recent
-        ("Keegan Bradley", "Travelers Championship"),
+    # ESPN Golf API endpoints
+    ESPN_SCOREBOARD_URL = "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard"
+    ESPN_EVENTS_URL = "https://site.api.espn.com/apis/site/v2/sports/golf/pga/events"
+    
+    # Cache settings
+    CACHE_DURATION_MINUTES = 30  # Cache for 30 minutes
+    
+    # Fallback winners in case API fails
+    FALLBACK_WINNERS = [
+        ("Justin Rose", "FedEx St. Jude Championship"),
         ("Scottie Scheffler", "Memorial Tournament"),
         ("Xander Schauffele", "PGA Championship"),
-        ("Jon Rahm", "The Masters"),
-        ("Hideki Matsuyama", "The Sentry"),
     ]
+    
+    def __init__(self):
+        self._cache = {}
+        self._cache_timestamp = None
     
     async def scrape_and_store_winner(self) -> Dict[str, str]:
         """Get the most recent tournament winner and their WITB data"""
         try:
-            # Try to find current winner from ESPN
-            winner_data = self._get_current_winner()
+            # Check cache first
+            if self._is_cache_valid():
+                print("🎯 Using cached tournament data")
+                return self._cache
+            
+            # Try to find current winner from ESPN API
+            winner_data = await self._get_current_winner_from_api()
             
             if winner_data and winner_data.get("winner") != "Not found":
                 # Get WITB data from our database
@@ -35,6 +49,12 @@ class SimpleTournamentScraper:
                 
                 # Store in database
                 await self._store_winner_in_db(winner_data)
+                
+                # Cache the result
+                self._cache = winner_data
+                self._cache_timestamp = datetime.now()
+                print(f"💾 Cached tournament data for {self.CACHE_DURATION_MINUTES} minutes")
+                
                 return winner_data
             
             # Fallback to database
@@ -44,33 +64,170 @@ class SimpleTournamentScraper:
             print(f"Error in scrape_and_store_winner: {e}")
             return await self._get_winner_from_db()
     
-    def _get_current_winner(self) -> Dict[str, str]:
-        """Check ESPN page for current tournament winner"""
+    def _is_cache_valid(self) -> bool:
+        """Check if cached data is still valid"""
+        if not self._cache or not self._cache_timestamp:
+            return False
+        
+        cache_age = (datetime.now() - self._cache_timestamp).total_seconds() / 60
+        return cache_age < self.CACHE_DURATION_MINUTES
+    
+    async def _get_current_winner_from_api(self) -> Dict[str, str]:
+        """Get current tournament winner from ESPN Golf API"""
         try:
-            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
-            response = requests.get("https://www.espn.com/golf/schedule", headers=headers, timeout=10)
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                'Accept': 'application/json',
+                'Cache-Control': 'no-cache'
+            }
             
-            if response.status_code == 200:
-                page_text = response.text
+            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=15)) as session:
+                # Rate limiting - small delay between requests
+                import asyncio
+                await asyncio.sleep(1)
+                # Try scoreboard endpoint first
+                async with session.get(self.ESPN_SCOREBOARD_URL, headers=headers) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        winner_data = self._extract_winner_from_scoreboard(data)
+                        if winner_data.get("winner") != "Not found":
+                            print(f"✅ Found winner from ESPN API: {winner_data['winner']} - {winner_data['tournament']}")
+                            return winner_data
                 
-                # Check for recent winners (most recent first)
-                for winner, tournament in self.RECENT_WINNERS:
-                    if winner in page_text and tournament in page_text:
-                        print(f"Found recent winner: {winner} - {tournament}")
+                # Fallback to events endpoint
+                async with session.get(self.ESPN_EVENTS_URL, headers=headers) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        winner_data = self._extract_winner_from_events(data)
+                        if winner_data.get("winner") != "Not found":
+                            print(f"✅ Found winner from ESPN Events API: {winner_data['winner']} - {winner_data['tournament']}")
+                            return winner_data
+            
+            print("⚠️ No current winner found in ESPN API, using fallback")
+            return self._get_fallback_winner()
+            
+        except Exception as e:
+            print(f"❌ Error fetching from ESPN API: {e}")
+            return self._get_fallback_winner()
+    
+    def _extract_winner_from_scoreboard(self, data: dict) -> Dict[str, str]:
+        """Extract tournament winner from ESPN scoreboard API response"""
+        try:
+            if "events" in data and data["events"]:
+                event = data["events"][0]  # Most recent tournament
+                
+                # Get tournament info
+                tournament_name = event.get("name", "Unknown Tournament")
+                event_date = event.get("date", datetime.now().strftime("%Y-%m-%d"))
+                
+                # Format date
+                try:
+                    parsed_date = datetime.strptime(event_date[:10], "%Y-%m-%d")
+                    formatted_date = parsed_date.strftime("%B %d, %Y")
+                except:
+                    formatted_date = datetime.now().strftime("%B %d, %Y")
+                
+                # Check if tournament is completed
+                competitions = event.get("competitions", [])
+                if competitions and competitions[0].get("status", {}).get("type", {}).get("name") in ["STATUS_FINAL", "Final"]:
+                    # Get competitors and find winner (lowest score)
+                    competitors = competitions[0].get("competitors", [])
+                    if competitors:
+                        # Sort by score (lowest wins in golf) - handle string scores
+                        def get_numeric_score(competitor):
+                            score = competitor.get("score", "999")
+                            try:
+                                # Convert score string to integer (e.g. "-18" -> -18)
+                                return int(score) if score != "" else 999
+                            except (ValueError, TypeError):
+                                return 999
+                        
+                        sorted_competitors = sorted(competitors, key=get_numeric_score)
+                        winner = sorted_competitors[0]
+                        
+                        winner_name = winner.get("athlete", {}).get("displayName", "Unknown")
+                        winner_score = winner.get("score", 0)
+                        # Handle score formatting safely
+                        if isinstance(winner_score, (int, float)):
+                            score_display = f"{int(winner_score):+d}" if winner_score != 0 else "E"
+                        else:
+                            # Handle string scores or other formats
+                            try:
+                                numeric_score = int(winner_score)
+                                score_display = f"{numeric_score:+d}" if numeric_score != 0 else "E"
+                            except (ValueError, TypeError):
+                                score_display = str(winner_score) if winner_score else ""
+                        
                         return {
-                            "winner": winner,
-                            "tournament": tournament,
-                            "date": datetime.now().strftime("%B %d, %Y"),
-                            "score": ""
+                            "winner": winner_name,
+                            "tournament": tournament_name,
+                            "date": formatted_date,
+                            "score": score_display
                         }
-                
-                print("No recent winners found in ESPN page - may need to update RECENT_WINNERS list")
             
             return {"winner": "Not found", "tournament": "", "date": "", "score": ""}
             
         except Exception as e:
-            print(f"Error checking ESPN: {e}")
+            print(f"Error parsing scoreboard data: {e}")
             return {"winner": "Not found", "tournament": "", "date": "", "score": ""}
+    
+    def _extract_winner_from_events(self, data: dict) -> Dict[str, str]:
+        """Extract tournament winner from ESPN events API response"""
+        try:
+            if "items" in data and data["items"]:
+                # Find most recent completed tournament
+                for event in data["items"]:
+                    if event.get("status", {}).get("type", {}).get("name") in ["STATUS_FINAL", "Final"]:
+                        tournament_name = event.get("name", "Unknown Tournament")
+                        event_date = event.get("date", datetime.now().strftime("%Y-%m-%d"))
+                        
+                        # Format date
+                        try:
+                            parsed_date = datetime.strptime(event_date[:10], "%Y-%m-%d")
+                            formatted_date = parsed_date.strftime("%B %d, %Y")
+                        except:
+                            formatted_date = datetime.now().strftime("%B %d, %Y")
+                        
+                        # Get winner from competitions
+                        competitions = event.get("competitions", [])
+                        if competitions:
+                            competitors = competitions[0].get("competitors", [])
+                            if competitors:
+                                # Find winner (position 1 or lowest score)
+                                winner = None
+                                for comp in competitors:
+                                    if comp.get("statistics", [{}])[0].get("value", 999) == 1:  # Position 1
+                                        winner = comp
+                                        break
+                                
+                                # Fallback to first competitor if no position found
+                                if not winner and competitors:
+                                    winner = competitors[0]
+                                
+                                if winner:
+                                    winner_name = winner.get("athlete", {}).get("displayName", "Unknown")
+                                    return {
+                                        "winner": winner_name,
+                                        "tournament": tournament_name,
+                                        "date": formatted_date,
+                                        "score": ""
+                                    }
+            
+            return {"winner": "Not found", "tournament": "", "date": "", "score": ""}
+            
+        except Exception as e:
+            print(f"Error parsing events data: {e}")
+            return {"winner": "Not found", "tournament": "", "date": "", "score": ""}
+    
+    def _get_fallback_winner(self) -> Dict[str, str]:
+        """Return fallback winner when API fails"""
+        winner, tournament = self.FALLBACK_WINNERS[0]
+        return {
+            "winner": winner,
+            "tournament": tournament,
+            "date": datetime.now().strftime("%B %d, %Y"),
+            "score": ""
+        }
     
     async def _get_winner_witb(self, winner_name: str) -> List[Dict[str, str]]:
         """Get WITB data for the tournament winner from our database"""

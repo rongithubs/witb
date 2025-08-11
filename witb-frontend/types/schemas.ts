@@ -5,6 +5,7 @@ export type WITBItem = {
   loft?: string;
   shaft?: string;
   product_url?: string;
+  source_url?: string;
 };
 
 export type Player = {
@@ -15,7 +16,14 @@ export type Player = {
   age?: number;
   ranking?: number;
   photo_url?: string;
+  last_updated?: string;
   witb_items: WITBItem[];
+};
+
+export type SystemInfo = {
+  owgr_last_updated?: string;
+  owgr_updated_count?: number;
+  owgr_total_processed?: number;
 };
 
 export type PaginatedPlayersResponse = {
@@ -24,6 +32,7 @@ export type PaginatedPlayersResponse = {
   page: number;
   per_page: number;
   total_pages: number;
+  system_info?: SystemInfo;
 };
 
 export type AsyncState<T> = {
