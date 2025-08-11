@@ -1,11 +1,13 @@
 import asyncio
 import sys
 import os
+import json
+from datetime import datetime
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import engine, SessionLocal
-from models import Player
+from models import Player, SystemUpdate
 from sqlalchemy import select
 import uuid
 
@@ -92,14 +94,42 @@ async def populate_ogwr_players():
                 print(f"❌ Error processing {player_data.get('name', 'Unknown')}: {e}")
                 continue
         
+        # Record the OWGR update in system updates table
+        owgr_update_details = {
+            "added_count": added_count,
+            "updated_count": updated_count,
+            "skipped_count": skipped_count,
+            "total_processed": len(players_data),
+        }
+        
+        # Find existing OWGR update record or create new one
+        result = await session.execute(
+            select(SystemUpdate).filter(SystemUpdate.update_type == "owgr")
+        )
+        owgr_record = result.scalar_one_or_none()
+        
+        if owgr_record:
+            # Update existing record
+            owgr_record.last_updated = datetime.now()
+            owgr_record.details = json.dumps(owgr_update_details)
+        else:
+            # Create new record
+            new_owgr_record = SystemUpdate(
+                update_type="owgr",
+                last_updated=datetime.now(),
+                details=json.dumps(owgr_update_details)
+            )
+            session.add(new_owgr_record)
+
         # Commit all changes
         try:
             await session.commit()
             print(f"\n🎉 Database update complete!")
-            print(f"   ✅ Added: {added_count} new OGWR players")
-            print(f"   🔄 Updated: {updated_count} existing OGWR players")
+            print(f"   ✅ Added: {added_count} new OWGR players")
+            print(f"   🔄 Updated: {updated_count} existing OWGR players")
             print(f"   ⏭️  Skipped: {skipped_count} players")
             print(f"   📊 Total players processed: {len(players_data)}")
+            print(f"   🕒 OWGR update timestamp recorded")
         except Exception as e:
             await session.rollback()
             print(f"❌ Error committing to database: {e}")
