@@ -44,7 +44,7 @@ class TestTournamentRoutes:
         assert isinstance(data["date"], str)
         assert isinstance(data["score"], str)
     
-    @patch('tournament_scraper.simple_tournament_scraper.scrape_and_store_winner')
+    @patch('services.tournament_scraper_service.simple_tournament_scraper.scrape_and_store_winner')
     def test_tournament_winner_with_mock_data(self, mock_scraper):
         """Test tournament winner endpoint with mocked ESPN data."""
         # Mock successful tournament winner response
@@ -78,7 +78,7 @@ class TestTournamentRoutes:
         assert "witb_items" in data
         assert len(data["witb_items"]) == 1
     
-    @patch('tournament_scraper.simple_tournament_scraper.scrape_and_store_winner')
+    @patch('services.tournament_scraper_service.simple_tournament_scraper.scrape_and_store_winner')
     def test_tournament_winner_handles_scraper_error(self, mock_scraper):
         """Test tournament winner endpoint handles scraper errors gracefully."""
         # Mock scraper raising exception
@@ -129,7 +129,7 @@ class TestTournamentService:
         service = TournamentService()
         
         # Mock the scraper to return predictable data
-        with patch('tournament_scraper.simple_tournament_scraper.scrape_and_store_winner') as mock_scraper:
+        with patch('services.tournament_scraper_service.simple_tournament_scraper.scrape_and_store_winner') as mock_scraper:
             mock_data = {
                 "winner": "Justin Rose",
                 "tournament": "FedEx St. Jude Championship",
@@ -151,7 +151,7 @@ class TestTournamentService:
         
         service = TournamentService()
         
-        with patch('tournament_scraper.simple_tournament_scraper.scrape_and_store_winner') as mock_scraper:
+        with patch('services.tournament_scraper_service.simple_tournament_scraper.scrape_and_store_winner') as mock_scraper:
             mock_scraper.side_effect = Exception("Network error")
             
             result = await service.get_tournament_winner()
@@ -169,7 +169,7 @@ class TestTournamentDatabaseIntegration:
     
     async def test_tournament_winner_storage(self):
         """Test that tournament winners are stored in database."""
-        from tournament_scraper import SimpleTournamentScraper
+        from services.tournament_scraper_service import SimpleTournamentScraper
         
         scraper = SimpleTournamentScraper()
         
@@ -183,7 +183,7 @@ class TestTournamentDatabaseIntegration:
             }
             
             # Mock database operations
-            with patch('tournament_scraper.engine.begin') as mock_engine:
+            with patch('services.tournament_scraper_service.engine.begin') as mock_engine:
                 mock_conn = AsyncMock()
                 mock_engine.return_value.__aenter__.return_value = mock_conn
                 
@@ -200,7 +200,7 @@ class TestTournamentDatabaseIntegration:
     
     async def test_witb_data_integration(self):
         """Test that WITB data is properly integrated with tournament winner."""
-        from tournament_scraper import SimpleTournamentScraper
+        from services.tournament_scraper_service import SimpleTournamentScraper
         
         scraper = SimpleTournamentScraper()
         
@@ -231,7 +231,7 @@ class TestTournamentErrorHandling:
     
     async def test_espn_api_timeout_handling(self):
         """Test handling of ESPN API timeouts."""
-        from tournament_scraper import SimpleTournamentScraper
+        from services.tournament_scraper_service import SimpleTournamentScraper
         import aiohttp
         
         scraper = SimpleTournamentScraper()
@@ -247,7 +247,7 @@ class TestTournamentErrorHandling:
     
     async def test_espn_api_404_handling(self):
         """Test handling of ESPN API 404 errors."""
-        from tournament_scraper import SimpleTournamentScraper
+        from services.tournament_scraper_service import SimpleTournamentScraper
         
         scraper = SimpleTournamentScraper()
         
@@ -264,7 +264,7 @@ class TestTournamentErrorHandling:
     
     async def test_malformed_json_handling(self):
         """Test handling of malformed JSON from ESPN API.""" 
-        from tournament_scraper import SimpleTournamentScraper
+        from services.tournament_scraper_service import SimpleTournamentScraper
         import json
         
         scraper = SimpleTournamentScraper()

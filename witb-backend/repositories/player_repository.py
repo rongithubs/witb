@@ -78,7 +78,7 @@ class PlayerRepository:
 
         return players, total
 
-    def _sort_witb_items(self, witb_items):
+    def _sort_witb_items(self, witb_items: List[models.WITBItem]) -> List[models.WITBItem]:
         """Sort WITB items from longest to shortest clubs following proper golf bag organization."""
 
         # Define club order from longest to shortest (case-insensitive)

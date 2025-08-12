@@ -3,12 +3,16 @@
 from typing import Optional, List
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from sqlalchemy import select
 from fastapi import HTTPException
+import json
+import logging
 from exceptions import (
     PlayerNotFoundError,
     InvalidPlayerIdError,
     PlayerAlreadyExistsError,
+    DatabaseOperationError,
 )
 
 import schemas
@@ -91,8 +95,7 @@ class PlayerService:
 
     async def _get_system_info(self) -> Optional[schemas.SystemInfo]:
         """Get OWGR system update information."""
-        from sqlalchemy import select
-        import json
+        logger = logging.getLogger(__name__)
         
         try:
             result = await self.db.execute(
@@ -107,17 +110,22 @@ class PlayerService:
             if owgr_update.details:
                 try:
                     details = json.loads(owgr_update.details)
-                except json.JSONDecodeError:
-                    pass
+                except json.JSONDecodeError as e:
+                    logger.warning(f"Failed to parse SystemUpdate details JSON: {e}")
+                    # Continue with empty details rather than failing completely
             
             return schemas.SystemInfo(
                 owgr_last_updated=owgr_update.last_updated,
                 owgr_updated_count=details.get("updated_count", 0),
                 owgr_total_processed=details.get("total_processed", 0),
             )
-        except Exception:
-            # If there's any error fetching system info, return None
-            # Don't let system info errors break the main player API
+        except SQLAlchemyError as e:
+            # Database connection or query errors - log but don't break main API
+            logger.error(f"Database error fetching system info: {e}")
+            return None
+        except Exception as e:
+            # Unexpected errors - log for debugging but don't break main API
+            logger.error(f"Unexpected error fetching system info: {e}")
             return None
 
     async def search_player_exists(self, name: str) -> bool:
@@ -132,12 +140,12 @@ class PlayerService:
         try:
             player_uuid = UUID(player_id)
         except ValueError:
-            raise HTTPException(status_code=400, detail="Invalid player ID format")
+            raise InvalidPlayerIdError(player_id)
 
         # Verify player exists
         player = await self.player_repo.get_player_by_id(PlayerId(player_uuid))
         if not player:
-            raise HTTPException(status_code=404, detail="Player not found")
+            raise PlayerNotFoundError(player_id)
 
         try:
             db_item = await self.witb_repo.create_witb_item(
@@ -146,4 +154,4 @@ class PlayerService:
             return schemas.WITBItem.model_validate(db_item)
         except Exception as e:
             await self.db.rollback()
-            raise HTTPException(status_code=400, detail=f"Error: {str(e)}")
+            raise DatabaseOperationError("create_witb_item", str(e))

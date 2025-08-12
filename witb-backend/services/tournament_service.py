@@ -1,10 +1,7 @@
 """Tournament service for business logic following CLAUDE.md O-4."""
 
-import sys
 import os
-
-# Add scraper to path for import
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "scraper"))
+from .tournament_scraper_service import simple_tournament_scraper
 
 
 class TournamentService:
@@ -13,8 +10,6 @@ class TournamentService:
     async def get_tournament_winner(self) -> dict:
         """Get the latest PGA tournament winner using scraping."""
         try:
-            from tournament_scraper import simple_tournament_scraper
-
             winner_data = await simple_tournament_scraper.scrape_and_store_winner()
             return winner_data
         except Exception as e:
