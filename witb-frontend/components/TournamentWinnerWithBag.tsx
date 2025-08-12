@@ -102,21 +102,14 @@ const TournamentWinnerWithBag = memo(function TournamentWinnerWithBag({ isCollap
   };
 
   const witbItems = sortEquipmentByClubLength(winnerData?.witb_items || []);
-  
-  console.log("Component rendering - showEquipment:", showEquipment, "witbItems length:", witbItems.length);
-  console.log("API data:", { winnerData, error, isLoading });
-  console.log("Sorted equipment order:", witbItems.map(item => item.category));
 
   const handleToggleEquipment = () => {
-    console.log("handleToggleEquipment called! Current showEquipment:", showEquipment);
     const newState = !showEquipment;
-    console.log("Setting showEquipment to:", newState);
     setShowEquipment(newState);
 
     if (newState) {
       setTimeout(() => {
         const equipmentSection = document.getElementById("equipment-section");
-        console.log("Looking for equipment section:", equipmentSection);
         if (equipmentSection) {
           equipmentSection.scrollIntoView({
             behavior: "smooth",
