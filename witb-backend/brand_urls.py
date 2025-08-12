@@ -3,6 +3,8 @@ Brand to URL mapping for golf equipment manufacturers.
 Maps brand names to their product category URLs for easy linking.
 """
 
+from typing import Optional, List
+
 BRAND_URLS = {
     # Major Club Manufacturers
     "TaylorMade": "https://www.taylormadegolf.com/taylormade-clubs/?lang=en_US",
@@ -34,7 +36,7 @@ BRAND_URLS = {
     "Maxfli": "https://www.dickssportinggoods.com/f/maxfli",  # Available at Dick's
 }
 
-def get_brand_url(brand_name: str) -> str:
+def get_brand_url(brand_name: str) -> Optional[str]:
     """
     Get the product URL for a given brand name.
     
@@ -64,6 +66,6 @@ def get_brand_url(brand_name: str) -> str:
     
     return None
 
-def get_all_supported_brands() -> list:
+def get_all_supported_brands() -> List[str]:
     """Get list of all supported brand names."""
     return list(BRAND_URLS.keys())

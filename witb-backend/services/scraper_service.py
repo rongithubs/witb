@@ -97,97 +97,121 @@ class PGAClubTrackerScraper:
     def _parse_last_updated(self, html_content: str) -> Optional[datetime]:
         """Parse last updated date from HTML content - specifically the date below the WITB header."""
         soup = BeautifulSoup(html_content, "lxml")
-
-        # First, try to find the date right below "What's in [name]'s bag?" header
-        # Look for h1 or h2 elements containing "What's in" and "bag"
-        header_selectors = [
-            'h1:contains("What\'s in")',
-            'h2:contains("What\'s in")', 
-            'h1:contains("bag")',
-            'h2:contains("bag")',
-            '[class*="title"]:contains("What\'s in")',
-            '[class*="header"]:contains("What\'s in")'
-        ]
         
-        # Since BeautifulSoup doesn't support :contains, we'll search manually
+        # Try header-based parsing first (most accurate)
+        date_str = self._find_date_near_witb_header(soup)
+        if date_str:
+            parsed_date = self._parse_date_string(date_str)
+            if parsed_date:
+                return parsed_date
+        
+        # Fallback to page-wide search
+        date_str = self._find_date_in_page_content(soup)
+        if date_str:
+            return self._parse_date_string(date_str)
+
+        # If no date found, return None to indicate we couldn't find the bag update date
+        return None
+    
+    def _find_date_near_witb_header(self, soup: BeautifulSoup) -> Optional[str]:
+        """Find date near 'What's in [name]'s bag?' header."""
+        potential_headers = self._find_witb_headers(soup)
+        
+        for header in potential_headers:
+            header_text = header.get_text().strip().lower()
+            if "what's in" in header_text and "bag" in header_text:
+                date_str = self._search_header_siblings_for_date(header)
+                if date_str:
+                    return date_str
+        
+        return None
+    
+    def _find_witb_headers(self, soup: BeautifulSoup) -> List:
+        """Find potential WITB header elements."""
+        # Find headers by class patterns
         potential_headers = soup.find_all(['h1', 'h2', 'div', 'span'], 
                                         class_=re.compile(r'(title|header|heading)', re.I))
         
         # Also check all h1/h2 elements regardless of class
         potential_headers.extend(soup.find_all(['h1', 'h2']))
         
-        for header in potential_headers:
-            header_text = header.get_text().strip().lower()
-            if "what's in" in header_text and "bag" in header_text:
-                # Found the header, now look for the date in the next few siblings
-                current = header
-                for _ in range(5):  # Check next 5 siblings
-                    current = current.find_next_sibling()
-                    if not current:
-                        break
-                    
-                    text = current.get_text().strip()
-                    # Look for date patterns in this sibling (with and without comma, with flexible spacing)
-                    date_patterns = [
-                        r'([A-Z][a-z]+ +\d{1,2}, +\d{4})',  # "June  8, 2025" (spaces around comma)
-                        r'([A-Z][a-z]+ \d{1,2}, \d{4})',     # "June 8, 2025" (standard format)
-                        r'([A-Z][a-z]+ +\d{1,2} +\d{4})'     # "June  8  2025" (spaces instead of comma)
-                    ]
-                    
-                    for pattern in date_patterns:
-                        date_match = re.search(pattern, text)
-                        if date_match:
-                            date_str = date_match.group(1).strip()
-                            # Normalize the date string by removing extra spaces
-                            date_str = re.sub(r'\s+', ' ', date_str)
-                            
-                            # Try different formats
-                            try:
-                                # Try with comma first
-                                if ',' in date_str:
-                                    return datetime.strptime(date_str, "%B %d, %Y")
-                                else:
-                                    # Try without comma
-                                    return datetime.strptime(date_str, "%B %d %Y")
-                            except ValueError:
-                                try:
-                                    if ',' in date_str:
-                                        return datetime.strptime(date_str, "%b %d, %Y")
-                                    else:
-                                        return datetime.strptime(date_str, "%b %d %Y")
-                                except ValueError:
-                                    continue
+        return potential_headers
+    
+    def _search_header_siblings_for_date(self, header) -> Optional[str]:
+        """Search the next few siblings of a header for date patterns."""
+        current = header
         
-        # Fallback: search entire page for date patterns
+        for _ in range(5):  # Check next 5 siblings
+            current = current.find_next_sibling()
+            if not current:
+                break
+            
+            text = current.get_text().strip()
+            date_str = self._extract_date_from_text(text)
+            if date_str:
+                return date_str
+        
+        return None
+    
+    def _extract_date_from_text(self, text: str) -> Optional[str]:
+        """Extract date string from text using multiple patterns."""
+        date_patterns = [
+            r'([A-Z][a-z]+ +\d{1,2}, +\d{4})',  # "June  8, 2025" (spaces around comma)
+            r'([A-Z][a-z]+ \d{1,2}, \d{4})',     # "June 8, 2025" (standard format)
+            r'([A-Z][a-z]+ +\d{1,2} +\d{4})'     # "June  8  2025" (spaces instead of comma)
+        ]
+        
+        for pattern in date_patterns:
+            date_match = re.search(pattern, text)
+            if date_match:
+                return self._normalize_date_string(date_match.group(1))
+        
+        return None
+    
+    def _find_date_in_page_content(self, soup: BeautifulSoup) -> Optional[str]:
+        """Find date anywhere in page content as fallback."""
         text_content = soup.get_text()
         fallback_patterns = [
             r"[Uu]pdated[:\s]*([A-Z][a-z]+ \d{1,2}, \d{4})",
             r"[Ll]ast updated[:\s]*([A-Z][a-z]+ \d{1,2}, \d{4})",
-            r"([A-Z][a-z]+ \d{1,2}, \d{4})",  # With comma
-            r"([A-Z][a-z]+ +\d{1,2} +\d{4})",  # Without comma (spaces)
+            r"([A-Z][a-z]+ \d{1,2}, \d{4})",      # With comma
+            r"([A-Z][a-z]+ +\d{1,2} +\d{4})",    # Without comma (spaces)
         ]
-
+        
         for pattern in fallback_patterns:
             match = re.search(pattern, text_content)
             if match:
-                date_str = match.group(1).strip()
-                date_str = re.sub(r'\s+', ' ', date_str)  # Normalize spaces
+                return self._normalize_date_string(match.group(1))
+        
+        return None
+    
+    def _normalize_date_string(self, date_str: str) -> str:
+        """Normalize whitespace and formatting in date strings."""
+        normalized = date_str.strip()
+        # Replace multiple spaces with single space
+        normalized = re.sub(r'\s+', ' ', normalized)
+        return normalized
+    
+    def _parse_date_string(self, date_str: str) -> Optional[datetime]:
+        """Parse a date string into datetime object."""
+        date_formats = [
+            ("%B %d, %Y", True),   # "June 8, 2025" (with comma)
+            ("%B %d %Y", False),   # "June 8 2025" (without comma)
+            ("%b %d, %Y", True),   # "Jun 8, 2025" (abbreviated with comma)
+            ("%b %d %Y", False),   # "Jun 8 2025" (abbreviated without comma)
+        ]
+        
+        for date_format, requires_comma in date_formats:
+            # Skip format if comma requirement doesn't match
+            has_comma = ',' in date_str
+            if requires_comma != has_comma:
+                continue
                 
-                try:
-                    if ',' in date_str:
-                        return datetime.strptime(date_str, "%B %d, %Y")
-                    else:
-                        return datetime.strptime(date_str, "%B %d %Y")
-                except ValueError:
-                    try:
-                        if ',' in date_str:
-                            return datetime.strptime(date_str, "%b %d, %Y")
-                        else:
-                            return datetime.strptime(date_str, "%b %d %Y")
-                    except ValueError:
-                        continue
-
-        # If no date found, return None to indicate we couldn't find the bag update date
+            try:
+                return datetime.strptime(date_str, date_format)
+            except ValueError:
+                continue
+        
         return None
 
     def _parse_equipment_table(self, html_content: str) -> List[EquipmentItem]:

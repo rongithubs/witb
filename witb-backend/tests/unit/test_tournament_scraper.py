@@ -7,10 +7,7 @@ import json
 import sys
 import os
 
-# Add scraper to path
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "..", "scraper"))
-
-from tournament_scraper import SimpleTournamentScraper
+from services.tournament_scraper_service import SimpleTournamentScraper
 
 
 class TestScoreParsing:
