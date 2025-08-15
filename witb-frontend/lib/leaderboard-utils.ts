@@ -57,7 +57,9 @@ export function getDisplayItems(
     return getAllCategoriesDisplay(leaderboardData, majorCategories);
   }
   
-  return leaderboardData.categories[selectedCategory] || [];
+  // Add category to items when viewing specific category
+  const items = leaderboardData.categories[selectedCategory] || [];
+  return items.map(item => ({ ...item, category: selectedCategory }));
 }
 
 /**
