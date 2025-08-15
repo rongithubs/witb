@@ -1,13 +1,12 @@
 """Player repository for database operations following CLAUDE.md D-4."""
 
-from typing import Optional, List
-from uuid import UUID
 import re
+
+from sqlalchemy import func
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy import func, case
 
 import models
 from custom_types import PlayerId
@@ -31,7 +30,7 @@ class PlayerRepository:
             await self.db.rollback()
             raise
 
-    async def get_player_by_id(self, player_id: PlayerId) -> Optional[models.Player]:
+    async def get_player_by_id(self, player_id: PlayerId) -> models.Player | None:
         """Get player by ID with WITB items."""
         result = await self.db.execute(
             select(models.Player)
@@ -47,8 +46,8 @@ class PlayerRepository:
         return player
 
     async def get_players_paginated(
-        self, offset: int, limit: int, tour: Optional[str] = None
-    ) -> tuple[List[models.Player], int]:
+        self, offset: int, limit: int, tour: str | None = None
+    ) -> tuple[list[models.Player], int]:
         """Get paginated players with optional tour filter."""
         # Build base query
         base_query = select(models.Player)
@@ -78,7 +77,9 @@ class PlayerRepository:
 
         return players, total
 
-    def _sort_witb_items(self, witb_items: List[models.WITBItem]) -> List[models.WITBItem]:
+    def _sort_witb_items(
+        self, witb_items: list[models.WITBItem]
+    ) -> list[models.WITBItem]:
         """Sort WITB items from longest to shortest clubs following proper golf bag organization."""
 
         # Define club order from longest to shortest (case-insensitive)
@@ -133,7 +134,7 @@ class PlayerRepository:
 
         return sorted(witb_items, key=sort_key)
 
-    async def search_player_by_name(self, name: str) -> Optional[models.Player]:
+    async def search_player_by_name(self, name: str) -> models.Player | None:
         """Search for player by name."""
         result = await self.db.execute(
             select(models.Player).where(models.Player.name.ilike(name.strip()))
@@ -152,7 +153,7 @@ class PlayerRepository:
                 setattr(player, key, value)
             await self.db.commit()
 
-    async def get_top_ranked_players(self, limit: int) -> List[models.Player]:
+    async def get_top_ranked_players(self, limit: int) -> list[models.Player]:
         """Get top ranked players ordered by ranking."""
         result = await self.db.execute(
             select(models.Player)

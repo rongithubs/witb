@@ -1,5 +1,5 @@
 """Player routes following CLAUDE.md O-4 (thin route handlers)."""
-from typing import Optional
+
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -12,8 +12,7 @@ router = APIRouter(prefix="/players", tags=["players"])
 
 @router.post("/", response_model=schemas.Player)
 async def create_player(
-    player: schemas.PlayerCreate, 
-    db: AsyncSession = Depends(get_db)
+    player: schemas.PlayerCreate, db: AsyncSession = Depends(get_db)
 ):
     """Create a new player."""
     service = PlayerService(db)
@@ -24,8 +23,10 @@ async def create_player(
 async def get_players(
     page: int = Query(1, ge=1, description="Page number"),
     per_page: int = Query(10, ge=1, le=100, description="Items per page"),
-    tour: Optional[str] = Query(None, description="Filter by tour (e.g., 'PGA Tour', 'OGWR', 'LPGA Tour')"),
-    db: AsyncSession = Depends(get_db)
+    tour: str | None = Query(
+        None, description="Filter by tour (e.g., 'PGA Tour', 'OGWR', 'LPGA Tour')"
+    ),
+    db: AsyncSession = Depends(get_db),
 ):
     """Get paginated players with optional tour filter."""
     service = PlayerService(db)
@@ -33,10 +34,7 @@ async def get_players(
 
 
 @router.get("/search")
-async def search_player(
-    name: str = Query(...), 
-    db: AsyncSession = Depends(get_db)
-):
+async def search_player(name: str = Query(...), db: AsyncSession = Depends(get_db)):
     """Search for player by name."""
     service = PlayerService(db)
     exists = await service.search_player_exists(name)
@@ -44,10 +42,7 @@ async def search_player(
 
 
 @router.get("/{player_id}", response_model=schemas.Player)
-async def get_player(
-    player_id: str, 
-    db: AsyncSession = Depends(get_db)
-):
+async def get_player(player_id: str, db: AsyncSession = Depends(get_db)):
     """Get player by ID."""
     service = PlayerService(db)
     return await service.get_player_by_id(player_id)
@@ -55,9 +50,7 @@ async def get_player(
 
 @router.post("/{player_id}/witb_items/", response_model=schemas.WITBItem)
 async def add_witb_item(
-    player_id: str,
-    item: schemas.WITBItemCreate,
-    db: AsyncSession = Depends(get_db)
+    player_id: str, item: schemas.WITBItemCreate, db: AsyncSession = Depends(get_db)
 ):
     """Add WITB item to player."""
     service = PlayerService(db)

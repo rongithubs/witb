@@ -1,5 +1,7 @@
 """FastAPI dependencies following CLAUDE.md FA-3."""
+
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from database import SessionLocal
 
 

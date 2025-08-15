@@ -1,6 +1,5 @@
 """WITB service for business logic following CLAUDE.md O-4."""
 
-
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import schemas

@@ -1,12 +1,13 @@
 """Unit tests for PlayerService following CLAUDE.md testing guidelines."""
 
-import pytest
-from uuid import uuid4
 from unittest.mock import AsyncMock, MagicMock
+from uuid import uuid4
 
-from services.player_service import PlayerService
-import schemas
+import pytest
+
 import models
+import schemas
+from services.player_service import PlayerService
 
 
 class TestPlayerService:

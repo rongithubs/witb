@@ -1,10 +1,9 @@
 """PGA Club Tracker HTML scraper service following CLAUDE.md C-4."""
 
-import re
 import asyncio
-from datetime import datetime
-from typing import List, Optional
+import re
 from dataclasses import dataclass
+from datetime import datetime
 
 import aiohttp
 from bs4 import BeautifulSoup
@@ -17,16 +16,16 @@ class EquipmentItem:
     category: str
     brand: str
     model: str
-    loft: Optional[str] = None
-    shaft: Optional[str] = None
+    loft: str | None = None
+    shaft: str | None = None
 
 
 @dataclass
 class WITBData:
     """Complete WITB data structure."""
 
-    last_updated: Optional[datetime]
-    equipment: List[EquipmentItem]
+    last_updated: datetime | None
+    equipment: list[EquipmentItem]
     source_url: str
 
 
@@ -94,17 +93,17 @@ class PGAClubTrackerScraper:
 
         return html_content
 
-    def _parse_last_updated(self, html_content: str) -> Optional[datetime]:
+    def _parse_last_updated(self, html_content: str) -> datetime | None:
         """Parse last updated date from HTML content - specifically the date below the WITB header."""
         soup = BeautifulSoup(html_content, "lxml")
-        
+
         # Try header-based parsing first (most accurate)
         date_str = self._find_date_near_witb_header(soup)
         if date_str:
             parsed_date = self._parse_date_string(date_str)
             if parsed_date:
                 return parsed_date
-        
+
         # Fallback to page-wide search
         date_str = self._find_date_in_page_content(soup)
         if date_str:
@@ -112,109 +111,111 @@ class PGAClubTrackerScraper:
 
         # If no date found, return None to indicate we couldn't find the bag update date
         return None
-    
-    def _find_date_near_witb_header(self, soup: BeautifulSoup) -> Optional[str]:
+
+    def _find_date_near_witb_header(self, soup: BeautifulSoup) -> str | None:
         """Find date near 'What's in [name]'s bag?' header."""
         potential_headers = self._find_witb_headers(soup)
-        
+
         for header in potential_headers:
             header_text = header.get_text().strip().lower()
             if "what's in" in header_text and "bag" in header_text:
                 date_str = self._search_header_siblings_for_date(header)
                 if date_str:
                     return date_str
-        
+
         return None
-    
-    def _find_witb_headers(self, soup: BeautifulSoup) -> List:
+
+    def _find_witb_headers(self, soup: BeautifulSoup) -> list:
         """Find potential WITB header elements."""
         # Find headers by class patterns
-        potential_headers = soup.find_all(['h1', 'h2', 'div', 'span'], 
-                                        class_=re.compile(r'(title|header|heading)', re.I))
-        
+        potential_headers = soup.find_all(
+            ["h1", "h2", "div", "span"],
+            class_=re.compile(r"(title|header|heading)", re.I),
+        )
+
         # Also check all h1/h2 elements regardless of class
-        potential_headers.extend(soup.find_all(['h1', 'h2']))
-        
+        potential_headers.extend(soup.find_all(["h1", "h2"]))
+
         return potential_headers
-    
-    def _search_header_siblings_for_date(self, header) -> Optional[str]:
+
+    def _search_header_siblings_for_date(self, header) -> str | None:
         """Search the next few siblings of a header for date patterns."""
         current = header
-        
+
         for _ in range(5):  # Check next 5 siblings
             current = current.find_next_sibling()
             if not current:
                 break
-            
+
             text = current.get_text().strip()
             date_str = self._extract_date_from_text(text)
             if date_str:
                 return date_str
-        
+
         return None
-    
-    def _extract_date_from_text(self, text: str) -> Optional[str]:
+
+    def _extract_date_from_text(self, text: str) -> str | None:
         """Extract date string from text using multiple patterns."""
         date_patterns = [
-            r'([A-Z][a-z]+ +\d{1,2}, +\d{4})',  # "June  8, 2025" (spaces around comma)
-            r'([A-Z][a-z]+ \d{1,2}, \d{4})',     # "June 8, 2025" (standard format)
-            r'([A-Z][a-z]+ +\d{1,2} +\d{4})'     # "June  8  2025" (spaces instead of comma)
+            r"([A-Z][a-z]+ +\d{1,2}, +\d{4})",  # "June  8, 2025" (spaces around comma)
+            r"([A-Z][a-z]+ \d{1,2}, \d{4})",  # "June 8, 2025" (standard format)
+            r"([A-Z][a-z]+ +\d{1,2} +\d{4})",  # "June  8  2025" (spaces instead of comma)
         ]
-        
+
         for pattern in date_patterns:
             date_match = re.search(pattern, text)
             if date_match:
                 return self._normalize_date_string(date_match.group(1))
-        
+
         return None
-    
-    def _find_date_in_page_content(self, soup: BeautifulSoup) -> Optional[str]:
+
+    def _find_date_in_page_content(self, soup: BeautifulSoup) -> str | None:
         """Find date anywhere in page content as fallback."""
         text_content = soup.get_text()
         fallback_patterns = [
             r"[Uu]pdated[:\s]*([A-Z][a-z]+ \d{1,2}, \d{4})",
             r"[Ll]ast updated[:\s]*([A-Z][a-z]+ \d{1,2}, \d{4})",
-            r"([A-Z][a-z]+ \d{1,2}, \d{4})",      # With comma
-            r"([A-Z][a-z]+ +\d{1,2} +\d{4})",    # Without comma (spaces)
+            r"([A-Z][a-z]+ \d{1,2}, \d{4})",  # With comma
+            r"([A-Z][a-z]+ +\d{1,2} +\d{4})",  # Without comma (spaces)
         ]
-        
+
         for pattern in fallback_patterns:
             match = re.search(pattern, text_content)
             if match:
                 return self._normalize_date_string(match.group(1))
-        
+
         return None
-    
+
     def _normalize_date_string(self, date_str: str) -> str:
         """Normalize whitespace and formatting in date strings."""
         normalized = date_str.strip()
         # Replace multiple spaces with single space
-        normalized = re.sub(r'\s+', ' ', normalized)
+        normalized = re.sub(r"\s+", " ", normalized)
         return normalized
-    
-    def _parse_date_string(self, date_str: str) -> Optional[datetime]:
+
+    def _parse_date_string(self, date_str: str) -> datetime | None:
         """Parse a date string into datetime object."""
         date_formats = [
-            ("%B %d, %Y", True),   # "June 8, 2025" (with comma)
-            ("%B %d %Y", False),   # "June 8 2025" (without comma)
-            ("%b %d, %Y", True),   # "Jun 8, 2025" (abbreviated with comma)
-            ("%b %d %Y", False),   # "Jun 8 2025" (abbreviated without comma)
+            ("%B %d, %Y", True),  # "June 8, 2025" (with comma)
+            ("%B %d %Y", False),  # "June 8 2025" (without comma)
+            ("%b %d, %Y", True),  # "Jun 8, 2025" (abbreviated with comma)
+            ("%b %d %Y", False),  # "Jun 8 2025" (abbreviated without comma)
         ]
-        
+
         for date_format, requires_comma in date_formats:
             # Skip format if comma requirement doesn't match
-            has_comma = ',' in date_str
+            has_comma = "," in date_str
             if requires_comma != has_comma:
                 continue
-                
+
             try:
                 return datetime.strptime(date_str, date_format)
             except ValueError:
                 continue
-        
+
         return None
 
-    def _parse_equipment_table(self, html_content: str) -> List[EquipmentItem]:
+    def _parse_equipment_table(self, html_content: str) -> list[EquipmentItem]:
         """Parse equipment table from HTML content."""
         soup = BeautifulSoup(html_content, "lxml")
         equipment_items = []
@@ -265,7 +266,7 @@ class PGAClubTrackerScraper:
 
         return equipment_items
 
-    def _clean_text(self, text: str) -> Optional[str]:
+    def _clean_text(self, text: str) -> str | None:
         """Clean and normalize text content."""
         if not text:
             return None

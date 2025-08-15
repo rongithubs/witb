@@ -44,7 +44,7 @@ async def run_scraper(players_count: int, delay: float, dry_run: bool) -> None:
             print(f"Duration: {duration:.1f} seconds")
 
             if report.failed_players > 0:
-                print(f"\nFailed players:")
+                print("\nFailed players:")
                 for result in report.player_results:
                     if result.status.value == "error":
                         print(f"  - {result.player_name}: {result.message}")

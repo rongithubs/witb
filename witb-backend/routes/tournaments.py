@@ -1,4 +1,5 @@
 """Tournament routes following CLAUDE.md O-4 (thin route handlers)."""
+
 from fastapi import APIRouter
 
 from services.tournament_service import TournamentService

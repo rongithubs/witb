@@ -1,7 +1,6 @@
 """URL generation service for PGA Club Tracker following CLAUDE.md C-4."""
 
 import re
-from typing import Optional
 
 # Manual mappings for players whose database names don't match PGA Club Tracker URLs
 NAME_MAPPINGS = {
@@ -11,9 +10,7 @@ NAME_MAPPINGS = {
 }
 
 
-def generate_pga_tracker_url(
-    first_name: Optional[str], last_name: Optional[str]
-) -> str:
+def generate_pga_tracker_url(first_name: str | None, last_name: str | None) -> str:
     """
     Generate PGA Club Tracker WITB URL from player names.
 

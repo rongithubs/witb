@@ -1,14 +1,15 @@
 """Unit tests for WITB sync service following CLAUDE.md T-1."""
 
-from datetime import datetime, timedelta
-from unittest.mock import Mock, AsyncMock
+from datetime import datetime
+from unittest.mock import AsyncMock, Mock
 from uuid import uuid4
+
 import pytest
 
-from services.witb_sync_service import WITBSyncService, SyncResult, SyncAction
-from services.scraper_service import WITBData, EquipmentItem
 import models
 from custom_types import PlayerId
+from services.scraper_service import EquipmentItem, WITBData
+from services.witb_sync_service import SyncAction, WITBSyncService
 
 
 class TestWITBSyncService:
