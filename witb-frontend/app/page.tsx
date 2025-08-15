@@ -2,6 +2,7 @@
 
 import Header from "@/components/ui/Header";
 import TournamentWinnerWithBag from "@/components/TournamentWinnerWithBag";
+import { ClubLeaderboard } from "@/components/ClubLeaderboard";
 import { useState } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePlayerSearch } from "@/hooks/usePlayerSearch";
@@ -34,6 +35,13 @@ export default function Home() {
         }`}>
           <ErrorBoundary>
             <TournamentWinnerWithBag isCollapsed={isWitbExpanded} />
+          </ErrorBoundary>
+        </div>
+
+        {/* Club Usage Leaderboard */}
+        <div className="py-6">
+          <ErrorBoundary>
+            <ClubLeaderboard />
           </ErrorBoundary>
         </div>
 

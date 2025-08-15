@@ -1,0 +1,314 @@
+/* Glassmorphism container styles */
+.glassContainer {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+:global(.dark) .glassContainer {
+  background: rgba(16, 24, 40, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Glass card styles */
+.glassCard {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+:global(.dark) .glassCard {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.glassCard:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 30px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+:global(.dark) .glassCard:hover {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 8px 30px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Champion card styling */
+.glassCardChampion {
+  background: rgba(255, 215, 0, 0.15);
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  transform: scale(1.02);
+  box-shadow: 
+    0 8px 32px rgba(255, 215, 0, 0.2),
+    0 4px 20px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+:global(.dark) .glassCardChampion {
+  background: rgba(255, 215, 0, 0.08);
+  border: 2px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(255, 215, 0, 0.15),
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.glassCardChampion:hover {
+  transform: scale(1.03) translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(255, 215, 0, 0.25),
+    0 8px 30px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+:global(.dark) .glassCardChampion:hover {
+  box-shadow: 
+    0 12px 40px rgba(255, 215, 0, 0.2),
+    0 8px 30px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Glass icon styles */
+.glassIcon {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:global(.dark) .glassIcon {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Glass badge styles */
+.glassBadge {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: rgba(75, 85, 99, 0.9);
+}
+
+:global(.dark) .glassBadge {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Glass tabs styles */
+.glassTabsList {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+  padding: 0.5rem;
+}
+
+:global(.dark) .glassTabsList {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glassTab {
+  background: transparent;
+  border: none;
+  color: rgba(75, 85, 99, 0.7);
+  border-radius: 10px;
+  flex: 1;
+  text-align: center;
+}
+
+:global(.dark) .glassTab {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.glassTab[data-state="active"] {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(6px);
+  color: rgba(75, 85, 99, 0.95);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+:global(.dark) .glassTab[data-state="active"] {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Category badge styles */
+.glassCategoryBadge {
+  background: rgba(59, 130, 246, 0.3);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: rgba(29, 78, 216, 0.9);
+}
+
+:global(.dark) .glassCategoryBadge {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: rgba(147, 197, 253, 0.9);
+}
+
+/* Rank badge styles */
+.rankBadge {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.875rem;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+:global(.dark) .rankBadge {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.rank1 {
+  background: rgba(255, 215, 0, 0.3);
+  color: rgb(180, 140, 0);
+  border-color: rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+:global(.dark) .rank1 {
+  background: rgba(255, 215, 0, 0.2);
+  color: rgb(255, 215, 0);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.rank2 {
+  background: rgba(192, 192, 192, 0.3);
+  color: rgb(120, 120, 120);
+  border-color: rgba(192, 192, 192, 0.4);
+  box-shadow: 0 0 10px rgba(192, 192, 192, 0.15);
+}
+
+:global(.dark) .rank2 {
+  background: rgba(192, 192, 192, 0.2);
+  color: rgb(192, 192, 192);
+  border-color: rgba(192, 192, 192, 0.3);
+}
+
+.rank3 {
+  background: rgba(205, 127, 50, 0.3);
+  color: rgb(140, 80, 30);
+  border-color: rgba(205, 127, 50, 0.4);
+  box-shadow: 0 0 10px rgba(205, 127, 50, 0.15);
+}
+
+:global(.dark) .rank3 {
+  background: rgba(205, 127, 50, 0.2);
+  color: rgb(205, 127, 50);
+  border-color: rgba(205, 127, 50, 0.3);
+}
+
+.rankOther {
+  background: rgba(0, 0, 0, 0.05);
+  color: rgba(75, 85, 99, 0.8);
+}
+
+:global(.dark) .rankOther {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Progress bar styles */
+.glassProgressBg {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  height: 4px;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+
+:global(.dark) .glassProgressBg {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.glassProgressFill {
+  background: linear-gradient(90deg, 
+    rgba(59, 130, 246, 0.8) 0%, 
+    rgba(147, 51, 234, 0.8) 100%
+  );
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.8s ease;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+}
+
+:global(.dark) .glassProgressFill {
+  background: linear-gradient(90deg, 
+    rgba(59, 130, 246, 0.7) 0%, 
+    rgba(147, 51, 234, 0.7) 100%
+  );
+}
+
+/* Button styles */
+.glassButton {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgba(75, 85, 99, 0.9);
+  border-radius: 8px;
+}
+
+:global(.dark) .glassButton {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.glassButton:hover {
+  background: rgba(255, 255, 255, 0.4);
+  color: rgba(75, 85, 99, 1);
+}
+
+:global(.dark) .glassButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
