@@ -1,7 +1,8 @@
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker
 import os
+
 from dotenv import load_dotenv
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
 
@@ -14,13 +15,11 @@ if DATABASE_URL and "sqlite" in DATABASE_URL:
     engine = create_async_engine(
         DATABASE_URL,
         echo=True,  # Enable SQL logging for development
-        connect_args={"check_same_thread": False}
+        connect_args={"check_same_thread": False},
     )
 else:
     # PostgreSQL configuration (Supabase or local PostgreSQL)
     engine = create_async_engine(
-        DATABASE_URL, 
-        echo=False,
-        connect_args={"statement_cache_size": 0}
+        DATABASE_URL, echo=False, connect_args={"statement_cache_size": 0}
     )
 SessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)

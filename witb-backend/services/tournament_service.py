@@ -1,6 +1,7 @@
 """Tournament service for business logic following CLAUDE.md O-4."""
 
 import os
+
 from .tournament_scraper_service import simple_tournament_scraper
 
 
@@ -33,7 +34,7 @@ class TournamentService:
                     os.path.dirname(__file__), "..", "..", "scraper", ".env"
                 )
                 if os.path.exists(scraper_env_path):
-                    with open(scraper_env_path, "r") as f:
+                    with open(scraper_env_path) as f:
                         for line in f:
                             if line.startswith("SCRAPINGBEE_API_KEY="):
                                 api_key = line.split("=", 1)[1].strip()

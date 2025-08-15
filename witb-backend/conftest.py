@@ -1,27 +1,23 @@
 """Pytest configuration and fixtures following CLAUDE.md T-8."""
-import pytest
+
 import asyncio
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
+
+import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
-from main import app
+import models
 from database import engine
 from dependencies import get_db
-import models
-
+from main import app
 
 # Test database engine
-test_engine = create_async_engine(
-    "sqlite+aiosqlite:///:memory:",
-    echo=True
-)
+test_engine = create_async_engine("sqlite+aiosqlite:///:memory:", echo=True)
 
 TestingSessionLocal = sessionmaker(
-    test_engine, 
-    class_=AsyncSession, 
-    expire_on_commit=False
+    test_engine, class_=AsyncSession, expire_on_commit=False
 )
 
 
@@ -44,10 +40,10 @@ async def db_session() -> AsyncGenerator[AsyncSession, None]:
     """Create a test database session."""
     async with test_engine.begin() as conn:
         await conn.run_sync(models.Base.metadata.create_all)
-    
+
     async with TestingSessionLocal() as session:
         yield session
-        
+
     async with test_engine.begin() as conn:
         await conn.run_sync(models.Base.metadata.drop_all)
 
@@ -56,8 +52,8 @@ async def db_session() -> AsyncGenerator[AsyncSession, None]:
 def client(db_session: AsyncSession) -> TestClient:
     """Create a test client with test database."""
     app.dependency_overrides[get_db] = lambda: db_session
-    
+
     with TestClient(app) as test_client:
         yield test_client
-        
+
     app.dependency_overrides.clear()

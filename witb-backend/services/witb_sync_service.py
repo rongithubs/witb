@@ -1,9 +1,8 @@
 """WITB data synchronization service following CLAUDE.md C-4."""
 
+from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import List, Optional
-from dataclasses import dataclass
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -11,7 +10,7 @@ import models
 from custom_types import PlayerId
 from repositories.player_repository import PlayerRepository
 from repositories.witb_repository import WITBRepository
-from services.scraper_service import WITBData, EquipmentItem
+from services.scraper_service import EquipmentItem, WITBData
 
 
 class SyncAction(Enum):
@@ -103,7 +102,7 @@ class WITBSyncService:
             )
 
     def _should_update_data(
-        self, existing_date: Optional[datetime], scraped_date: Optional[datetime]
+        self, existing_date: datetime | None, scraped_date: datetime | None
     ) -> bool:
         """
         Determine if data should be updated based on timestamps.
@@ -127,8 +126,8 @@ class WITBSyncService:
         return scraped_date > existing_date
 
     def _convert_to_witb_items(
-        self, equipment: List[EquipmentItem], player_id: PlayerId, source_url: str
-    ) -> List[models.WITBItem]:
+        self, equipment: list[EquipmentItem], player_id: PlayerId, source_url: str
+    ) -> list[models.WITBItem]:
         """
         Convert scraped equipment to WITBItem database models.
 

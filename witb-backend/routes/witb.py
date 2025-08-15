@@ -1,6 +1,5 @@
 """WITB routes following CLAUDE.md O-4 (thin route handlers)."""
 
-
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 

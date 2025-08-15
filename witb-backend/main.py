@@ -1,4 +1,5 @@
 """FastAPI application entry point following CLAUDE.md best practices."""
+
 import os
 from contextlib import asynccontextmanager
 
@@ -7,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import models
 from database import engine
-from routes import players, tournaments
+from routes import players, tournaments, witb
 
 
 @asynccontextmanager
@@ -25,15 +26,14 @@ app = FastAPI(
     title="WITB API",
     description="What's In The Bag API for golf equipment tracking",
     version="1.0.0",
-    lifespan=lifespan
+    lifespan=lifespan,
 )
 
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=os.getenv(
-        "CORS_ORIGINS", 
-        "http://localhost:3000,http://localhost:3001"
+        "CORS_ORIGINS", "http://localhost:3000,http://localhost:3001"
     ).split(","),
     allow_credentials=True,
     allow_methods=["*"],
@@ -43,6 +43,7 @@ app.add_middleware(
 # Include routers
 app.include_router(players.router)
 app.include_router(tournaments.router)
+app.include_router(witb.router)
 
 
 @app.get("/")

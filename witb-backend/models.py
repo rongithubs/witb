@@ -1,9 +1,11 @@
-from sqlalchemy import Column, String, ForeignKey, Integer, DateTime, func
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import declarative_base, relationship
 import uuid
 
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, func
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import declarative_base, relationship
+
 Base = declarative_base()
+
 
 class Player(Base):
     __tablename__ = "players"
@@ -14,12 +16,10 @@ class Player(Base):
     age = Column(Integer)
     ranking = Column(Integer)
     photo_url = Column(String)
-    last_updated = Column(DateTime, default=func.now())  # Only set on creation, WITB scraper will update manually
-    witb_items = relationship(
-        "WITBItem", 
-        back_populates="player", 
-        lazy="selectin"
-    )
+    last_updated = Column(
+        DateTime, default=func.now()
+    )  # Only set on creation, WITB scraper will update manually
+    witb_items = relationship("WITBItem", back_populates="player", lazy="selectin")
 
 
 class WITBItem(Base):

@@ -1,10 +1,8 @@
 """Main PGA Club Tracker scraper engine following CLAUDE.md C-4."""
 
-import asyncio
+from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import List, Tuple
-from dataclasses import dataclass
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -12,8 +10,8 @@ import models
 from custom_types import PlayerId
 from repositories.player_repository import PlayerRepository
 from services.scraper_service import PGAClubTrackerScraper as HTMLScraper
-from services.witb_sync_service import WITBSyncService, SyncAction
 from services.url_service import generate_pga_tracker_url
+from services.witb_sync_service import SyncAction, WITBSyncService
 
 
 class ScrapingStatus(Enum):
@@ -45,7 +43,7 @@ class ScrapingReport:
     skipped_players: int
     start_time: datetime
     end_time: datetime
-    player_results: List[PlayerScrapingResult]
+    player_results: list[PlayerScrapingResult]
 
 
 class PGATrackerScraper:
@@ -138,7 +136,7 @@ class PGATrackerScraper:
             player_results=player_results,
         )
 
-    async def _get_top_players(self, limit: int) -> List[models.Player]:
+    async def _get_top_players(self, limit: int) -> list[models.Player]:
         """Get top ranked players from database."""
         return await self.player_repo.get_top_ranked_players(limit)
 
@@ -192,7 +190,7 @@ class PGATrackerScraper:
                 url=self._generate_player_url(player),
             )
 
-    def _extract_player_names(self, full_name: str) -> Tuple[str, str]:
+    def _extract_player_names(self, full_name: str) -> tuple[str, str]:
         """
         Extract first and last names from full name.
 

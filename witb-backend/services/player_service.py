@@ -1,26 +1,25 @@
 """Player service for business logic following CLAUDE.md O-4."""
 
-from typing import Optional, List
-from uuid import UUID
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from sqlalchemy import select
-from fastapi import HTTPException
 import json
 import logging
-from exceptions import (
-    PlayerNotFoundError,
-    InvalidPlayerIdError,
-    PlayerAlreadyExistsError,
-    DatabaseOperationError,
-)
+from uuid import UUID
 
-import schemas
+from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from sqlalchemy.ext.asyncio import AsyncSession
+
 import models
-from repositories.player_repository import PlayerRepository
-from repositories.witb_repository import WITBRepository
+import schemas
 from brand_urls import get_brand_url
 from custom_types import PlayerId
+from exceptions import (
+    DatabaseOperationError,
+    InvalidPlayerIdError,
+    PlayerAlreadyExistsError,
+    PlayerNotFoundError,
+)
+from repositories.player_repository import PlayerRepository
+from repositories.witb_repository import WITBRepository
 
 
 class PlayerService:
@@ -32,8 +31,8 @@ class PlayerService:
         self.db = db
 
     def _enrich_witb_items_with_urls(
-        self, items: List[models.WITBItem]
-    ) -> List[models.WITBItem]:
+        self, items: list[models.WITBItem]
+    ) -> list[models.WITBItem]:
         """Add brand URLs to WITB items that don't have specific product URLs."""
         for item in items:
             if not item.product_url and item.brand:
@@ -65,7 +64,7 @@ class PlayerService:
         return schemas.Player.model_validate(player)
 
     async def get_players_paginated(
-        self, page: int, per_page: int, tour: Optional[str] = None
+        self, page: int, per_page: int, tour: str | None = None
     ) -> schemas.PaginatedPlayersResponse:
         """Get paginated players with optional tour filter and enriched WITB items."""
         offset = (page - 1) * per_page
@@ -93,19 +92,21 @@ class PlayerService:
             system_info=system_info,
         )
 
-    async def _get_system_info(self) -> Optional[schemas.SystemInfo]:
+    async def _get_system_info(self) -> schemas.SystemInfo | None:
         """Get OWGR system update information."""
         logger = logging.getLogger(__name__)
-        
+
         try:
             result = await self.db.execute(
-                select(models.SystemUpdate).filter(models.SystemUpdate.update_type == "owgr")
+                select(models.SystemUpdate).filter(
+                    models.SystemUpdate.update_type == "owgr"
+                )
             )
             owgr_update = result.scalar_one_or_none()
-            
+
             if not owgr_update:
                 return None
-            
+
             details = {}
             if owgr_update.details:
                 try:
@@ -113,7 +114,7 @@ class PlayerService:
                 except json.JSONDecodeError as e:
                     logger.warning(f"Failed to parse SystemUpdate details JSON: {e}")
                     # Continue with empty details rather than failing completely
-            
+
             return schemas.SystemInfo(
                 owgr_last_updated=owgr_update.last_updated,
                 owgr_updated_count=details.get("updated_count", 0),

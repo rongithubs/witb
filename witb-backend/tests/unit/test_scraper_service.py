@@ -1,10 +1,11 @@
 """Unit tests for HTML scraper service following CLAUDE.md T-1."""
 
 from datetime import datetime
-from unittest.mock import Mock, patch, AsyncMock
+from unittest.mock import AsyncMock, Mock, patch
+
 import pytest
 
-from services.scraper_service import PGAClubTrackerScraper, WITBData, EquipmentItem
+from services.scraper_service import PGAClubTrackerScraper, WITBData
 
 
 class TestPGAClubTrackerScraper:
