@@ -33,24 +33,31 @@ export function LeaderboardCard({
         animation: "fadeInUp 0.6s ease-out forwards"
       }}
     >
-      {/* Rank badge */}
-      <div className="flex items-center justify-between mb-3">
-        <div className={`${styles.rankBadge} ${styles[rankVariant]}`}>
-          #{item.rank}
+      {/* Rank and category */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <div className={`${styles.rankBadge} ${styles[rankVariant]}`}>
+            #{item.rank}
+          </div>
+          {item.category && (
+            <span className={`text-xl font-bold tracking-wide uppercase ${styles.categoryText}`}>
+              {item.category}
+            </span>
+          )}
         </div>
-        {showCategory && item.category && (
-          <Badge variant="secondary" className={styles.glassCategoryBadge}>
-            {item.category}
-          </Badge>
+        {showCategory && (
+          <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+            All Categories
+          </span>
         )}
       </div>
 
-      {/* Brand & Model */}
-      <div className="mb-4">
-        <h3 className="font-bold text-gray-800 dark:text-white/90 text-lg leading-tight mb-1">
+      {/* Brand & Model - Enhanced visibility */}
+      <div className={`mb-6 p-4 rounded-xl ${styles.brandModelContainer}`}>
+        <h3 className={`font-bold text-2xl leading-tight mb-3 transition-all duration-300 ${styles.brandHighlight} ${styles.brandPulse}`}>
           {item.brand}
         </h3>
-        <p className="text-blue-600 dark:text-blue-200/80 text-sm font-medium">
+        <p className={`text-lg font-semibold tracking-wide ${styles.modelGradient}`}>
           {item.model}
         </p>
       </div>

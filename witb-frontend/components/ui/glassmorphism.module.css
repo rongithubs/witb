@@ -297,6 +297,87 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* Enhanced brand and model styles */
+.brandHighlight {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.025em;
+}
+
+:global(.dark) .brandHighlight {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.modelGradient {
+  background: linear-gradient(135deg, 
+    #3b82f6 0%, 
+    #8b5cf6 50%, 
+    #06b6d4 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  position: relative;
+}
+
+:global(.dark) .modelGradient {
+  background: linear-gradient(135deg, 
+    #60a5fa 0%, 
+    #a78bfa 50%, 
+    #22d3ee 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 0 25px rgba(96, 165, 250, 0.4);
+}
+
+.modelGradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  filter: blur(3px);
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/* Champion card enhanced brand/model styling */
+.glassCardChampion .brandHighlight {
+  color: #b45309;
+  text-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+}
+
+:global(.dark) .glassCardChampion .brandHighlight {
+  color: #fbbf24;
+  text-shadow: 0 2px 12px rgba(255, 215, 0, 0.5);
+}
+
+.glassCardChampion .modelGradient {
+  background: linear-gradient(135deg, 
+    #d97706 0%, 
+    #f59e0b 50%, 
+    #fbbf24 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+}
+
+:global(.dark) .glassCardChampion .modelGradient {
+  background: linear-gradient(135deg, 
+    #fbbf24 0%, 
+    #f59e0b 50%, 
+    #d97706 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 0 25px rgba(251, 191, 36, 0.5);
+}
+
 /* Animation keyframes */
 @keyframes fadeInUp {
   from {
@@ -311,4 +392,133 @@
 
 .fadeInUp {
   animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes brandPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.brandPulse:hover {
+  animation: brandPulse 1.5s ease-in-out infinite;
+}
+
+/* Brand/Model container styles */
+.brandModelContainer {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.25) 0%, 
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+:global(.dark) .brandModelContainer {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.08) 0%, 
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.brandModelContainer:hover {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.35) 0%, 
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+:global(.dark) .brandModelContainer:hover {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.12) 0%, 
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Champion brand/model container */
+.glassCardChampion .brandModelContainer {
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.2) 0%, 
+    rgba(255, 215, 0, 0.05) 100%
+  );
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  box-shadow: 
+    0 4px 12px rgba(255, 215, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+:global(.dark) .glassCardChampion .brandModelContainer {
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.12) 0%, 
+    rgba(255, 215, 0, 0.03) 100%
+  );
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 
+    0 4px 12px rgba(255, 215, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Category text styles */
+.categoryText {
+  background: linear-gradient(135deg, 
+    #374151 0%, 
+    #6b7280 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+:global(.dark) .categoryText {
+  background: linear-gradient(135deg, 
+    #d1d5db 0%, 
+    #9ca3af 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Champion category styling */
+.glassCardChampion .categoryText {
+  background: linear-gradient(135deg, 
+    #b45309 0%, 
+    #d97706 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);
+}
+
+:global(.dark) .glassCardChampion .categoryText {
+  background: linear-gradient(135deg, 
+    #fbbf24 0%, 
+    #f59e0b 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 2px 8px rgba(251, 191, 36, 0.5);
 }
