@@ -1,5 +1,10 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import styles from "@/components/ui/glassmorphism.module.css";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface LeaderboardTabsProps {
   selectedCategory: string;
@@ -14,25 +19,42 @@ export function LeaderboardTabs({
   availableCategories,
   children
 }: LeaderboardTabsProps) {
-  // Use flexbox for even distribution of tabs
-  const tabsListClassName = `${styles.glassTabsList} flex w-full mb-6`;
-  
-  return (
-    <Tabs value={selectedCategory} onValueChange={onCategoryChange} className="w-full">
-      <TabsList className={tabsListClassName}>
-        <TabsTrigger value="all" className={styles.glassTab}>
-          All
-        </TabsTrigger>
-        {availableCategories.map(category => (
-          <TabsTrigger key={category} value={category} className={styles.glassTab}>
-            {category}
-          </TabsTrigger>
-        ))}
-      </TabsList>
+  const getDisplayValue = (value: string) => {
+    return value === "all" ? "All Categories" : value;
+  };
 
-      <TabsContent value={selectedCategory} className="mt-0">
+  return (
+    <div className="w-full">
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Filter by Category
+        </label>
+        <Select value={selectedCategory} onValueChange={onCategoryChange}>
+          <SelectTrigger className="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+            <SelectValue placeholder="Select category">
+              {getDisplayValue(selectedCategory)}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+            <SelectItem value="all" className="hover:bg-gray-50 dark:hover:bg-gray-700">
+              All Categories
+            </SelectItem>
+            {availableCategories.map(category => (
+              <SelectItem 
+                key={category} 
+                value={category}
+                className="hover:bg-gray-50 dark:hover:bg-gray-700"
+              >
+                {category}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div>
         {children}
-      </TabsContent>
-    </Tabs>
+      </div>
+    </div>
   );
 }

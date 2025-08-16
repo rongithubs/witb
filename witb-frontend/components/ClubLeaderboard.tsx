@@ -16,7 +16,6 @@ import {
   LeaderboardFooter
 } from "@/components/leaderboard";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
-import styles from "@/components/ui/glassmorphism.module.css";
 
 export function ClubLeaderboard() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -39,7 +38,7 @@ export function ClubLeaderboard() {
 
   if (error) {
     return (
-      <div className={styles.glassContainer + " p-6"}>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <div className="text-center">
           <h3 className="text-lg font-semibold text-red-600 dark:text-red-400 mb-2">
             Failed to load leaderboard data
@@ -49,7 +48,7 @@ export function ClubLeaderboard() {
           </p>
           <button
             onClick={() => refetch()}
-            className={styles.glassButton + " px-4 py-2 text-sm"}
+            className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 text-sm rounded-md"
           >
             Retry
           </button>
@@ -60,7 +59,7 @@ export function ClubLeaderboard() {
 
   if (hasInvalidData) {
     return (
-      <div className={styles.glassContainer + " p-6"}>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <div className="text-center">
           <h3 className="text-lg font-semibold text-amber-600 dark:text-amber-400 mb-2">
             Invalid data received
@@ -70,7 +69,7 @@ export function ClubLeaderboard() {
           </p>
           <button
             onClick={() => refetch()}
-            className={styles.glassButton + " px-4 py-2 text-sm"}
+            className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 text-sm rounded-md"
           >
             Retry
           </button>
@@ -81,7 +80,7 @@ export function ClubLeaderboard() {
 
   if (!validatedData || displayItems.length === 0) {
     return (
-      <div className={styles.glassContainer + " p-6"}>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <div className="text-center text-gray-500 dark:text-gray-400">
           No leaderboard data available
         </div>
@@ -91,10 +90,8 @@ export function ClubLeaderboard() {
 
   return (
     <ErrorBoundary>
-      <div className={styles.glassContainer + " relative overflow-hidden"}>
-        {/* Glass background with gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-pink-500/10"></div>
-        <div className="relative z-10 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+        <div className="p-6">
           
           <LeaderboardHeader leaderboardData={validatedData} />
 
@@ -103,13 +100,12 @@ export function ClubLeaderboard() {
             onCategoryChange={setSelectedCategory}
             availableCategories={availableCategories}
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               {displayItems.map((item, index) => (
                 <LeaderboardCard
                   key={`${item.brand}-${item.model}-${index}`}
                   item={item}
                   index={index}
-                  showCategory={selectedCategory === "all"}
                 />
               ))}
             </div>
