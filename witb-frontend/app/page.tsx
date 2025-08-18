@@ -12,7 +12,6 @@ import { PlayerTable } from "@/components/PlayerTable";
 
 export default function Home() {
   const [query, setQuery] = useState("");
-  const [isWitbExpanded, setIsWitbExpanded] = useState(false);
   
   // Custom hooks for state management
   const { page, setPage } = usePagination();
@@ -30,11 +29,9 @@ export default function Home() {
           onSearch={setQuery} 
         />
         
-        <div className={`transition-all duration-500 ease-in-out ${
-          isWitbExpanded ? 'my-2' : 'my-6'
-        }`}>
+        <div className="my-4">
           <ErrorBoundary>
-            <TournamentWinnerWithBag isCollapsed={isWitbExpanded} />
+            <TournamentWinnerWithBag isCollapsed={true} />
           </ErrorBoundary>
         </div>
 
@@ -51,7 +48,6 @@ export default function Home() {
                   playersResponse={playersResponse}
                   page={page}
                   onPageChange={setPage}
-                  onWitbExpansionChange={setIsWitbExpanded}
                 />
               </ErrorBoundary>
             </div>
