@@ -9,6 +9,7 @@ import { usePlayerSearch } from "@/hooks/usePlayerSearch";
 import { usePagination } from "@/hooks/usePagination";
 import { usePlayersData } from "@/hooks/usePlayersData";
 import { PlayerTable } from "@/components/PlayerTable";
+import { UserProfile } from "@/components/auth/UserProfile";
 
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -29,7 +30,11 @@ export default function Home() {
           onSearch={setQuery} 
         />
         
-        <div className="my-4">
+        <div className="my-4 space-y-4">
+          <ErrorBoundary>
+            <UserProfile />
+          </ErrorBoundary>
+          
           <ErrorBoundary>
             <TournamentWinnerWithBag isCollapsed={true} />
           </ErrorBoundary>
