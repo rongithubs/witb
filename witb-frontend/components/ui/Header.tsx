@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LoginButton } from "@/components/auth/LoginButton";
 
 type HeaderProps = {
   onSearch: (query: string) => void;
@@ -34,8 +35,9 @@ export default function Header({ onSearch }: HeaderProps) {
           />
         </div>
         
-        {/* Right section: Theme toggle */}
-        <div className="flex-shrink-0">
+        {/* Right section: Auth and Theme toggle */}
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <LoginButton />
           <ThemeToggle />
         </div>
       </div>
