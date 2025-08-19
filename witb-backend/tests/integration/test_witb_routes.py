@@ -23,7 +23,7 @@ class TestWitbRoutes:
         assert isinstance(data["categories"], dict)
         assert isinstance(data["total_categories"], int)
         assert isinstance(data["total_unique_combinations"], int)
-        
+
         # With empty test database, should return empty categories
         assert data["total_categories"] == 0
         assert data["total_unique_combinations"] == 0
@@ -41,7 +41,7 @@ class TestWitbRoutes:
         assert "categories" in data
         assert "total_categories" in data
         assert "total_unique_combinations" in data
-        
+
         # With empty test database, should return empty results
         assert data["total_categories"] == 0
 

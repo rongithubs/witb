@@ -1,7 +1,7 @@
 from datetime import datetime
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class WITBItemBase(BaseModel):
@@ -17,8 +17,7 @@ class WITBItemBase(BaseModel):
 class WITBItem(WITBItemBase):
     id: UUID
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class WITBItemCreate(WITBItemBase):
@@ -45,8 +44,7 @@ class Player(BaseModel):
     last_updated: datetime | None = None
     witb_items: list[WITBItem] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class PlayerCreate(PlayerBase):
@@ -81,3 +79,32 @@ class LeaderboardResponse(BaseModel):
     categories: dict[str, list[ClubUsageItem]]
     total_categories: int
     total_unique_combinations: int
+
+
+class UserBase(BaseModel):
+    email: str | None = None
+    phone: str | None = None
+
+
+class User(UserBase):
+    id: UUID
+    supabase_user_id: UUID
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class UserCreate(UserBase):
+    supabase_user_id: UUID
+
+
+class AuthUser(BaseModel):
+    """Schema for authenticated user with JWT token info."""
+
+    user_id: UUID
+    supabase_user_id: UUID
+    email: str | None = None
+    phone: str | None = None
+    exp: int  # Token expiration timestamp
+    iat: int  # Token issued at timestamp
