@@ -43,3 +43,13 @@ class SystemUpdate(Base):
     update_type = Column(String, nullable=False)  # "owgr", "witb", etc.
     last_updated = Column(DateTime, default=func.now())
     details = Column(String, nullable=True)  # JSON string with update details
+
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    supabase_user_id = Column(UUID(as_uuid=True), unique=True, nullable=False)
+    email = Column(String, nullable=True)
+    phone = Column(String, nullable=True)
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
