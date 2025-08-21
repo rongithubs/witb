@@ -25,26 +25,28 @@ export default function Home() {
 
   return (
     <ErrorBoundary>
-      <div className="max-w-screen-2xl mx-auto px-6">
-        <Header 
-          onSearch={setQuery} 
-        />
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <Header onSearch={setQuery} />
         
-        <div className="my-4 space-y-4">
-          <ErrorBoundary>
-            <UserProfile />
-          </ErrorBoundary>
+        <main className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* User Profile */}
+          <div className="py-4">
+            <ErrorBoundary>
+              <UserProfile />
+            </ErrorBoundary>
+          </div>
           
-          <ErrorBoundary>
-            <TournamentWinnerWithBag isCollapsed={true} />
-          </ErrorBoundary>
-        </div>
+          {/* Tournament Winner Banner */}
+          <div className="mb-6">
+            <ErrorBoundary>
+              <TournamentWinnerWithBag isCollapsed={true} />
+            </ErrorBoundary>
+          </div>
 
-        {/* Side-by-side layout: OGWR Rankings (70%) and Club Leaderboard (30%) */}
-        <div className="py-6">
-          <div className="grid grid-cols-1 lg:grid-cols-10 gap-6">
-            {/* OGWR Rankings - Left Column (70%) */}
-            <div className="lg:col-span-7">
+          {/* Mobile-First Layout */}
+          <div className="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-8">
+            {/* Main Content: Player Rankings */}
+            <div className="lg:col-span-8 xl:col-span-9">
               <ErrorBoundary>
                 <PlayerTable
                   players={filteredPlayers}
@@ -57,14 +59,19 @@ export default function Home() {
               </ErrorBoundary>
             </div>
 
-            {/* Club Usage Leaderboard - Right Column (30%) */}
-            <div className="lg:col-span-3">
-              <ErrorBoundary>
-                <ClubLeaderboard />
-              </ErrorBoundary>
+            {/* Sidebar: Club Leaderboard */}
+            <div className="lg:col-span-4 xl:col-span-3">
+              <div className="sticky top-24">
+                <ErrorBoundary>
+                  <ClubLeaderboard />
+                </ErrorBoundary>
+              </div>
             </div>
           </div>
-        </div>
+
+          {/* Bottom Spacing */}
+          <div className="h-8"></div>
+        </main>
       </div>
     </ErrorBoundary>
   );

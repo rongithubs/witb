@@ -149,17 +149,14 @@ const TournamentWinnerWithBag = memo(function TournamentWinnerWithBag({ isCollap
   }
 
   return (
-    <div className={`transition-all duration-500 ease-in-out ${isCollapsed ? "mb-4" : "mb-12"}`}>
-      {/* Single morphing banner */}
+    <div className={`transition-all duration-500 ease-in-out ${isCollapsed ? "mb-6" : "mb-12"}`}>
+      {/* Single morphing banner - Mobile-Optimized */}
       <div 
-        className={`relative w-full overflow-hidden shadow-2xl transition-all duration-1000 cubic-bezier(0.4, 0.0, 0.2, 1) ${
+        className={`relative w-full overflow-hidden transition-all duration-700 ease-in-out ${
           isCollapsed 
-            ? 'h-40 sm:h-32 md:h-24 rounded-xl bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 border border-emerald-200 dark:border-emerald-700' 
-            : 'h-64 sm:h-80 md:h-96 lg:h-[28rem] rounded-xl sm:rounded-3xl bg-gradient-to-br from-emerald-600 via-green-700 to-teal-800'
+            ? 'h-32 sm:h-28 md:h-24 rounded-2xl bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 border border-emerald-200 dark:border-emerald-700 shadow-sm' 
+            : 'h-72 sm:h-80 md:h-96 lg:h-[28rem] rounded-2xl sm:rounded-3xl bg-gradient-to-br from-emerald-600 via-green-700 to-teal-800 shadow-2xl'
         }`}
-        style={{
-          transition: 'height 1000ms cubic-bezier(0.4, 0.0, 0.2, 1), background 800ms cubic-bezier(0.4, 0.0, 0.2, 1) 200ms, border-radius 800ms cubic-bezier(0.4, 0.0, 0.2, 1) 100ms'
-        }}
       >
         {/* Background overlay for collapsed state */}
         <div 
@@ -192,40 +189,43 @@ const TournamentWinnerWithBag = memo(function TournamentWinnerWithBag({ isCollap
           <div className="w-32 h-32 rounded-full border-4 border-white"></div>
         </div>
 
-        {/* Content container */}
+        {/* Content container - Mobile-Optimized */}
         <div 
-          className={`absolute inset-0 flex items-center z-10 ${
-            isCollapsed ? 'px-4 py-2 sm:px-10 sm:py-0' : 'px-4 sm:px-6'
+          className={`absolute inset-0 flex items-center z-10 transition-all duration-500 ease-in-out ${
+            isCollapsed ? 'px-4 py-3 sm:px-8 sm:py-0' : 'px-4 sm:px-6 py-6'
           }`}
           style={{
-            justifyContent: isCollapsed ? 'flex-start' : 'center',
-            transition: 'justify-content 800ms cubic-bezier(0.4, 0.0, 0.2, 1) 100ms, padding 800ms cubic-bezier(0.4, 0.0, 0.2, 1) 100ms'
+            justifyContent: isCollapsed ? 'flex-start' : 'center'
           }}
         >
           <div 
-            className={`w-full transition-all duration-700 ease-in-out ${
+            className={`w-full transition-all duration-500 ease-in-out ${
               isCollapsed 
-                ? 'flex flex-col items-center justify-center gap-2 text-center sm:flex-row sm:justify-between sm:items-center sm:text-left' 
-                : 'flex flex-col items-center justify-center gap-0 text-center text-white'
+                ? 'flex items-center gap-3 sm:gap-4' 
+                : 'flex flex-col items-center justify-center text-center text-white'
             }`}
           >
-            {/* Winner Info Section */}
-            <div className={`flex items-center transition-all duration-700 ease-in-out ${isCollapsed ? 'gap-3 sm:gap-5' : 'gap-3 flex-col'}`}>
+            {/* Winner Info Section - Mobile-Optimized */}
+            <div className={`flex items-center transition-all duration-500 ease-in-out ${
+              isCollapsed ? 'flex-1 min-w-0' : 'flex-col'
+            }`}>
               {/* Trophy Icon */}
               <div 
-                className={`flex-shrink-0 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center transition-all duration-700 ease-in-out ${
-                  isCollapsed ? 'w-10 h-10' : 'w-16 h-16 mb-6'
+                className={`flex-shrink-0 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center transition-all duration-500 ease-in-out ${
+                  isCollapsed ? 'w-8 h-8 mr-3' : 'w-16 h-16 mb-6'
                 }`}
               >
-                <Trophy size={isCollapsed ? 16 : 20} className="text-white" />
+                <Trophy size={isCollapsed ? 14 : 20} className="text-white" />
               </div>
 
               {/* Text Content */}
-              <div className={`transition-all duration-700 ease-in-out ${isCollapsed ? 'text-left' : 'text-center'}`}>
+              <div className={`transition-all duration-500 ease-in-out min-w-0 ${
+                isCollapsed ? 'flex-1' : 'text-center'
+              }`}>
                 {/* Badge */}
-                <div className={`inline-flex items-center gap-2 rounded-full transition-all duration-700 ease-in-out ${
+                <div className={`inline-flex items-center justify-center gap-1 rounded-full transition-all duration-500 ease-in-out ${
                   isCollapsed 
-                    ? 'px-3 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/30 mb-1' 
+                    ? 'px-2 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/30 mb-1' 
                     : 'px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 text-sm font-medium text-white mb-6'
                 }`}>
                   {!isCollapsed && <Trophy size={16} className="text-yellow-300" />}
@@ -236,78 +236,100 @@ const TournamentWinnerWithBag = memo(function TournamentWinnerWithBag({ isCollap
 
                 {/* Player Name */}
                 <h1 
-                  className={`font-bold tracking-tight transition-all duration-700 ease-in-out ${
+                  className={`font-bold tracking-tight transition-all duration-500 ease-in-out ${
                     isCollapsed 
-                      ? 'text-lg text-gray-900 dark:text-white mb-1.5' 
-                      : 'text-4xl md:text-5xl lg:text-6xl text-white mb-4'
+                      ? 'text-base sm:text-lg text-gray-900 dark:text-white mb-0.5 truncate' 
+                      : 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-4'
                   }`}
                 >
                   {winnerData.winner}
                 </h1>
 
-                {/* Tournament Name */}
-                <h2 
-                  className={`font-medium transition-all duration-700 ease-in-out ${
-                    isCollapsed 
-                      ? 'text-xs text-gray-600 dark:text-gray-300' 
-                      : 'text-xl md:text-2xl lg:text-3xl text-white/90 mb-6'
-                  }`}
-                >
-                  {winnerData.tournament}
-                </h2>
+                {/* Tournament Name - Show in both states */}
+                {isCollapsed ? (
+                  <div className="text-xs text-gray-600 dark:text-gray-300 truncate">
+                    {winnerData.tournament}
+                  </div>
+                ) : (
+                  <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mb-6 font-medium">
+                    {winnerData.tournament}
+                  </h2>
+                )}
               </div>
             </div>
 
-            {/* Stats and Button Section */}
-            <div 
-              className={`flex items-center gap-2 transition-all duration-700 ease-in-out ${
-                isCollapsed ? 'flex-col justify-center w-full sm:w-auto sm:flex-row' : 'flex-col sm:flex-row justify-center mt-6'
-              }`}
-            >
-              {/* Stats */}
-              <div 
-                className={`flex items-center gap-4 transition-all duration-700 ease-in-out ${
-                  isCollapsed ? 'text-xs text-gray-600 dark:text-gray-400' : 'text-white/80'
-                }`}
-              >
-                {winnerData.date && (
-                  <div className="flex items-center gap-1">
-                    <Calendar size={isCollapsed ? 12 : 18} />
-                    <span className={isCollapsed ? 'text-xs' : 'text-base md:text-lg font-medium'}>
-                      {winnerData.date}
-                    </span>
-                  </div>
-                )}
-                {winnerData.score && (
-                  <div className="flex items-center gap-1">
-                    <Target size={isCollapsed ? 12 : 18} />
-                    <span className={isCollapsed ? 'text-xs' : 'text-base md:text-lg font-medium'}>
-                      {winnerData.score}
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              {/* Equipment Toggle Button */}
-              {witbItems.length > 0 && (
-                <button
-                  type="button"
-                  onClick={handleToggleEquipment}
-                  className={`inline-flex items-center gap-2 font-medium rounded-lg transition-all duration-300 flex-shrink-0 ${
-                    isCollapsed
-                      ? 'px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs'
-                      : 'px-8 py-4 bg-white/20 backdrop-blur-sm border border-white/30 hover:bg-white/30 text-white text-base rounded-full hover:scale-105 focus:ring-2 focus:ring-white/50 shadow-lg mt-2'
-                  }`}
-                >
-                  <span>{showEquipment ? "Hide Equipment" : "View Equipment"}</span>
-                  {showEquipment ? (
-                    <ChevronUp size={isCollapsed ? 14 : 20} />
-                  ) : (
-                    <ChevronDown size={isCollapsed ? 14 : 20} />
+            {/* Stats and Button Section - Mobile-Optimized */}
+            {isCollapsed ? (
+              // Collapsed: Show stats and button
+              <div className="flex items-center gap-2 flex-shrink-0">
+                {/* Date and Score in collapsed state */}
+                <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+                  {winnerData.date && (
+                    <span>{winnerData.date}</span>
                   )}
-                </button>
-              )}
-            </div>
+                  {winnerData.score && (
+                    <span>({winnerData.score})</span>
+                  )}
+                </div>
+                
+                {witbItems.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={handleToggleEquipment}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium rounded-lg transition-all duration-200 flex-shrink-0"
+                  >
+                    <span className="hidden sm:inline">
+                      {showEquipment ? "Hide" : "View"} Bag
+                    </span>
+                    <span className="sm:hidden">WITB</span>
+                    {showEquipment ? (
+                      <ChevronUp size={12} />
+                    ) : (
+                      <ChevronDown size={12} />
+                    )}
+                  </button>
+                )}
+              </div>
+            ) : (
+              // Expanded: Show stats and button prominently
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
+                {/* Stats */}
+                <div className="flex items-center gap-4 text-white/80">
+                  {winnerData.date && (
+                    <div className="flex items-center gap-1">
+                      <Calendar size={16} />
+                      <span className="text-sm sm:text-base font-medium">
+                        {winnerData.date}
+                      </span>
+                    </div>
+                  )}
+                  {winnerData.score && (
+                    <div className="flex items-center gap-1">
+                      <Target size={16} />
+                      <span className="text-sm sm:text-base font-medium">
+                        {winnerData.score}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Equipment Toggle Button */}
+                {witbItems.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={handleToggleEquipment}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-sm border border-white/30 hover:bg-white/30 text-white text-sm sm:text-base font-medium rounded-full transition-all duration-200 hover:scale-105 focus:ring-2 focus:ring-white/50 shadow-lg"
+                  >
+                    <span>{showEquipment ? "Hide Equipment" : "View Equipment"}</span>
+                    {showEquipment ? (
+                      <ChevronUp size={18} />
+                    ) : (
+                      <ChevronDown size={18} />
+                    )}
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
@@ -339,8 +361,8 @@ const TournamentWinnerWithBag = memo(function TournamentWinnerWithBag({ isCollap
             </p>
           </div>
 
-          {/* Equipment Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {/* Equipment Grid - Mobile-Optimized */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {witbItems.map((item, index) => (
               <div
                 key={index}

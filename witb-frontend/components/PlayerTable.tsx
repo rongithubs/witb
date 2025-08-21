@@ -131,67 +131,84 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
           <div key={player.id}>
             {/* Player Row */}
             <div className="p-4 pr-6 sm:pr-8 md:pr-10 lg:pr-12 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-              {/* Mobile Card Layout */}
-              <div className="flex flex-col space-y-3 md:hidden">
-                {/* Top Row - Rank, Player, Country */}
-                <div className="flex items-center gap-3">
-                  <span className="font-bold text-gray-900 dark:text-white text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded flex-shrink-0">
-                    {player.ranking ? `#${player.ranking}` : '-'}
-                  </span>
-                  
-                  <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <div className="w-8 h-8 rounded-full bg-blue-200 dark:bg-blue-800 flex items-center justify-center text-blue-700 dark:text-blue-200 text-xs font-bold flex-shrink-0">
-                      {player.name.split(" ").map(n => n[0]).join("")}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="font-semibold text-gray-900 dark:text-white text-sm truncate">
-                        {player.name}
+              {/* Mobile Card Layout - Redesigned */}
+              <div className="md:hidden">
+                <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-4">
+                  {/* Header: Rank + Player Info */}
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
+                        {player.name.split(" ").map(n => n[0]).join("")}
                       </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
-                        {getPrimaryBrand(player.witb_items)}
+                    </div>
+                    
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-semibold text-lg text-gray-900 dark:text-white truncate">
+                          {player.name}
+                        </h3>
+                        <span className="flex-shrink-0 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 text-xs font-bold px-2 py-1 rounded-full">
+                          #{player.ranking || '-'}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
+                        <span className="inline-flex items-center gap-1">
+                          🌍 {player.country}
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          🏌️ {getPrimaryBrand(player.witb_items)}
+                        </span>
                       </div>
                     </div>
                   </div>
-                  
-                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300 uppercase bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded flex-shrink-0">
-                    {player.country.slice(0, 3)}
-                  </span>
-                </div>
 
-                {/* Key Clubs Row */}
-                <div className="flex flex-wrap gap-1 pl-1">
-                  {getKeyClubs(player.witb_items).map((club, index) => (
-                    <Badge 
-                      key={index} 
-                      variant="secondary"
-                      className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-2 py-1"
+                  {/* Key Equipment Preview */}
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Key Equipment</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {getKeyClubs(player.witb_items).map((club, index) => (
+                        <div 
+                          key={index}
+                          className="bg-gray-50 dark:bg-gray-700 rounded-lg px-3 py-2 text-xs"
+                        >
+                          <div className="font-medium text-gray-900 dark:text-white">
+                            {club.category}
+                          </div>
+                          <div className="text-gray-600 dark:text-gray-400">
+                            {club.brand}
+                          </div>
+                        </div>
+                      ))}
+                      {getKeyClubs(player.witb_items).length === 0 && (
+                        <div className="text-sm text-gray-400 dark:text-gray-500 italic">
+                          No equipment data available
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Footer: Last Updated + WITB Button */}
+                  <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-700">
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      Updated {getLastUpdated(player)}
+                    </div>
+                    <Button
+                      onClick={() => toggleRowExpansion(player.id)}
+                      variant="default"
+                      size="sm"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-4 py-2 h-9 rounded-lg font-medium shadow-sm transition-all duration-200"
                     >
-                      {club.category}: {club.brand}
-                    </Badge>
-                  ))}
-                  {getKeyClubs(player.witb_items).length === 0 && (
-                    <span className="text-xs text-gray-400 dark:text-gray-500">No key clubs</span>
-                  )}
-                </div>
-
-                {/* Bottom Row - Updated & Action */}
-                <div className="flex items-center justify-between pl-1 pr-2">
-                  <span className="text-xs text-gray-600 dark:text-gray-400">
-                    {getLastUpdated(player)}
-                  </span>
-                  <Button
-                    onClick={() => toggleRowExpansion(player.id)}
-                    variant="default"
-                    size="sm"
-                    className="bg-gray-900 hover:bg-gray-800 text-white text-xs px-2 py-1 h-7 mr-1"
-                  >
-                    <span className="mr-1">WITB</span>
-                    {expandedRows.has(player.id) ? (
-                      <ChevronUpIcon className="h-3 w-3" />
-                    ) : (
-                      <ChevronDownIcon className="h-3 w-3" />
-                    )}
-                  </Button>
+                      <span className="mr-2">
+                        {expandedRows.has(player.id) ? "Hide" : "View"} Full Bag
+                      </span>
+                      {expandedRows.has(player.id) ? (
+                        <ChevronUpIcon className="h-4 w-4" />
+                      ) : (
+                        <ChevronDownIcon className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
                 </div>
               </div>
 
@@ -295,66 +312,66 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
                     </div>
                   ) : (
                     <>
-                      {/* Mobile Card Layout */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:hidden">
-                        {player.witb_items.map((club, index) => (
-                          <div
-                            key={index}
-                            className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-all duration-200"
-                            style={{
-                              animationDelay: `${index * 50}ms`,
-                              animation: expandedRows.has(player.id)
-                                ? "fadeInUp 0.4s ease-out forwards"
-                                : "none",
-                            }}
-                          >
-                            {/* Category Badge */}
-                            <div className="flex items-center justify-between mb-3">
-                              <Badge 
-                                variant="secondary"
-                                className="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-700 text-xs px-2 py-1"
-                              >
-                                {club.category}
-                              </Badge>
-                              {club.product_url && (
-                                <Button 
-                                  size="sm" 
-                                  variant="outline"
-                                  onClick={() => window.open(club.product_url, '_blank')}
-                                  className="text-xs px-2 py-1 h-6"
-                                >
-                                  View
-                                </Button>
-                              )}
-                            </div>
-
-                            {/* Brand & Model */}
-                            <div className="mb-3">
-                              <div className="font-semibold text-gray-900 dark:text-white text-sm mb-1">
-                                {club.brand}
+                      {/* Mobile Equipment Grid - Redesigned */}
+                      <div className="md:hidden space-y-4">
+                        <div className="grid grid-cols-1 gap-4">
+                          {player.witb_items.map((club, index) => (
+                            <div
+                              key={index}
+                              className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm hover:shadow-md transition-all duration-300"
+                              style={{
+                                animationDelay: `${index * 75}ms`,
+                                animation: expandedRows.has(player.id)
+                                  ? "fadeInUp 0.5s ease-out forwards"
+                                  : "none",
+                              }}
+                            >
+                              {/* Club Header */}
+                              <div className="flex items-start justify-between mb-4">
+                                <div className="flex-1">
+                                  <div className="inline-flex items-center px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 rounded-full text-sm font-medium mb-2">
+                                    {club.category}
+                                  </div>
+                                  <h4 className="font-bold text-lg text-gray-900 dark:text-white mb-1">
+                                    {club.brand}
+                                  </h4>
+                                  <p className="text-base text-gray-700 dark:text-gray-300 font-medium">
+                                    {club.model}
+                                  </p>
+                                </div>
+                                
+                                {club.product_url && (
+                                  <Button 
+                                    size="sm" 
+                                    variant="outline"
+                                    onClick={() => window.open(club.product_url, '_blank')}
+                                    className="flex-shrink-0 text-sm px-3 py-2 rounded-lg border-emerald-200 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                                  >
+                                    View Product
+                                  </Button>
+                                )}
                               </div>
-                              <div className="text-sm text-blue-600 dark:text-blue-400 font-medium">
-                                {club.model}
-                              </div>
-                            </div>
 
-                            {/* Specs */}
-                            <div className="space-y-1 text-xs text-gray-600 dark:text-gray-400">
-                              {club.loft && (
-                                <div className="flex items-center justify-between">
-                                  <span className="font-medium">Loft:</span>
-                                  <span>{club.loft}</span>
+                              {/* Specifications */}
+                              {(club.loft || club.shaft) && (
+                                <div className="space-y-3 pt-3 border-t border-gray-100 dark:border-gray-700">
+                                  {club.loft && (
+                                    <div className="flex items-center justify-between">
+                                      <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Loft:</span>
+                                      <span className="text-sm font-semibold text-gray-900 dark:text-white">{club.loft}</span>
+                                    </div>
+                                  )}
+                                  {club.shaft && (
+                                    <div className="flex items-start justify-between">
+                                      <span className="text-sm font-medium text-gray-600 dark:text-gray-400 flex-shrink-0">Shaft:</span>
+                                      <span className="text-sm font-semibold text-gray-900 dark:text-white text-right ml-2">{club.shaft}</span>
+                                    </div>
+                                  )}
                                 </div>
                               )}
-                              {club.shaft && (
-                                <div className="flex items-center justify-between">
-                                  <span className="font-medium">Shaft:</span>
-                                  <span className="truncate ml-2">{club.shaft}</span>
-                                </div>
-                              )}
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
 
                       {/* Desktop Table Layout */}
@@ -431,24 +448,57 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
         ))}
       </div>
 
-      {/* Pagination Controls */}
+      {/* Pagination Controls - Mobile-Optimized */}
       {playersResponse && playersResponse.total_pages > 1 && (
-        <div className="border-t border-gray-200 dark:border-gray-700 p-4">
-          <div className="flex justify-between items-center gap-2">
+        <div className="border-t border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+          {/* Mobile Pagination */}
+          <div className="flex sm:hidden flex-col gap-4">
+            <div className="text-center">
+              <div className="text-lg font-semibold text-gray-900 dark:text-white">
+                {isLoading ? "Loading..." : `Page ${page} of ${playersResponse.total_pages}`}
+              </div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                {isLoading ? "" : `${playersResponse.total} players total`}
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => onPageChange(page - 1)}
+                disabled={page <= 1 || isLoading}
+                className="flex-1 h-12 text-base font-medium disabled:opacity-50 disabled:cursor-not-allowed rounded-xl"
+              >
+                {isLoading ? "..." : "← Previous"}
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => onPageChange(page + 1)}
+                disabled={page >= playersResponse.total_pages || isLoading}
+                className="flex-1 h-12 text-base font-medium disabled:opacity-50 disabled:cursor-not-allowed rounded-xl"
+              >
+                {isLoading ? "..." : "Next →"}
+              </Button>
+            </div>
+          </div>
+
+          {/* Desktop Pagination */}
+          <div className="hidden sm:flex justify-between items-center">
             <Button
               variant="outline"
               size="sm"
               onClick={() => onPageChange(page - 1)}
               disabled={page <= 1 || isLoading}
-              className="disabled:opacity-50 disabled:cursor-not-allowed"
+              className="disabled:opacity-50 disabled:cursor-not-allowed px-6 py-3 rounded-lg"
             >
-              {isLoading ? "..." : "Previous"}
+              {isLoading ? "..." : "← Previous"}
             </Button>
             <div className="flex items-center gap-4">
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 {isLoading ? "Loading..." : `Page ${page} of ${playersResponse.total_pages}`}
               </span>
-              <span className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block">
+              <span className="text-sm text-gray-500 dark:text-gray-400">
                 {isLoading ? "" : `${playersResponse.total} players total`}
               </span>
             </div>
@@ -457,9 +507,9 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
               size="sm"
               onClick={() => onPageChange(page + 1)}
               disabled={page >= playersResponse.total_pages || isLoading}
-              className="disabled:opacity-50 disabled:cursor-not-allowed"
+              className="disabled:opacity-50 disabled:cursor-not-allowed px-6 py-3 rounded-lg"
             >
-              {isLoading ? "..." : "Next"}
+              {isLoading ? "..." : "Next →"}
             </Button>
           </div>
         </div>
