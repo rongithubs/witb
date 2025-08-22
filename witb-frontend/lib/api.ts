@@ -62,6 +62,26 @@ class ApiClient {
       return { error: 'Network error' }
     }
   }
+
+  async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
+    try {
+      const headers = await this.getAuthHeaders()
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'DELETE',
+        headers,
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        return { error: errorData.detail || 'Request failed' }
+      }
+
+      const data = await response.json()
+      return { data }
+    } catch (error) {
+      return { error: 'Network error' }
+    }
+  }
 }
 
 export const apiClient = new ApiClient()
@@ -71,4 +91,7 @@ export const authApi = {
   getCurrentUser: () => apiClient.get('/auth/me'),
   verifyToken: () => apiClient.post('/auth/verify-token'),
   healthCheck: () => apiClient.get('/auth/health'),
+  getFavorites: () => apiClient.get('/auth/me/favorites'),
+  addFavorite: (playerId: string) => apiClient.post('/auth/me/favorites', { player_id: playerId }),
+  removeFavorite: (playerId: string) => apiClient.delete(`/auth/me/favorites/${playerId}`),
 }

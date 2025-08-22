@@ -1,12 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '@/providers/auth-provider'
 import { Button } from '@/components/ui/button'
+import { ChevronDown, User, LogOut } from 'lucide-react'
+import Link from 'next/link'
 
 export function LoginButton() {
   const { signInWithGoogle, user, signOut, loading } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
 
   const handleGoogleSignIn = async () => {
@@ -22,6 +26,7 @@ export function LoginButton() {
 
   const handleSignOut = async () => {
     setIsLoading(true)
+    setIsDropdownOpen(false)
     try {
       await signOut()
     } catch (error) {
@@ -30,6 +35,20 @@ export function LoginButton() {
       setIsLoading(false)
     }
   }
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   if (loading) {
     return (
@@ -48,18 +67,39 @@ export function LoginButton() {
                      'User'
 
     return (
-      <div className="flex items-center gap-3">
-        <span className="text-sm text-gray-600 dark:text-gray-300">
-          Welcome, {firstName}
-        </span>
+      <div className="relative" ref={dropdownRef}>
         <Button 
-          onClick={handleSignOut}
-          disabled={isLoading}
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           variant="outline"
           size="sm"
+          className="flex items-center gap-2"
         >
-          {isLoading ? 'Signing out...' : 'Sign Out'}
+          <span className="text-sm">Welcome, {firstName}</span>
+          <ChevronDown className={`h-4 w-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
         </Button>
+        
+        {isDropdownOpen && (
+          <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
+            <div className="py-2">
+              <Link
+                href="/profile"
+                onClick={() => setIsDropdownOpen(false)}
+                className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              >
+                <User className="h-4 w-4" />
+                Profile
+              </Link>
+              <button
+                onClick={handleSignOut}
+                disabled={isLoading}
+                className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50"
+              >
+                <LogOut className="h-4 w-4" />
+                {isLoading ? 'Signing out...' : 'Sign Out'}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     )
   }

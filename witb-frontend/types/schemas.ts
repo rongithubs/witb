@@ -48,3 +48,23 @@ export type DataHookReturn<T> = {
   isEmpty: boolean;
   refetch: () => void;
 };
+
+export type User = {
+  id: string;
+  supabase_user_id: string;
+  email?: string;
+  phone?: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type FavoritePlayer = {
+  id: string;
+  player: Player;
+  created_at: string;
+};
+
+export type UserFavoritesResponse = {
+  favorites: FavoritePlayer[];
+  total: number;
+};

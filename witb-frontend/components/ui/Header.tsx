@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Search, X } from "lucide-react";
+import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LoginButton } from "@/components/auth/LoginButton";
 
@@ -30,9 +31,11 @@ export default function Header({ onSearch }: HeaderProps) {
         <div className="flex items-center justify-between h-16">
           {/* Logo - always visible */}
           <div className="flex items-center flex-shrink-0">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              WITB
-            </h1>
+            <Link href="/" className="hover:opacity-80 transition-opacity">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                WITB
+              </h1>
+            </Link>
           </div>
 
           {/* Desktop: Search + Actions */}

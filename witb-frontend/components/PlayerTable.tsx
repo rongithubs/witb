@@ -4,8 +4,10 @@ import type { Player, WITBItem, PaginatedPlayersResponse } from "@/types/schemas
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon, Heart } from "lucide-react";
 import { useOWGRInfo } from "@/hooks/useOWGRInfo";
+import { useAuth } from "@/providers/auth-provider";
+import { useFavorites } from "@/providers/favorites-provider";
 
 interface PlayerTableProps {
   players: Player[];
@@ -20,6 +22,9 @@ interface PlayerTableProps {
 export function PlayerTable({ players, isLoading, error, playersResponse, page, onPageChange, onWitbExpansionChange }: PlayerTableProps) {
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
   const { owgrInfo, formatLastUpdated } = useOWGRInfo(playersResponse?.system_info);
+  const { user } = useAuth();
+  const { addFavorite, isFavorite } = useFavorites();
+  const [addingFavorites, setAddingFavorites] = useState<Set<string>>(new Set());
 
   const toggleRowExpansion = (playerId: string) => {
     const newExpanded = new Set(expandedRows);
@@ -32,6 +37,22 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
     
     // Notify parent component about expansion state change
     onWitbExpansionChange?.(newExpanded.size > 0);
+  };
+
+  const addToFavorites = async (playerId: string) => {
+    if (!user) return;
+    
+    setAddingFavorites(prev => new Set(prev).add(playerId));
+    
+    try {
+      await addFavorite(playerId);
+    } finally {
+      setAddingFavorites(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(playerId);
+        return newSet;
+      });
+    }
   };
 
   const getKeyClubs = (witbItems: WITBItem[]) => {
@@ -95,9 +116,9 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
         <div className="col-span-1">Rank</div>
         <div className="col-span-3">Player</div>
         <div className="col-span-1">Country</div>
-        <div className="col-span-4">Key Clubs</div>
+        <div className="col-span-3">Key Clubs</div>
         <div className="col-span-2">Updated</div>
-        <div className="col-span-1">Actions</div>
+        <div className="col-span-2">Actions</div>
       </div>
 
       {/* OWGR Update Info Subheader - Mobile */}
@@ -188,26 +209,38 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
                     </div>
                   </div>
 
-                  {/* Footer: Last Updated + WITB Button */}
+                  {/* Footer: Last Updated + Actions */}
                   <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-700">
                     <div className="text-xs text-gray-500 dark:text-gray-400">
                       Updated {getLastUpdated(player)}
                     </div>
-                    <Button
-                      onClick={() => toggleRowExpansion(player.id)}
-                      variant="default"
-                      size="sm"
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-4 py-2 h-9 rounded-lg font-medium shadow-sm transition-all duration-200"
-                    >
-                      <span className="mr-2">
-                        {expandedRows.has(player.id) ? "Hide" : "View"} Full Bag
-                      </span>
-                      {expandedRows.has(player.id) ? (
-                        <ChevronUpIcon className="h-4 w-4" />
-                      ) : (
-                        <ChevronDownIcon className="h-4 w-4" />
-                      )}
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        onClick={() => addToFavorites(player.id)}
+                        variant="outline"
+                        size="sm"
+                        disabled={addingFavorites.has(player.id) || !user || isFavorite(player.id)}
+                        className="h-9 px-3 border-gray-200 dark:border-gray-700 hover:border-red-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                        title={!user ? "Sign in to add favorites" : isFavorite(player.id) ? "Already in favorites" : "Add to favorites"}
+                      >
+                        <Heart className={`h-4 w-4 text-red-500 ${isFavorite(player.id) ? 'fill-current' : ''}`} />
+                      </Button>
+                      <Button
+                        onClick={() => toggleRowExpansion(player.id)}
+                        variant="default"
+                        size="sm"
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-4 py-2 h-9 rounded-lg font-medium shadow-sm transition-all duration-200"
+                      >
+                        <span className="mr-2">
+                          {expandedRows.has(player.id) ? "Hide" : "View"} Full Bag
+                        </span>
+                        {expandedRows.has(player.id) ? (
+                          <ChevronUpIcon className="h-4 w-4" />
+                        ) : (
+                          <ChevronDownIcon className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -244,7 +277,7 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
                 </div>
 
                 {/* Key Clubs */}
-                <div className="col-span-4 flex items-center">
+                <div className="col-span-3 flex items-center">
                   <div className="flex flex-wrap gap-1">
                     {getKeyClubs(player.witb_items).map((club, index) => (
                       <Badge 
@@ -269,12 +302,22 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
                 </div>
 
                 {/* Actions */}
-                <div className="col-span-1 flex items-center justify-start pr-6">
+                <div className="col-span-2 flex items-center justify-start pr-6 gap-2">
+                  <Button
+                    onClick={() => addToFavorites(player.id)}
+                    variant="outline"
+                    size="sm"
+                    disabled={addingFavorites.has(player.id) || !user || isFavorite(player.id)}
+                    className="h-8 px-2 border-gray-200 dark:border-gray-700 hover:border-red-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                    title={!user ? "Sign in to add favorites" : isFavorite(player.id) ? "Already in favorites" : "Add to favorites"}
+                  >
+                    <Heart className={`h-3 w-3 text-red-500 ${isFavorite(player.id) ? 'fill-current' : ''}`} />
+                  </Button>
                   <Button
                     onClick={() => toggleRowExpansion(player.id)}
                     variant="default"
                     size="sm"
-                    className="bg-gray-900 hover:bg-gray-800 text-white text-xs px-3 py-1 h-8 mr-2"
+                    className="bg-gray-900 hover:bg-gray-800 text-white text-xs px-3 py-1 h-8"
                   >
                     <span className="mr-1">View WITB</span>
                     {expandedRows.has(player.id) ? (
