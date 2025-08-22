@@ -11,9 +11,11 @@ from jose import jwt, JWTError
 
 import models
 import schemas
-from custom_types import UserId, SupabaseUserId
+from custom_types import UserId, SupabaseUserId, PlayerId
 from supabase_client import get_supabase_config
-from exceptions import DatabaseOperationError
+from exceptions import DatabaseOperationError, PlayerNotFoundError
+from repositories.favorite_player_repository import FavoritePlayerRepository
+from services.player_service import PlayerService
 
 
 class AuthService:
@@ -22,6 +24,7 @@ class AuthService:
     def __init__(self, db: AsyncSession):
         self.db = db
         self.config = get_supabase_config()
+        self.favorite_repo = FavoritePlayerRepository(db)
 
     async def get_or_create_user(
         self, supabase_user_id: SupabaseUserId, user_data: Dict[str, Any]
@@ -92,7 +95,7 @@ class AuthService:
                 algorithms=["HS256"],
                 options={
                     "verify_aud": False,  # Disable audience verification
-                    "verify_exp": True,   # Keep expiration verification
+                    "verify_exp": True,  # Keep expiration verification
                 },
             )
 
@@ -113,3 +116,66 @@ class AuthService:
             raise ValueError(f"Invalid JWT token: {str(e)}")
         except Exception as e:
             raise ValueError(f"Token verification failed: {str(e)}")
+
+    async def add_favorite_player(
+        self, user_id: UserId, player_id: PlayerId
+    ) -> schemas.FavoritePlayerResponse:
+        """Add player to user's favorites."""
+        try:
+            # Verify player exists
+            player_service = PlayerService(self.db)
+            await player_service.get_player_by_id(
+                str(player_id)
+            )  # Will raise PlayerNotFoundError if not found
+
+            # Add to favorites
+            favorite = await self.favorite_repo.add_favorite_player(user_id, player_id)
+
+            # Return with enriched player data
+            player_service._enrich_witb_items_with_urls(favorite.player.witb_items)
+            return schemas.FavoritePlayerResponse.model_validate(favorite)
+
+        except IntegrityError:
+            # Player already in favorites - return existing favorite
+            favorites = await self.favorite_repo.get_user_favorites(user_id)
+            for fav in favorites:
+                if fav.player_id == player_id:
+                    player_service = PlayerService(self.db)
+                    player_service._enrich_witb_items_with_urls(fav.player.witb_items)
+                    return schemas.FavoritePlayerResponse.model_validate(fav)
+            raise DatabaseOperationError("add_favorite_player", "Unexpected state")
+        except Exception as e:
+            await self.db.rollback()
+            raise DatabaseOperationError("add_favorite_player", str(e))
+
+    async def remove_favorite_player(
+        self, user_id: UserId, player_id: PlayerId
+    ) -> bool:
+        """Remove player from user's favorites."""
+        try:
+            return await self.favorite_repo.remove_favorite_player(user_id, player_id)
+        except Exception as e:
+            await self.db.rollback()
+            raise DatabaseOperationError("remove_favorite_player", str(e))
+
+    async def get_user_favorites(
+        self, user_id: UserId
+    ) -> schemas.UserFavoritesResponse:
+        """Get user's favorite players with enriched data."""
+        try:
+            favorites = await self.favorite_repo.get_user_favorites(user_id)
+
+            # Enrich player data with brand URLs
+            player_service = PlayerService(self.db)
+            for favorite in favorites:
+                player_service._enrich_witb_items_with_urls(favorite.player.witb_items)
+
+            return schemas.UserFavoritesResponse(
+                favorites=[
+                    schemas.FavoritePlayerResponse.model_validate(fav)
+                    for fav in favorites
+                ],
+                total=len(favorites),
+            )
+        except Exception as e:
+            raise DatabaseOperationError("get_user_favorites", str(e))

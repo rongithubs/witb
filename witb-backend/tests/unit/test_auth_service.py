@@ -42,7 +42,7 @@ class TestAuthService:
         # Mock new user creation
         new_user_id = uuid4()
         created_at = datetime.now()
-        
+
         # Mock the User model instance that will be created
         with patch("auth.service.models.User") as MockUserClass:
             mock_user_instance = MagicMock()
@@ -52,7 +52,7 @@ class TestAuthService:
             mock_user_instance.phone = user_data["phone"]
             mock_user_instance.created_at = created_at
             mock_user_instance.updated_at = created_at
-            
+
             MockUserClass.return_value = mock_user_instance
             mock_db.refresh = AsyncMock()
 
@@ -192,12 +192,17 @@ class TestAuthService:
         # Note: verify_signature should be True by default (not explicitly disabled)
         assert isinstance(result, schemas.AuthUser)
 
-    @pytest.mark.parametrize("invalid_payload", [
-        {"sub": "invalid-uuid", "email": "test@example.com"},  # Invalid UUID
-        {"sub": None, "email": "test@example.com"},  # None sub
-        {},  # Empty payload
-    ])
-    def test_verify_jwt_token_invalid_payload_formats(self, auth_service, invalid_payload):
+    @pytest.mark.parametrize(
+        "invalid_payload",
+        [
+            {"sub": "invalid-uuid", "email": "test@example.com"},  # Invalid UUID
+            {"sub": None, "email": "test@example.com"},  # None sub
+            {},  # Empty payload
+        ],
+    )
+    def test_verify_jwt_token_invalid_payload_formats(
+        self, auth_service, invalid_payload
+    ):
         """Test JWT verification with various invalid payload formats."""
         # Act & Assert
         with patch("jose.jwt.decode", return_value=invalid_payload):
@@ -207,10 +212,12 @@ class TestAuthService:
     def test_verify_jwt_token_jwt_error_handling(self, auth_service):
         """Test that JWTError is properly caught and converted to ValueError."""
         from jose import JWTError
-        
+
         # Act & Assert
         with patch("jose.jwt.decode", side_effect=JWTError("Invalid signature")):
-            with pytest.raises(ValueError, match="Invalid JWT token: Invalid signature"):
+            with pytest.raises(
+                ValueError, match="Invalid JWT token: Invalid signature"
+            ):
                 auth_service.verify_jwt_token("test-token")
 
     def test_verify_jwt_token_uses_correct_jwt_secret(self, mock_db):
@@ -218,7 +225,7 @@ class TestAuthService:
         # Arrange
         test_jwt_secret = "correct-jwt-secret"
         test_service_role_key = "different-service-role-key"
-        
+
         with patch("auth.service.get_supabase_config") as mock_config:
             mock_config.return_value.jwt_secret = test_jwt_secret
             mock_config.return_value.service_role_key = test_service_role_key

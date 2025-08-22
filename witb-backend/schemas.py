@@ -108,3 +108,26 @@ class AuthUser(BaseModel):
     phone: str | None = None
     exp: int  # Token expiration timestamp
     iat: int  # Token issued at timestamp
+
+
+class FavoritePlayerRequest(BaseModel):
+    """Schema for adding player to favorites."""
+
+    player_id: UUID
+
+
+class FavoritePlayerResponse(BaseModel):
+    """Schema for favorite player with player details."""
+
+    id: UUID
+    player: Player
+    created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class UserFavoritesResponse(BaseModel):
+    """Schema for user's favorite players list."""
+
+    favorites: list[FavoritePlayerResponse]
+    total: int

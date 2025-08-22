@@ -22,11 +22,9 @@ class SupabaseConfig:
             raise ValueError(
                 "SUPABASE_URL and SUPABASE_ANON_KEY must be set in environment variables"
             )
-        
+
         if not self.jwt_secret:
-            raise ValueError(
-                "SUPABASE_JWT_SECRET must be set for JWT verification"
-            )
+            raise ValueError("SUPABASE_JWT_SECRET must be set for JWT verification")
 
 
 # Global Supabase client instances

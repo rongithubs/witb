@@ -1,6 +1,14 @@
 import uuid
 
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, func
+from sqlalchemy import (
+    Column,
+    DateTime,
+    ForeignKey,
+    Integer,
+    String,
+    func,
+    UniqueConstraint,
+)
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_base, relationship
 
@@ -53,3 +61,20 @@ class User(Base):
     phone = Column(String, nullable=True)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+    favorite_players = relationship(
+        "FavoritePlayer", back_populates="user", lazy="selectin"
+    )
+
+
+class FavoritePlayer(Base):
+    __tablename__ = "user_favorite_players"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+    player_id = Column(UUID(as_uuid=True), ForeignKey("players.id"), nullable=False)
+    created_at = Column(DateTime, default=func.now())
+    user = relationship("User", back_populates="favorite_players")
+    player = relationship("Player", lazy="selectin")
+
+    __table_args__ = (
+        UniqueConstraint("user_id", "player_id", name="unique_user_player_favorite"),
+    )

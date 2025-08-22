@@ -33,9 +33,7 @@ class TestAuthRoutes:
         assert response.status_code == 401
         assert "Authentication required" in response.json()["detail"]
 
-    def test_get_current_user_info_with_valid_token(
-        self, client: TestClient
-    ):
+    def test_get_current_user_info_with_valid_token(self, client: TestClient):
         """Test /auth/me endpoint returns user info with valid token."""
         # Arrange
         mock_auth_user = schemas.AuthUser(
