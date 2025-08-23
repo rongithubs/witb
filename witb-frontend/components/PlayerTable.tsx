@@ -8,6 +8,7 @@ import { ChevronDownIcon, ChevronUpIcon, Heart } from "lucide-react";
 import { useOWGRInfo } from "@/hooks/useOWGRInfo";
 import { useAuth } from "@/providers/auth-provider";
 import { useFavorites } from "@/providers/favorites-provider";
+import heartStyles from "@/components/ui/heartAnimations.module.css";
 
 interface PlayerTableProps {
   players: Player[];
@@ -25,6 +26,8 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
   const { user } = useAuth();
   const { addFavorite, removeFavorite, isFavorite } = useFavorites();
   const [togglingFavorites, setTogglingFavorites] = useState<Set<string>>(new Set());
+  const [animatingFavorites, setAnimatingFavorites] = useState<Set<string>>(new Set());
+  const [favoriteAnimations, setFavoriteAnimations] = useState<Map<string, 'filling' | 'unfilling' | 'success'>>(new Map());
 
   const toggleRowExpansion = (playerId: string) => {
     const newExpanded = new Set(expandedRows);
@@ -42,21 +45,92 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
   const toggleFavorite = async (playerId: string) => {
     if (!user) return;
     
+    const currentlyFavorited = isFavorite(playerId);
+    
+    // Start animation immediately for better UX
     setTogglingFavorites(prev => new Set(prev).add(playerId));
+    setAnimatingFavorites(prev => new Set(prev).add(playerId));
+    setFavoriteAnimations(prev => new Map(prev).set(playerId, currentlyFavorited ? 'unfilling' : 'filling'));
     
     try {
-      if (isFavorite(playerId)) {
+      if (currentlyFavorited) {
         await removeFavorite(playerId);
       } else {
         await addFavorite(playerId);
       }
+      
+      // Add success animation after API call
+      setFavoriteAnimations(prev => new Map(prev).set(playerId, 'success'));
+      
+    } catch (error) {
+      console.error('Failed to toggle favorite:', error);
     } finally {
-      setTogglingFavorites(prev => {
-        const newSet = new Set(prev);
-        newSet.delete(playerId);
-        return newSet;
-      });
+      // Clean up animations and loading states
+      setTimeout(() => {
+        setTogglingFavorites(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(playerId);
+          return newSet;
+        });
+        setAnimatingFavorites(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(playerId);
+          return newSet;
+        });
+        setFavoriteAnimations(prev => {
+          const newMap = new Map(prev);
+          newMap.delete(playerId);
+          return newMap;
+        });
+      }, 600);
     }
+  };
+
+  const getHeartClasses = (playerId: string, size: 'sm' | 'md' = 'md') => {
+    const sizeClasses = size === 'sm' ? 'h-3 w-3' : 'h-4 w-4';
+    const baseClasses = `${sizeClasses} ${heartStyles.heartIcon} transition-all duration-200`;
+    const isFav = isFavorite(playerId);
+    const animation = favoriteAnimations.get(playerId);
+    const isAnimating = animatingFavorites.has(playerId);
+    
+    let classes = `${baseClasses} text-red-500`;
+    
+    // Add animation classes
+    if (animation === 'filling') {
+      classes += ` ${heartStyles.heartFavoriting}`;
+    } else if (animation === 'unfilling') {
+      classes += ` ${heartStyles.heartUnfavoriting}`;
+    } else if (animation === 'success') {
+      classes += ` ${heartStyles.heartSuccess}`;
+    }
+    
+    // Add state classes
+    if (isFav) {
+      classes += ` fill-current ${heartStyles.favorited}`;
+      if (!isAnimating) {
+        classes += ` ${heartStyles.heartFavorited}`;
+      }
+    } else {
+      classes += ` ${heartStyles.unfavorited}`;
+    }
+    
+    // Add loading state
+    if (isAnimating && !animation) {
+      classes += ` ${heartStyles.heartLoading}`;
+    }
+    
+    return classes;
+  };
+
+  const getButtonClasses = (playerId: string, baseClasses: string) => {
+    const isAnimating = animatingFavorites.has(playerId);
+    let classes = `${baseClasses} ${heartStyles.favoriteButton}`;
+    
+    if (isAnimating) {
+      classes += ` ${heartStyles.favoriteButtonAnimating}`;
+    }
+    
+    return classes;
   };
 
   const getKeyClubs = (witbItems: WITBItem[]) => {
@@ -224,10 +298,10 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
                         variant="outline"
                         size="sm"
                         disabled={togglingFavorites.has(player.id) || !user}
-                        className="h-9 px-3 border-gray-200 dark:border-gray-700 hover:border-red-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                        className={getButtonClasses(player.id, "h-9 px-3 border-gray-200 dark:border-gray-700 hover:border-red-300 hover:bg-red-50 dark:hover:bg-red-900/20")}
                         title={!user ? "Sign in to add favorites" : isFavorite(player.id) ? "Remove from favorites" : "Add to favorites"}
                       >
-                        <Heart className={`h-4 w-4 text-red-500 ${isFavorite(player.id) ? 'fill-current' : ''}`} />
+                        <Heart className={getHeartClasses(player.id, 'md')} />
                       </Button>
                       <Button
                         onClick={() => toggleRowExpansion(player.id)}
@@ -312,10 +386,10 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
                     variant="outline"
                     size="sm"
                     disabled={togglingFavorites.has(player.id) || !user}
-                    className="h-8 px-2 border-gray-200 dark:border-gray-700 hover:border-red-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                    className={getButtonClasses(player.id, "h-8 px-2 border-gray-200 dark:border-gray-700 hover:border-red-300 hover:bg-red-50 dark:hover:bg-red-900/20")}
                     title={!user ? "Sign in to add favorites" : isFavorite(player.id) ? "Remove from favorites" : "Add to favorites"}
                   >
-                    <Heart className={`h-3 w-3 text-red-500 ${isFavorite(player.id) ? 'fill-current' : ''}`} />
+                    <Heart className={getHeartClasses(player.id, 'sm')} />
                   </Button>
                   <Button
                     onClick={() => toggleRowExpansion(player.id)}
