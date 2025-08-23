@@ -42,7 +42,7 @@ export default function Home() {
           )}
           
           {/* Tournament Winner Banner */}
-          <div className="mb-6">
+          <div className="mb-6 pt-6">
             <ErrorBoundary>
               <TournamentWinnerWithBag isCollapsed={true} />
             </ErrorBoundary>
