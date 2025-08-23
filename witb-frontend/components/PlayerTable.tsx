@@ -23,8 +23,8 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
   const { owgrInfo, formatLastUpdated } = useOWGRInfo(playersResponse?.system_info);
   const { user } = useAuth();
-  const { addFavorite, isFavorite } = useFavorites();
-  const [addingFavorites, setAddingFavorites] = useState<Set<string>>(new Set());
+  const { addFavorite, removeFavorite, isFavorite } = useFavorites();
+  const [togglingFavorites, setTogglingFavorites] = useState<Set<string>>(new Set());
 
   const toggleRowExpansion = (playerId: string) => {
     const newExpanded = new Set(expandedRows);
@@ -39,15 +39,19 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
     onWitbExpansionChange?.(newExpanded.size > 0);
   };
 
-  const addToFavorites = async (playerId: string) => {
+  const toggleFavorite = async (playerId: string) => {
     if (!user) return;
     
-    setAddingFavorites(prev => new Set(prev).add(playerId));
+    setTogglingFavorites(prev => new Set(prev).add(playerId));
     
     try {
-      await addFavorite(playerId);
+      if (isFavorite(playerId)) {
+        await removeFavorite(playerId);
+      } else {
+        await addFavorite(playerId);
+      }
     } finally {
-      setAddingFavorites(prev => {
+      setTogglingFavorites(prev => {
         const newSet = new Set(prev);
         newSet.delete(playerId);
         return newSet;
@@ -216,12 +220,12 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
                     </div>
                     <div className="flex items-center gap-2">
                       <Button
-                        onClick={() => addToFavorites(player.id)}
+                        onClick={() => toggleFavorite(player.id)}
                         variant="outline"
                         size="sm"
-                        disabled={addingFavorites.has(player.id) || !user || isFavorite(player.id)}
+                        disabled={togglingFavorites.has(player.id) || !user}
                         className="h-9 px-3 border-gray-200 dark:border-gray-700 hover:border-red-300 hover:bg-red-50 dark:hover:bg-red-900/20"
-                        title={!user ? "Sign in to add favorites" : isFavorite(player.id) ? "Already in favorites" : "Add to favorites"}
+                        title={!user ? "Sign in to add favorites" : isFavorite(player.id) ? "Remove from favorites" : "Add to favorites"}
                       >
                         <Heart className={`h-4 w-4 text-red-500 ${isFavorite(player.id) ? 'fill-current' : ''}`} />
                       </Button>
@@ -304,12 +308,12 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
                 {/* Actions */}
                 <div className="col-span-2 flex items-center justify-start pr-6 gap-2">
                   <Button
-                    onClick={() => addToFavorites(player.id)}
+                    onClick={() => toggleFavorite(player.id)}
                     variant="outline"
                     size="sm"
-                    disabled={addingFavorites.has(player.id) || !user || isFavorite(player.id)}
+                    disabled={togglingFavorites.has(player.id) || !user}
                     className="h-8 px-2 border-gray-200 dark:border-gray-700 hover:border-red-300 hover:bg-red-50 dark:hover:bg-red-900/20"
-                    title={!user ? "Sign in to add favorites" : isFavorite(player.id) ? "Already in favorites" : "Add to favorites"}
+                    title={!user ? "Sign in to add favorites" : isFavorite(player.id) ? "Remove from favorites" : "Add to favorites"}
                   >
                     <Heart className={`h-3 w-3 text-red-500 ${isFavorite(player.id) ? 'fill-current' : ''}`} />
                   </Button>

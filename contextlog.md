@@ -263,53 +263,76 @@ club_order = {
    - FastAPI TestClient for endpoint testing
    - Comprehensive error scenario coverage
 
-## Current State & Observations (Updated August 15, 2025)
+## Current State & Observations (Updated August 23, 2025)
 
 ### Current Architecture Status
 
 #### Backend (witb-backend/)
-- **FastAPI Application**: Modern Python API with proper async/await patterns
-- **Database Models**: SQLAlchemy with UUID primary keys, Player and WITBItem models
-- **Service Layer Architecture**: Clean separation with PlayerService, WitbService, etc.
-- **Repository Pattern**: Dedicated repository classes for database operations
-- **API Routes**: RESTful endpoints in `/routes/` for players, tournaments, witb
-- **Testing Structure**: Comprehensive unit and integration tests in `/tests/`
-- **Scraping Infrastructure**: PGA Club Tracker scraper with CLI interface
+- **FastAPI Application**: Modern Python API with proper async/await patterns and CORS configuration
+- **Database Models**: SQLAlchemy with UUID primary keys, comprehensive model set:
+  - `Player`: Core golfer data with WITB relationships
+  - `WITBItem`: Equipment details with brand/model/specifications  
+  - `SystemUpdate`: Data refresh tracking with JSON details
+  - `User`: Supabase-integrated user management
+  - `FavoritePlayer`: User favorites with unique constraints
+- **Layered Architecture**: Clean separation following CLAUDE.md best practices:
+  - **Routes Layer**: Thin controllers in `/routes/` (players, tournaments, witb, auth)
+  - **Services Layer**: Business logic in `/services/` with URL enrichment and data processing
+  - **Repository Layer**: Database abstraction in `/repositories/` with complex sorting logic
+- **Authentication System**: Full Supabase JWT integration with local user management
+- **Testing Structure**: Comprehensive 40+ test suite in `/tests/` with unit/integration separation
+- **Scraping Infrastructure**: PGA Club Tracker scraper with CLI interface and date parsing
+- **Live Data Integration**: ESPN API for real-time tournament winners with caching
 
 #### Frontend (witb-frontend/)
-- **Next.js 15**: Modern React application with App Router
-- **Component Architecture**: Modular components with proper separation
-  - `ClubLeaderboard`: Main leaderboard component with category filtering
-  - `PlayerTable`: Responsive table with expand/collapse functionality
-  - `TournamentWinnerWithBag`: Featured tournament winner display
-- **Custom Hooks**: Data fetching and state management hooks
-  - `useLeaderboardData`: SWR-based leaderboard data fetching
-  - `usePlayersData`: Player data with pagination
-  - `usePlayerSearch`: Real-time search functionality
-- **UI System**: Shadcn/ui components with Tailwind CSS
-- **Type Safety**: TypeScript throughout with proper schema definitions
+- **Next.js 15 + React 19**: Modern application with App Router and latest React features
+- **Component Architecture**: Professional component organization:
+  - `PlayerTable`: Responsive table with WITB expansion and favorites integration
+  - `ClubLeaderboard`: Equipment statistics sidebar with category filtering
+  - `TournamentWinnerWithBag`: Live tournament winner display
+  - `UserProfile`: Complete user profile with favorites management
+  - `Header`: Search, navigation, theme toggle, and auth controls
+- **Authentication Components**: Full Supabase OAuth integration:
+  - `LoginButton`: Google OAuth sign-in
+  - `UserProfile`: Profile management with favorites
+  - `AuthProvider`: Session management context
+- **Custom Hooks**: Comprehensive data management:
+  - `usePlayersData`: Paginated player data with SWR caching
+  - `useLeaderboardData`: Equipment statistics with real-time updates
+  - `usePlayerSearch`: Instant search with debouncing
+  - `useFavorites`: User favorites management
+- **UI System**: Shadcn/ui + Tailwind CSS with glassmorphism effects
+- **State Management**: Context providers for auth, theme, and favorites
+- **Type Safety**: Full TypeScript integration with schema matching backend
 
 ### Key Features Currently Implemented
 
 #### Data Management
-- **Player Database**: Professional golfer profiles with rankings and equipment
-- **WITB Items**: Detailed equipment tracking (brand, model, loft, shaft)
-- **Club Leaderboard**: Equipment usage statistics across players
-- **System Updates**: Tracking for data refresh timestamps
+- **Player Database**: Professional golfer profiles with OGWR rankings and equipment
+- **WITB Items**: Detailed equipment tracking (brand, model, loft, shaft, product URLs)
+- **Club Leaderboard**: Real-time equipment usage statistics across top players
+- **System Updates**: Comprehensive tracking for OGWR and WITB data refresh timestamps
+- **User Management**: Supabase-integrated user accounts with favorites system
 
 #### API Capabilities
-- **Player CRUD**: Full player management with WITB item associations
-- **Pagination**: Server-side pagination with configurable page sizes
-- **Search**: Player name search functionality
-- **Leaderboard**: Club usage statistics with category filtering
+- **Player CRUD**: Full player management with WITB item associations and URL enrichment
+- **Authentication**: JWT-based auth with Supabase integration and local user creation
+- **Favorites System**: Add/remove favorite players with proper validation
+- **Pagination**: Server-side pagination with configurable page sizes and filtering
+- **Search**: Real-time player name search functionality
+- **Leaderboard**: Dynamic club usage statistics with category filtering
+- **Tournament Integration**: Live ESPN API data for current tournament winners
 - **Tour Filtering**: Filter players by tour (PGA, OGWR, LPGA)
 
 #### Frontend Features
-- **Responsive Design**: Mobile-first with glassmorphism UI effects
-- **Real-time Search**: Instant player filtering as user types
-- **Equipment Display**: Expandable equipment details with proper golf club ordering
-- **Loading States**: Skeleton components and proper error handling
-- **Theme Support**: Dark/light mode with system preference detection
+- **Authentication Flow**: Google OAuth sign-in with profile management
+- **Favorites Management**: Save/unsave favorite players with visual feedback  
+- **Responsive Design**: Mobile-first with glassmorphism UI effects and card/table transitions
+- **Real-time Search**: Instant player filtering with debounced input
+- **Equipment Display**: Expandable WITB details with proper golf club ordering (Driver→Putter)
+- **Live Tournament Data**: Current tournament winner with equipment details
+- **Loading States**: Comprehensive skeleton components and error boundaries
+- **Theme Support**: Dark/light mode with system preference detection and smooth transitions
 
 ### Strengths
 1. **Clean Architecture**: Well-separated concerns with clear boundaries
@@ -321,12 +344,15 @@ club_order = {
 7. **Code Standards**: Consistent following of CLAUDE.md guidelines
 8. **Modern Stack**: FastAPI + Next.js 15 with latest patterns
 
-### Recent Observations (August 15, 2025)
-1. **Active Development**: Codebase shows recent commits and active maintenance
-2. **Feature Completeness**: Core WITB functionality is fully implemented
-3. **Data Quality**: Professional-grade equipment tracking with proper validation
-4. **Performance**: Fast loading with proper caching strategies
-5. **User Experience**: Intuitive interface with good responsive behavior
+### Recent Observations (August 23, 2025)
+1. **Mature Codebase**: Well-established architecture with professional development patterns
+2. **Feature Completeness**: Core WITB functionality fully implemented with authentication and favorites
+3. **Modern Stack**: Latest versions (Next.js 15, React 19, FastAPI) with current best practices
+4. **Data Quality**: Professional-grade equipment tracking with live tournament integration
+5. **Performance**: Optimized with SWR caching, skeleton loading, and efficient data fetching
+6. **User Experience**: Polished interface with smooth auth flow and responsive design
+7. **Testing Coverage**: Comprehensive 40+ test suite with proper unit/integration separation
+8. **Code Standards**: Consistent adherence to CLAUDE.md guidelines throughout
 
 ### Areas for Enhancement
 1. **Error Boundaries**: More granular error handling in frontend components
@@ -336,11 +362,14 @@ club_order = {
 5. **Analytics**: Equipment trend analysis and player comparison tools
 
 ### Technical Debt Status
-- ✅ **Clean Architecture**: Proper separation of concerns implemented
-- ✅ **Type Safety**: Comprehensive typing throughout both frontend and backend
-- ✅ **Testing**: Good test coverage with proper unit/integration separation
-- ✅ **Modern Patterns**: Latest Next.js and FastAPI best practices
-- ✅ **Performance**: Optimized data fetching and rendering
+- ✅ **Clean Architecture**: Proper separation of concerns with layered backend and modular frontend
+- ✅ **Type Safety**: Comprehensive TypeScript + Pydantic typing with branded types (UserId, PlayerId)
+- ✅ **Testing**: Excellent test coverage (40+ tests) with proper unit/integration separation
+- ✅ **Modern Patterns**: Latest Next.js 15 + React 19 + FastAPI patterns and best practices
+- ✅ **Authentication**: Full Supabase integration with JWT validation and local user management
+- ✅ **Performance**: Optimized SWR caching, skeleton loading, and efficient data fetching
+- ✅ **Responsive Design**: Mobile-first approach with glassmorphism effects and smooth transitions
+- ✅ **Code Standards**: Consistent following of CLAUDE.md guidelines with proper formatting
 
 ## Deployment & Operations
 
