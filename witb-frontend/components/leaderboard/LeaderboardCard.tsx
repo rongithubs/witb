@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLinkIcon } from "lucide-react";
 import { isChampionItem, getRankBadgeVariant } from "@/lib/leaderboard-utils";
+import { BrandLogo } from "@/components/ui/BrandLogo";
+import { ClubImage } from "@/components/ui/ClubImage";
 import type { ClubUsageItem } from "@/hooks/useLeaderboardData";
 
 interface LeaderboardCardProps {
@@ -41,7 +43,7 @@ export function LeaderboardCard({
       {isChampion ? (
         <>
           {/* Featured #1 Design */}
-          <div className="bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-400/10 dark:to-amber-400/10 p-4 border-b border-yellow-200 dark:border-yellow-700/30">
+          <div className="bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-400/10 dark:to-amber-400/10 p-4 border-b border-yellow-200 dark:border-yellow-700/30 relative overflow-hidden">
             <div className="flex items-start gap-3 mb-2">
               <div className="bg-yellow-600 dark:bg-yellow-500 text-white text-lg font-bold rounded flex items-center justify-center w-12 h-12">
                 #{item.rank}
@@ -52,15 +54,38 @@ export function LeaderboardCard({
               </div>
             </div>
             
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-              {item.brand}
-            </h3>
-            <p className="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-3">
-              {item.model}
-            </p>
-            <p className="text-sm text-yellow-600 dark:text-gray-300">
-              Trusted by {item.percentage}% of Tour Players
-            </p>
+            <div className="flex items-start justify-between">
+              <div className="flex-1" style={{ maxWidth: '60%' }}>
+                <div className="mb-1">
+                  <BrandLogo 
+                    brandName={item.brand}
+                    width={600}
+                    height={120}
+                    fallbackClassName="text-6xl font-bold text-gray-900 dark:text-white"
+                    className="max-w-full h-auto object-contain"
+                  />
+                </div>
+                <p className="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-4">
+                  {item.model}
+                </p>
+                <p className="text-sm text-yellow-600 dark:text-gray-300">
+                  Trusted by {item.percentage}% of Tour Players
+                </p>
+              </div>
+              
+              {/* Club Head Image - contained within card bounds */}
+              <div className="flex items-center justify-center ml-4" style={{ width: '40%' }}>
+                <ClubImage
+                  brandName={item.brand}
+                  modelName={item.model}
+                  category={item.category}
+                  width={540}
+                  height={540}
+                  className="drop-shadow-lg object-contain max-w-full max-h-full"
+                  style={{ filter: 'drop-shadow(0 8px 12px rgba(0, 0, 0, 0.6))' }}
+                />
+              </div>
+            </div>
           </div>
           <div className="p-4">
             {item.brand_url && (
@@ -83,10 +108,23 @@ export function LeaderboardCard({
             <span className="font-bold text-xs px-2 py-1 rounded text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700">
               #{item.rank}
             </span>
-            <div>
-              <h3 className="font-bold text-lg leading-tight text-gray-900 dark:text-white">
-                {item.brand}
-              </h3>
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-1">
+                <BrandLogo 
+                  brandName={item.brand}
+                  width={80}
+                  height={32}
+                  fallbackClassName="font-bold text-lg leading-tight text-gray-900 dark:text-white"
+                />
+                <ClubImage
+                  brandName={item.brand}
+                  modelName={item.model}
+                  category={item.category}
+                  width={40}
+                  height={40}
+                  className="flex-shrink-0"
+                />
+              </div>
               <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">
                 {item.model}
               </p>
