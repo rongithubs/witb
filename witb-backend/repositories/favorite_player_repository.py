@@ -52,11 +52,15 @@ class FavoritePlayerRepository:
         return False
 
     async def get_user_favorites(self, user_id: UserId) -> list[models.FavoritePlayer]:
-        """Get user's favorite players with player data loaded."""
+        """Get user's favorite players with player data and WITB items loaded."""
         result = await self.db.execute(
             select(models.FavoritePlayer)
             .where(models.FavoritePlayer.user_id == user_id)
-            .options(selectinload(models.FavoritePlayer.player))
+            .options(
+                selectinload(models.FavoritePlayer.player).selectinload(
+                    models.Player.witb_items
+                )
+            )
             .order_by(models.FavoritePlayer.created_at.desc())
         )
         return list(result.scalars().all())

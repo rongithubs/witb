@@ -1,13 +1,12 @@
 "use client";
 
-import type { Metadata } from "next";
 import Header from "@/components/ui/Header";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { UserProfile } from "@/components/auth/UserProfile";
 import { useState } from "react";
 
 export default function ProfilePage() {
-  const [query, setQuery] = useState("");
+  const [, setQuery] = useState("");
 
   return (
     <ErrorBoundary>
