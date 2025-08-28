@@ -98,6 +98,14 @@ witb/
 - **Type Safety**: TypeScript interfaces matching backend schemas
 - **Loading States**: Skeleton components and loading indicators
 
+#### 5. Image System (August 2025)
+- **BrandLogo Component**: Smart brand logo display with dark mode support and fallback text
+- **ClubImage Component**: Club head image rendering with automatic fallback handling  
+- **image-utils.ts**: Intelligent brand/model matching with fuzzy search and case-insensitive lookup
+- **Asset Organization**: Structured `/brands/` and `/clubs/` image directories with organized naming
+- **LeaderboardCard Enhancement**: Large club images (540x540px) in champion cards, smaller (40x40px) in regular cards
+- **Image Optimization**: Next.js Image component integration with proper loading and error states
+
 ### Key Features
 
 1. **Player Equipment Display**: Expandable WITB details with proper golf club ordering
@@ -164,11 +172,13 @@ club_order = {
 
 ### Frontend
 - **Next.js 15**: React framework with App Router
+- **Next.js Image**: Optimized brand logo and club head image loading with automatic optimization
 - **TypeScript**: Type safety and better developer experience
 - **Tailwind CSS**: Utility-first styling framework
 - **Shadcn/ui**: Component library built on Radix UI
 - **SWR**: Data fetching with smart caching
 - **Lucide React**: Icon library
+- **Image Fallback System**: Graceful handling of missing equipment images with text fallbacks
 
 ### Development Tools
 - **Black**: Python code formatting
