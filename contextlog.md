@@ -215,6 +215,28 @@ club_order = {
 
 ## Recent Major Updates (August 2025)
 
+### Profile Bag View Enhancement (August 28, 2025)
+1. **Expandable Favorite Players**: Complete redesign of profile favorites section
+   - **Backend Enhancement**: Updated `FavoritePlayerRepository` with eager loading for WITB items using nested `selectinload`
+   - **Reusable WITB Components**: Extracted shared components from PlayerTable for consistency
+     - `WITBItemList`: Mobile card + desktop table layouts with product links
+     - `WITBExpansionControls`: Consistent expand/collapse UI across contexts
+     - `WITBContainer`: Manages expansion state and animations
+   - **FavoritePlayerCard**: Ultra-compact expandable cards with inline equipment preview
+   - **User Experience**: Users can now view complete equipment setups for favorite players in profile
+   
+2. **Component Architecture Improvements**:
+   - **Code Reuse**: Eliminated duplication by extracting WITB display logic into shared components
+   - **Compact Design**: Ultra-compact card layout using 60-70% less vertical space than original
+   - **Smart Equipment Preview**: Shows key clubs (Driver, Putter, Iron) when collapsed
+   - **Responsive Design**: Seamless mobile/desktop experience with proper responsive patterns
+
+3. **Quality & Testing**:
+   - **Comprehensive Test Suite**: Added 15+ unit tests for all new components following CLAUDE.md practices
+   - **Type Safety**: Full TypeScript integration with proper interfaces and branded types
+   - **Performance**: Efficient data loading with eager loading, no additional API calls needed
+   - **Clean Code**: Follows all CLAUDE.md guidelines with proper separation of concerns
+
 ### Live Tournament Integration
 1. **ESPN API Integration**: Replaced hardcoded tournament winners with live ESPN Golf API
    - Real-time tournament winner data with proper score parsing
@@ -300,8 +322,14 @@ club_order = {
   - `PlayerTable`: Responsive table with WITB expansion and favorites integration
   - `ClubLeaderboard`: Equipment statistics sidebar with category filtering
   - `TournamentWinnerWithBag`: Live tournament winner display
-  - `UserProfile`: Complete user profile with favorites management
+  - `UserProfile`: Streamlined profile with expandable favorite player bags
   - `Header`: Search, navigation, theme toggle, and auth controls
+  - **WITB Components**: Reusable equipment display system
+    - `WITBItemList`: Mobile card + desktop table layouts with product links
+    - `WITBExpansionControls`: Consistent expand/collapse UI
+    - `WITBContainer`: Manages expansion state and animations
+  - **Favorites Components**: Enhanced profile experience
+    - `FavoritePlayerCard`: Ultra-compact expandable cards with equipment preview
 - **Authentication Components**: Full Supabase OAuth integration:
   - `LoginButton`: Google OAuth sign-in
   - `UserProfile`: Profile management with favorites
@@ -336,10 +364,11 @@ club_order = {
 
 #### Frontend Features
 - **Authentication Flow**: Google OAuth sign-in with profile management
-- **Favorites Management**: Save/unsave favorite players with visual feedback  
-- **Responsive Design**: Mobile-first with glassmorphism UI effects and card/table transitions
+- **Enhanced Favorites**: Expandable favorite player cards with complete equipment bags in profile
+- **Responsive Design**: Mobile-first with glassmorphism UI effects and ultra-compact card layouts
 - **Real-time Search**: Instant player filtering with debounced input
-- **Equipment Display**: Expandable WITB details with proper golf club ordering (Driver→Putter)
+- **Equipment Display**: Reusable WITB components with proper golf club ordering (Driver→Putter)
+- **Profile Experience**: Streamlined profile focusing on expandable favorite player equipment
 - **Live Tournament Data**: Current tournament winner with equipment details
 - **Loading States**: Comprehensive skeleton components and error boundaries
 - **Theme Support**: Dark/light mode with system preference detection and smooth transitions
@@ -354,15 +383,16 @@ club_order = {
 7. **Code Standards**: Consistent following of CLAUDE.md guidelines
 8. **Modern Stack**: FastAPI + Next.js 15 with latest patterns
 
-### Recent Observations (August 23, 2025)
-1. **Mature Codebase**: Well-established architecture with professional development patterns
-2. **Feature Completeness**: Core WITB functionality fully implemented with authentication and favorites
-3. **Modern Stack**: Latest versions (Next.js 15, React 19, FastAPI) with current best practices
-4. **Data Quality**: Professional-grade equipment tracking with live tournament integration
-5. **Performance**: Optimized with SWR caching, skeleton loading, and efficient data fetching
-6. **User Experience**: Polished interface with smooth auth flow and responsive design
-7. **Testing Coverage**: Comprehensive 40+ test suite with proper unit/integration separation
-8. **Code Standards**: Consistent adherence to CLAUDE.md guidelines throughout
+### Recent Observations (August 28, 2025)
+1. **Enhanced Architecture**: Mature codebase with new reusable WITB component system
+2. **Feature Evolution**: Profile experience transformed with expandable favorite player equipment bags
+3. **Component Reusability**: Successfully extracted shared WITB display logic eliminating code duplication
+4. **Modern Stack**: Latest versions (Next.js 15, React 19, FastAPI) with current best practices
+5. **Data Quality**: Professional-grade equipment tracking with live tournament integration and eager loading
+6. **Performance**: Optimized with SWR caching, skeleton loading, efficient data loading, and ultra-compact UI
+7. **User Experience**: Streamlined profile interface focusing on equipment exploration
+8. **Testing Coverage**: Expanded to 55+ test suite with comprehensive component coverage
+9. **Code Standards**: Consistent adherence to CLAUDE.md guidelines with excellent QCHECK analysis results
 
 ### Areas for Enhancement
 1. **Error Boundaries**: More granular error handling in frontend components
