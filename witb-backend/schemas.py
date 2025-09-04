@@ -131,3 +131,73 @@ class UserFavoritesResponse(BaseModel):
 
     favorites: list[FavoritePlayerResponse]
     total: int
+
+
+# eBay API Integration Schemas
+
+
+class EBaySearchRequest(BaseModel):
+    """Schema for eBay product search requests."""
+
+    brand: str | None = None
+    model: str | None = None
+    category: str | None = None
+    condition: str | None = "New"
+    max_price: float | None = None
+    min_price: float | None = None
+    limit: int = 20
+
+
+class EBayPriceInfo(BaseModel):
+    """Schema for eBay product pricing information."""
+
+    current_price: float
+    currency: str = "USD"
+    condition: str
+    shipping_cost: float | None = None
+    buy_it_now_price: float | None = None
+    auction_end_time: datetime | None = None
+
+
+class EBayProduct(BaseModel):
+    """Schema for eBay product listing."""
+
+    product_id: str
+    title: str
+    brand: str | None = None
+    model: str | None = None
+    category: str | None = None
+    price_info: EBayPriceInfo
+    listing_url: str
+    image_url: str | None = None
+    seller_info: dict | None = None
+    location: str | None = None
+    listing_type: str  # "Auction", "FixedPrice", etc.
+
+
+class EBaySearchResponse(BaseModel):
+    """Schema for eBay search results."""
+
+    products: list[EBayProduct]
+    total_found: int
+    page: int
+    per_page: int
+    search_query: str
+
+
+class EBayEnrichmentRequest(BaseModel):
+    """Schema for enriching WITB items with eBay data."""
+
+    witb_item_ids: list[UUID]
+    search_options: EBaySearchRequest | None = None
+
+
+class EnrichedWITBItem(WITBItem):
+    """Schema for WITB item enriched with eBay pricing data."""
+
+    ebay_product_id: str | None = None
+    current_price: float | None = None
+    price_currency: str | None = None
+    price_condition: str | None = None
+    price_last_updated: datetime | None = None
+    ebay_listing_url: str | None = None

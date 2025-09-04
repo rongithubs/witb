@@ -68,3 +68,49 @@ export type UserFavoritesResponse = {
   favorites: FavoritePlayer[];
   total: number;
 };
+
+// eBay API Integration Types
+export type EBayPriceInfo = {
+  current_price: number;
+  currency: string;
+  condition: string;
+  shipping_cost?: number;
+  buy_it_now_price?: number;
+  auction_end_time?: string;
+};
+
+export type EBayProduct = {
+  product_id: string;
+  title: string;
+  brand?: string;
+  model?: string;
+  category?: string;
+  price_info: EBayPriceInfo;
+  listing_url: string;
+  image_url?: string;
+  seller_info?: {
+    username: string;
+    feedback_percentage?: number;
+    feedback_score?: number;
+  };
+  location?: string;
+  listing_type: string;
+};
+
+export type EBaySearchResponse = {
+  products: EBayProduct[];
+  total_found: number;
+  page: number;
+  per_page: number;
+  search_query: string;
+};
+
+export type EBaySearchParams = {
+  brand?: string;
+  model?: string;
+  category?: string;
+  condition?: string;
+  max_price?: number;
+  min_price?: number;
+  limit?: number;
+};

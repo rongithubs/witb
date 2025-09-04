@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import models
 from database import engine
-from routes import players, tournaments, witb
+from routes import ebay, players, tournaments, witb
 from auth import routes as auth_routes
 
 
@@ -43,6 +43,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(auth_routes.router)
+app.include_router(ebay.router)
 app.include_router(players.router)
 app.include_router(tournaments.router)
 app.include_router(witb.router)

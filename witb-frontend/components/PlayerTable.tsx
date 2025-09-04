@@ -8,6 +8,7 @@ import { ChevronDownIcon, ChevronUpIcon, Heart } from "lucide-react";
 import { useOWGRInfo } from "@/hooks/useOWGRInfo";
 import { useAuth } from "@/providers/auth-provider";
 import { useFavorites } from "@/providers/favorites-provider";
+import { PriceButton } from "@/components/pricing/PriceButton";
 import heartStyles from "@/components/ui/heartAnimations.module.css";
 
 interface PlayerTableProps {
@@ -461,16 +462,24 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
                                   </p>
                                 </div>
                                 
-                                {club.product_url && (
-                                  <Button 
-                                    size="sm" 
+                                <div className="flex-shrink-0 flex flex-col gap-2">
+                                  <PriceButton 
+                                    witbItem={club}
                                     variant="outline"
-                                    onClick={() => window.open(club.product_url, '_blank')}
-                                    className="flex-shrink-0 text-sm px-3 py-2 rounded-lg border-emerald-200 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
-                                  >
-                                    View Product
-                                  </Button>
-                                )}
+                                    size="sm"
+                                    className="text-xs px-2 py-1.5"
+                                  />
+                                  {club.product_url && (
+                                    <Button 
+                                      size="sm" 
+                                      variant="outline"
+                                      onClick={() => window.open(club.product_url, '_blank')}
+                                      className="text-sm px-3 py-2 rounded-lg border-emerald-200 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                                    >
+                                      View Product
+                                    </Button>
+                                  )}
+                                </div>
                               </div>
 
                               {/* Specifications */}
@@ -517,7 +526,7 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
                                 Shaft
                               </th>
                               <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                Action
+                                Actions
                               </th>
                             </tr>
                           </thead>
@@ -542,18 +551,26 @@ export function PlayerTable({ players, isLoading, error, playersResponse, page, 
                                   {club.shaft || '-'}
                                 </td>
                                 <td className="py-3 px-4">
-                                  {club.product_url ? (
-                                    <Button 
-                                      size="sm" 
+                                  <div className="flex items-center gap-2">
+                                    <PriceButton 
+                                      witbItem={club}
                                       variant="outline"
-                                      onClick={() => window.open(club.product_url, '_blank')}
+                                      size="sm"
                                       className="text-xs px-2 py-1 h-6"
-                                    >
-                                      View
-                                    </Button>
-                                  ) : (
-                                    <span className="text-xs text-gray-400">-</span>
-                                  )}
+                                    />
+                                    {club.product_url ? (
+                                      <Button 
+                                        size="sm" 
+                                        variant="outline"
+                                        onClick={() => window.open(club.product_url, '_blank')}
+                                        className="text-xs px-2 py-1 h-6"
+                                      >
+                                        View
+                                      </Button>
+                                    ) : (
+                                      <span className="text-xs text-gray-400">-</span>
+                                    )}
+                                  </div>
                                 </td>
                               </tr>
                             ))}
