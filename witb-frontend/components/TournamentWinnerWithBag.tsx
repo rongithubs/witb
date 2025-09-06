@@ -10,9 +10,9 @@ import {
   Target,
   ChevronDown,
   ChevronUp,
-  ExternalLink,
   Info,
 } from "lucide-react";
+import { PriceButton } from "./pricing/PriceButton";
 
 type TournamentWinner = {
   winner: string;
@@ -381,22 +381,16 @@ const TournamentWinnerWithBag = memo(function TournamentWinnerWithBag({ isCollap
                   </span>
                 </div>
 
-                {/* Product URL Button */}
-                {item.product_url && (
-                  <div className="absolute top-4 right-4 z-10">
-                    <a
-                      href={item.product_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center w-8 h-8 bg-white/90 dark:bg-slate-700/90 backdrop-blur-sm rounded-full shadow-sm hover:shadow-md transition-all duration-200 hover:scale-110 group/link"
-                    >
-                      <ExternalLink
-                        size={14}
-                        className="text-slate-600 dark:text-slate-400 group-hover/link:text-emerald-600 dark:group-hover/link:text-emerald-400"
-                      />
-                    </a>
+                {/* eBay Pricing in top-right corner */}
+                <div className="absolute top-4 right-4 z-10">
+                  <div className="bg-white/90 dark:bg-slate-700/90 backdrop-blur-sm rounded-full px-2 py-1 shadow-sm">
+                    <PriceButton 
+                      witbItem={item}
+                      size="sm"
+                      variant="ghost"
+                    />
                   </div>
-                )}
+                </div>
 
                 {/* Card Content */}
                 <div className="p-6 pt-12">
@@ -436,21 +430,15 @@ const TournamentWinnerWithBag = memo(function TournamentWinnerWithBag({ isCollap
                     </div>
                   )}
 
-                  {/* View Product Button */}
-                  {item.product_url && (
-                    <a
-                      href={item.product_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 w-full px-4 py-2 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-md justify-center group/btn"
-                    >
-                      <span>View Product</span>
-                      <ExternalLink
-                        size={14}
-                        className="group-hover/btn:translate-x-0.5 transition-transform duration-200"
-                      />
-                    </a>
-                  )}
+                  {/* eBay Pricing Button */}
+                  <div className="w-full">
+                    <PriceButton 
+                      witbItem={item}
+                      size="lg"
+                      variant="default"
+                      className="w-full justify-center bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md"
+                    />
+                  </div>
                 </div>
 
                 {/* Hover overlay */}
