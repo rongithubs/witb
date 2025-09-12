@@ -5,6 +5,9 @@ import { Search, X } from "lucide-react";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LoginButton } from "@/components/auth/LoginButton";
+import { MobileMenu } from "@/components/ui/MobileMenu";
+import { AnimatedHamburger } from "@/components/ui/AnimatedHamburger";
+import { useAuth } from "@/providers/auth-provider";
 
 type HeaderProps = {
   onSearch: (query: string) => void;
@@ -13,6 +16,8 @@ type HeaderProps = {
 export default function Header({ onSearch }: HeaderProps) {
   const [query, setQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -29,8 +34,9 @@ export default function Header({ onSearch }: HeaderProps) {
       <div className="mx-auto px-4 sm:px-6">
         {/* Mobile-first layout */}
         <div className="flex items-center justify-between h-16">
-          {/* Logo - always visible */}
-          <div className="flex items-center flex-shrink-0">
+          {/* Mobile: Logo only */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            {/* Logo - always visible */}
             <Link href="/" className="hover:opacity-80 transition-opacity">
               <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 WITB
@@ -68,10 +74,24 @@ export default function Header({ onSearch }: HeaderProps) {
             <ThemeToggle />
           </div>
 
-          {/* Mobile: Actions only */}
+          {/* Mobile: Actions + Hamburger */}
           <div className="flex md:hidden items-center gap-2 flex-shrink-0">
-            <LoginButton />
-            <ThemeToggle />
+            {user ? (
+              <>
+                <ThemeToggle />
+                {/* Hamburger Menu - Mobile Only, Authenticated Users, Right Side */}
+                <AnimatedHamburger
+                  isOpen={isMobileMenuOpen}
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                />
+              </>
+            ) : (
+              <>
+                <LoginButton />
+                <ThemeToggle />
+              </>
+            )}
           </div>
         </div>
 
@@ -90,8 +110,8 @@ export default function Header({ onSearch }: HeaderProps) {
               placeholder="Search players or equipment..."
               className={`block w-full pl-12 pr-12 py-4 border-2 rounded-2xl bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none text-base transition-all duration-200 ${
                 isSearchFocused
-                  ? 'border-emerald-500 dark:border-emerald-400 bg-white dark:bg-gray-900 shadow-lg'
-                  : 'border-gray-200 dark:border-gray-700'
+                  ? "border-emerald-500 dark:border-emerald-400 bg-white dark:bg-gray-900 shadow-lg"
+                  : "border-gray-200 dark:border-gray-700"
               }`}
             />
             {query && (
@@ -104,6 +124,12 @@ export default function Header({ onSearch }: HeaderProps) {
             )}
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        <MobileMenu
+          isOpen={isMobileMenuOpen}
+          onClose={() => setIsMobileMenuOpen(false)}
+        />
       </div>
     </header>
   );
