@@ -2,18 +2,18 @@
 
 import { useState } from "react";
 import { useLeaderboardData } from "@/hooks/useLeaderboardData";
-import { 
-  getAvailableCategories, 
-  getDisplayItems, 
+import {
+  getAvailableCategories,
+  getDisplayItems,
   MAJOR_CATEGORIES,
-  validateLeaderboardData 
+  validateLeaderboardData,
 } from "@/lib/leaderboard-utils";
 import {
   LeaderboardCard,
   LeaderboardTabs,
   LeaderboardHeader,
   LeaderboardSkeleton,
-  LeaderboardFooter
+  LeaderboardFooter,
 } from "@/components/leaderboard";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 
@@ -22,15 +22,20 @@ export function ClubLeaderboard() {
   const { leaderboardData, error, isLoading, refetch } = useLeaderboardData(3);
 
   // Validate data when it arrives
-  const validatedData = leaderboardData && validateLeaderboardData(leaderboardData) 
-    ? leaderboardData 
-    : undefined;
+  const validatedData =
+    leaderboardData && validateLeaderboardData(leaderboardData)
+      ? leaderboardData
+      : undefined;
 
   // Check for data corruption
   const hasInvalidData = leaderboardData && !validatedData;
 
   const availableCategories = getAvailableCategories(validatedData);
-  const displayItems = getDisplayItems(validatedData, selectedCategory, MAJOR_CATEGORIES);
+  const displayItems = getDisplayItems(
+    validatedData,
+    selectedCategory,
+    MAJOR_CATEGORIES,
+  );
 
   if (isLoading) {
     return <LeaderboardSkeleton />;
@@ -90,9 +95,11 @@ export function ClubLeaderboard() {
 
   return (
     <ErrorBoundary>
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+      <div
+        data-testid="club-leaderboard"
+        className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
+      >
         <div className="p-6">
-          
           <LeaderboardHeader leaderboardData={validatedData} />
 
           <LeaderboardTabs
