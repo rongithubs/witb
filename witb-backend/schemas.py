@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
@@ -201,3 +201,50 @@ class EnrichedWITBItem(WITBItem):
     price_condition: str | None = None
     price_last_updated: datetime | None = None
     ebay_listing_url: str | None = None
+
+
+# User WITB Item Schemas
+
+
+class UserWITBItemBase(BaseModel):
+    category: str
+    brand: str
+    model: str
+    loft: str | None = None
+    shaft: str | None = None
+    carry_distance: int | None = None
+    notes: str | None = None
+    purchase_date: date | None = None
+    purchase_price: float | None = None
+
+
+class UserWITBItem(UserWITBItemBase):
+    id: UUID
+    user_id: UUID
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class UserWITBItemCreate(UserWITBItemBase):
+    pass
+
+
+class UserWITBItemUpdate(BaseModel):
+    category: str | None = None
+    brand: str | None = None
+    model: str | None = None
+    loft: str | None = None
+    shaft: str | None = None
+    carry_distance: int | None = None
+    notes: str | None = None
+    purchase_date: date | None = None
+    purchase_price: float | None = None
+
+
+class UserBagResponse(BaseModel):
+    """Schema for user's complete bag of equipment."""
+
+    items: list[UserWITBItem]
+    total: int

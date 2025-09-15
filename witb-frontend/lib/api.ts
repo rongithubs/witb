@@ -63,6 +63,27 @@ class ApiClient {
     }
   }
 
+  async put<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+    try {
+      const headers = await this.getAuthHeaders()
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'PUT',
+        headers,
+        body: body ? JSON.stringify(body) : undefined,
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        return { error: errorData.detail || 'Request failed' }
+      }
+
+      const data = await response.json()
+      return { data }
+    } catch (error) {
+      return { error: 'Network error' }
+    }
+  }
+
   async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
     try {
       const headers = await this.getAuthHeaders()
@@ -85,6 +106,23 @@ class ApiClient {
 }
 
 export const apiClient = new ApiClient()
+
+// SWR fetcher function
+export const fetcher = async (url: string) => {
+  const response = await apiClient.get(url)
+  if (response.error) {
+    throw new Error(response.error)
+  }
+  return response.data
+}
+
+// Simplified API for direct calls
+export const api = {
+  get: (url: string) => apiClient.get(url),
+  post: (url: string, data?: any) => apiClient.post(url, data),
+  put: (url: string, data?: any) => apiClient.put(url, data),
+  delete: (url: string) => apiClient.delete(url),
+}
 
 // Auth-specific API calls
 export const authApi = {
