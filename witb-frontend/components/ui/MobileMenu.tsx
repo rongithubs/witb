@@ -166,6 +166,15 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     <span className="text-sm font-medium">My Profile</span>
                   </Link>
 
+                  <Link
+                    href="/my-bag"
+                    onClick={handleLinkClick}
+                    className="flex items-center gap-3 p-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                  >
+                    <TrendingUp className="h-5 w-5" />
+                    <span className="text-sm font-medium">My Bag</span>
+                  </Link>
+
                   <button
                     onClick={handleLeaderboardClick}
                     className="w-full flex items-center gap-3 p-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
