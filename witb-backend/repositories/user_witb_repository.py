@@ -78,15 +78,21 @@ class UserWITBRepository:
         self, item_id: UserWITBItemId, user_id: UserId
     ) -> bool:
         """Delete a user WITB item."""
+        print(f"DELETE REPO DEBUG - Looking for item_id: {item_id}, user_id: {user_id}")
         item = await self.get_user_witb_item_by_id(item_id, user_id)
+        print(f"DELETE REPO DEBUG - Found item: {item}")
         if not item:
+            print(f"DELETE REPO DEBUG - Item not found, returning False")
             return False
 
+        print(f"DELETE REPO DEBUG - Deleting item: {item.id}")
         await self.db.delete(item)
         try:
             await self.db.commit()
+            print(f"DELETE REPO DEBUG - Successfully deleted and committed")
             return True
-        except IntegrityError:
+        except IntegrityError as e:
+            print(f"DELETE REPO DEBUG - IntegrityError during commit: {e}")
             await self.db.rollback()
             raise
 

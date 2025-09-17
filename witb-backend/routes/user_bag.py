@@ -1,5 +1,7 @@
 """User bag routes following CLAUDE.md O-4 (thin route handlers)."""
 
+from uuid import UUID
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -41,7 +43,8 @@ async def get_user_bag_item(
 ):
     """Get a specific item from user's bag."""
     try:
-        item_uuid = UserWITBItemId(item_id)
+        uuid_obj = UUID(item_id)
+        item_uuid = UserWITBItemId(uuid_obj)
     except ValueError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -61,7 +64,8 @@ async def update_user_bag_item(
 ):
     """Update an item in user's bag."""
     try:
-        item_uuid = UserWITBItemId(item_id)
+        uuid_obj = UUID(item_id)
+        item_uuid = UserWITBItemId(uuid_obj)
     except ValueError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -80,11 +84,19 @@ async def remove_equipment_from_bag(
 ):
     """Remove equipment from user's bag."""
     try:
-        item_uuid = UserWITBItemId(item_id)
-    except ValueError:
+        # Add debug logging
+        print(f"DELETE DEBUG - Received item_id: {item_id}")
+        print(f"DELETE DEBUG - item_id type: {type(item_id)}")
+
+        # First convert string to UUID, then wrap with branded type
+        uuid_obj = UUID(item_id)
+        item_uuid = UserWITBItemId(uuid_obj)
+        print(f"DELETE DEBUG - Converted to UUID: {item_uuid}")
+    except ValueError as e:
+        print(f"DELETE DEBUG - UUID conversion failed: {e}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid item ID format"
+            detail=f"Invalid item ID format: {item_id}. Expected UUID format."
         )
 
     service = UserWITBService(db)

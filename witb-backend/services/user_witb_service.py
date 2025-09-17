@@ -104,10 +104,17 @@ class UserWITBService:
     ) -> bool:
         """Delete a user WITB item."""
         try:
+            print(f"DELETE SERVICE DEBUG - item_id: {item_id}, user_id: {user_id}")
             success = await self.user_witb_repo.delete_user_witb_item(item_id, user_id)
+            print(f"DELETE SERVICE DEBUG - Repository returned success: {success}")
             if not success:
+                print(f"DELETE SERVICE DEBUG - Item not found, raising InvalidPlayerIdError")
                 raise InvalidPlayerIdError(str(item_id))  # Reusing exception for simplicity
             return success
+        except InvalidPlayerIdError:
+            # Re-raise the specific error instead of wrapping it
+            raise
         except SQLAlchemyError as e:
             logging.error(f"Error deleting user WITB item: {e}")
+            print(f"DELETE SERVICE DEBUG - SQLAlchemy error: {e}")
             raise DatabaseOperationError("Failed to delete user WITB item")
