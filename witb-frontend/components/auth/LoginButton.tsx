@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '@/providers/auth-provider'
 import { Button } from '@/components/ui/button'
-import { ChevronDown, User, LogOut } from 'lucide-react'
+import { ChevronDown, User, LogOut, Target } from 'lucide-react'
 import Link from 'next/link'
 
 export function LoginButton() {
@@ -88,6 +88,14 @@ export function LoginButton() {
               >
                 <User className="h-4 w-4" />
                 Profile
+              </Link>
+              <Link
+                href="/my-bag"
+                onClick={() => setIsDropdownOpen(false)}
+                className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              >
+                <Target className="h-4 w-4" />
+                My Bag
               </Link>
             </div>
             {/* Separator line */}

@@ -114,3 +114,50 @@ export type EBaySearchParams = {
   min_price?: number;
   limit?: number;
 };
+
+// User WITB Item Types
+export type UserWITBItem = {
+  id: string;
+  user_id: string;
+  category: string;
+  brand: string;
+  model: string;
+  loft?: string;
+  shaft?: string;
+  carry_distance?: number;
+  notes?: string;
+  purchase_date?: string;
+  purchase_price?: number;
+  created_at: string;
+  updated_at: string;
+  product_url?: string; // Enriched by backend service
+};
+
+export type UserWITBItemCreate = {
+  category: string;
+  brand: string;
+  model: string;
+  loft?: string;
+  shaft?: string;
+  carry_distance?: number;
+  notes?: string;
+  purchase_date?: string;
+  purchase_price?: number;
+};
+
+export type UserWITBItemUpdate = {
+  category?: string;
+  brand?: string;
+  model?: string;
+  loft?: string;
+  shaft?: string;
+  carry_distance?: number;
+  notes?: string;
+  purchase_date?: string;
+  purchase_price?: number;
+};
+
+export type UserBagResponse = {
+  items: UserWITBItem[];
+  total: number;
+};

@@ -2,10 +2,13 @@ import uuid
 
 from sqlalchemy import (
     Column,
+    Date,
     DateTime,
+    Float,
     ForeignKey,
     Integer,
     String,
+    Text,
     func,
     UniqueConstraint,
 )
@@ -64,6 +67,9 @@ class User(Base):
     favorite_players = relationship(
         "FavoritePlayer", back_populates="user", lazy="selectin"
     )
+    user_witb_items = relationship(
+        "UserWITBItem", back_populates="user", lazy="selectin"
+    )
 
 
 class FavoritePlayer(Base):
@@ -78,3 +84,21 @@ class FavoritePlayer(Base):
     __table_args__ = (
         UniqueConstraint("user_id", "player_id", name="unique_user_player_favorite"),
     )
+
+
+class UserWITBItem(Base):
+    __tablename__ = "user_witb_items"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+    category = Column(String, nullable=False)
+    brand = Column(String, nullable=False)
+    model = Column(String, nullable=False)
+    loft = Column(String, nullable=True)
+    shaft = Column(String, nullable=True)
+    carry_distance = Column(Integer, nullable=True)  # Average carry distance in yards
+    notes = Column(Text, nullable=True)
+    purchase_date = Column(Date, nullable=True)
+    purchase_price = Column(Float, nullable=True)
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+    user = relationship("User", back_populates="user_witb_items")
