@@ -28,12 +28,20 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
       return
     }
 
+    console.log('DELETE DEBUG - Item ID:', item.id)
+    console.log('DELETE DEBUG - Item ID type:', typeof item.id)
+    console.log('DELETE DEBUG - Full item:', item)
+    console.log('DELETE DEBUG - URL will be:', `/user-bag/${item.id}`)
+
     setIsDeleting(true)
     try {
       await api.delete(`/user-bag/${item.id}`)
+      console.log('DELETE DEBUG - Success!')
       onUpdate()
     } catch (error) {
-      console.error('Failed to delete equipment:', error)
+      console.error('DELETE DEBUG - Error:', error)
+      console.error('DELETE DEBUG - Error type:', typeof error)
+      console.error('DELETE DEBUG - Error message:', (error as Error)?.message)
       alert('Failed to remove equipment. Please try again.')
     } finally {
       setIsDeleting(false)
@@ -58,8 +66,7 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
           {/* Brand Logo */}
           <div className="flex-shrink-0">
             <BrandLogo
-              brand={item.brand}
-              size="sm"
+              brandName={item.brand}
               className="w-10 h-10"
             />
           </div>
@@ -115,9 +122,11 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
         <div className="flex items-center gap-2 ml-4">
           {/* eBay Pricing */}
           <PriceButton
-            brand={item.brand}
-            model={item.model}
-            category={item.category}
+            witbItem={{
+              brand: item.brand,
+              model: item.model,
+              category: item.category
+            }}
             size="sm"
           />
 

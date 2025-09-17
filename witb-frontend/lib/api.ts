@@ -97,6 +97,11 @@ class ApiClient {
         return { error: errorData.detail || 'Request failed' }
       }
 
+      // Handle 204 No Content responses (common for DELETE operations)
+      if (response.status === 204 || response.headers.get('content-length') === '0') {
+        return { data: undefined as T }
+      }
+
       const data = await response.json()
       return { data }
     } catch (error) {
@@ -109,8 +114,11 @@ export const apiClient = new ApiClient()
 
 // SWR fetcher function
 export const fetcher = async (url: string) => {
+  console.log('Fetcher called for URL:', url)
   const response = await apiClient.get(url)
+  console.log('Fetcher response:', response)
   if (response.error) {
+    console.error('Fetcher error:', response.error)
     throw new Error(response.error)
   }
   return response.data
@@ -118,10 +126,34 @@ export const fetcher = async (url: string) => {
 
 // Simplified API for direct calls
 export const api = {
-  get: (url: string) => apiClient.get(url),
-  post: (url: string, data?: any) => apiClient.post(url, data),
-  put: (url: string, data?: any) => apiClient.put(url, data),
-  delete: (url: string) => apiClient.delete(url),
+  get: async (url: string) => {
+    const response = await apiClient.get(url)
+    if (response.error) {
+      throw new Error(response.error)
+    }
+    return response.data
+  },
+  post: async (url: string, data?: any) => {
+    const response = await apiClient.post(url, data)
+    if (response.error) {
+      throw new Error(response.error)
+    }
+    return response.data
+  },
+  put: async (url: string, data?: any) => {
+    const response = await apiClient.put(url, data)
+    if (response.error) {
+      throw new Error(response.error)
+    }
+    return response.data
+  },
+  delete: async (url: string) => {
+    const response = await apiClient.delete(url)
+    if (response.error) {
+      throw new Error(response.error)
+    }
+    return response.data
+  },
 }
 
 // Auth-specific API calls

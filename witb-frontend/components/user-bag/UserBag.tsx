@@ -5,7 +5,7 @@ import { useAuth } from '@/providers/auth-provider'
 import { useUserBag } from '@/hooks/useUserBag'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Plus, Golf } from 'lucide-react'
+import { Plus, Target } from 'lucide-react'
 import { AddEquipmentForm } from './AddEquipmentForm'
 import { UserWITBItemList } from './UserWITBItemList'
 
@@ -14,11 +14,14 @@ export function UserBag() {
   const { data: bagData, error, isLoading, refetch } = useUserBag()
   const [showAddForm, setShowAddForm] = useState(false)
 
+  // Debug logging
+  console.log('UserBag Debug:', { user, bagData, error, isLoading })
+
   if (!user) {
     return (
       <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
         <div className="text-center">
-          <Golf className="h-12 w-12 text-blue-400 mx-auto mb-4" />
+          <Target className="h-12 w-12 text-blue-400 mx-auto mb-4" />
           <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-2">
             Sign In Required
           </h3>
@@ -37,9 +40,17 @@ export function UserBag() {
           Error Loading Your Bag
         </h3>
         <p className="text-red-700 dark:text-red-300 mb-4">
-          {error.message || 'Unable to load your equipment. Please try again.'}
+          <strong>Error:</strong> {error.message || 'Unable to load your equipment. Please try again.'}
         </p>
-        <Button onClick={refetch} variant="outline" size="sm">
+        {error && (
+          <details className="mt-2 text-xs text-red-600 dark:text-red-400">
+            <summary>Debug Info</summary>
+            <pre className="mt-1 p-2 bg-red-50 dark:bg-red-900/20 rounded text-xs overflow-auto">
+              {JSON.stringify(error, null, 2)}
+            </pre>
+          </details>
+        )}
+        <Button onClick={() => refetch()} variant="outline" size="sm">
           Try Again
         </Button>
       </div>
@@ -52,7 +63,7 @@ export function UserBag() {
       <Card className="p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <Golf className="h-5 w-5 text-emerald-500" />
+            <Target className="h-5 w-5 text-emerald-500" />
             <h3 className="text-lg font-semibold">My Equipment</h3>
             {bagData && (
               <span className="text-sm text-gray-500 dark:text-gray-400">
