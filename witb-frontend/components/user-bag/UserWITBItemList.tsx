@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { UserWITBItem } from '@/types/schemas'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Edit2, Trash2, Target, Calendar, DollarSign } from 'lucide-react'
@@ -63,10 +62,24 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
     }).format(price)
   }
 
+  const getCategoryColor = (category: string) => {
+    const colors = {
+      'Driver': 'bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-300',
+      'Fairway': 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300',
+      '5-Wood': 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300',
+      'Hybrid': 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300',
+      'Iron': 'bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-300',
+      'Wedge': 'bg-amber-100 text-amber-800 dark:bg-amber-900/20 dark:text-amber-300',
+      'Putter': 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-300',
+      'Ball': 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300',
+    }
+    return colors[category as keyof typeof colors] || 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300'
+  }
+
   return (
-    <Card className="relative p-4 pr-20 hover:shadow-md transition-shadow overflow-hidden">
+    <Card className="relative p-4 pr-16 hover:shadow-lg transition-all duration-200 hover:scale-[1.01] border-0 shadow-sm bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
       {/* Top-Right Action Buttons */}
-      <div className="absolute top-2 right-2 flex gap-1 z-10">
+      <div className="absolute top-3 right-3 flex gap-1 z-10">
         <Button
           variant="ghost"
           size="sm"
@@ -74,9 +87,9 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
             // TODO: Implement edit functionality
             alert('Edit functionality coming soon!')
           }}
-          className="h-8 w-8 p-0 flex-shrink-0"
+          className="h-7 w-7 p-0 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
         >
-          <Edit2 className="h-4 w-4" />
+          <Edit2 className="h-3.5 w-3.5" />
         </Button>
 
         <Button
@@ -84,69 +97,98 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
           size="sm"
           onClick={handleDelete}
           disabled={isDeleting}
-          className="h-8 w-8 p-0 flex-shrink-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20"
+          className="h-7 w-7 p-0 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 hover:text-red-600 rounded-full"
         >
-          <Trash2 className="h-4 w-4" />
+          {isDeleting ? (
+            <div className="h-3.5 w-3.5 animate-spin border border-red-500 border-t-transparent rounded-full" />
+          ) : (
+            <Trash2 className="h-3.5 w-3.5" />
+          )}
         </Button>
       </div>
 
       {/* Main Content */}
-      <div className="flex items-start gap-3">
+      <div className="flex items-start gap-4">
         {/* Brand Logo */}
         <div className="flex-shrink-0">
-          <BrandLogo
-            brandName={item.brand}
-            className="w-10 h-10"
-          />
+          <div className="w-16 h-12 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 p-2 shadow-sm overflow-hidden flex items-center justify-center">
+            <BrandLogo
+              brandName={item.brand}
+              className="w-full h-full"
+              fallbackClassName="text-xs text-center whitespace-nowrap"
+            />
+          </div>
         </div>
 
         {/* Equipment Details */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-2">
-            <Badge variant="secondary" className="text-xs">
+          {/* Header Row */}
+          <div className="flex items-center gap-2 mb-2 flex-wrap">
+            <div className={`inline-flex items-center justify-center rounded-md px-3 py-1 text-xs font-medium whitespace-nowrap overflow-hidden ${getCategoryColor(item.category)}`}>
               {item.category}
-            </Badge>
+            </div>
             {item.carry_distance && (
-              <div className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
-                <Target className="h-3 w-3" />
-                {item.carry_distance}y
+              <div className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-50 dark:bg-emerald-900/20 rounded-md whitespace-nowrap overflow-hidden">
+                <Target className="h-3 w-3 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                <span className="text-xs font-medium text-emerald-700 dark:text-emerald-300">
+                  {item.carry_distance}y
+                </span>
               </div>
             )}
           </div>
 
-          <h4 className="font-medium text-gray-900 dark:text-white">
-            {item.brand} {item.model}
+          {/* Equipment Name */}
+          <h4 className="font-semibold text-lg text-gray-900 dark:text-white mb-1 truncate">
+            {item.model}
           </h4>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 truncate">
+            by {item.brand}
+          </p>
 
-          <div className="flex flex-wrap gap-2 mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {item.loft && <span>Loft: {item.loft}</span>}
-            {item.shaft && <span>Shaft: {item.shaft}</span>}
-          </div>
+          {/* Specifications */}
+          {(item.loft || item.shaft) && (
+            <div className="flex flex-wrap gap-3 mb-3">
+              {item.loft && (
+                <div className="flex items-center gap-1 text-sm whitespace-nowrap">
+                  <span className="text-gray-500 dark:text-gray-400">Loft:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{item.loft}</span>
+                </div>
+              )}
+              {item.shaft && (
+                <div className="flex items-center gap-1 text-sm">
+                  <span className="text-gray-500 dark:text-gray-400 whitespace-nowrap">Shaft:</span>
+                  <span className="font-medium text-gray-900 dark:text-white truncate max-w-[120px]">{item.shaft}</span>
+                </div>
+              )}
+            </div>
+          )}
 
+          {/* Notes */}
           {item.notes && (
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">
-              {item.notes}
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2 italic">
+              "{item.notes}"
             </p>
           )}
 
-          {/* Purchase Info */}
-          <div className="flex flex-wrap gap-4 mt-2 text-xs text-gray-500 dark:text-gray-500">
-            {item.purchase_date && (
-              <div className="flex items-center gap-1">
-                <Calendar className="h-3 w-3" />
-                {formatDate(item.purchase_date)}
-              </div>
-            )}
-            {item.purchase_price && (
-              <div className="flex items-center gap-1">
-                <DollarSign className="h-3 w-3" />
-                {formatPrice(item.purchase_price)}
-              </div>
-            )}
-          </div>
+          {/* Bottom Row - Purchase Info & Actions */}
+          <div className="flex items-center justify-between">
+            {/* Purchase Info */}
+            <div className="flex flex-wrap gap-3 text-xs text-gray-500 dark:text-gray-500">
+              {item.purchase_date && (
+                <div className="flex items-center gap-1">
+                  <Calendar className="h-3 w-3" />
+                  <span>{formatDate(item.purchase_date)}</span>
+                </div>
+              )}
+              {item.purchase_price && (
+                <div className="flex items-center gap-1">
+                  <DollarSign className="h-3 w-3" />
+                  <span className="font-medium">{formatPrice(item.purchase_price)}</span>
+                </div>
+              )}
+            </div>
 
-          {/* eBay Pricing */}
-          <div className="mt-3">
+            {/* eBay Pricing */}
             <PriceButton
               witbItem={{
                 brand: item.brand,
@@ -169,13 +211,18 @@ export function UserWITBItemList({ items, onUpdate }: UserWITBItemListProps) {
   }
 
   return (
-    <div className="space-y-3">
-      {items.map((item) => (
-        <UserWITBItemCard
+    <div className="space-y-4">
+      {items.map((item, index) => (
+        <div
           key={item.id}
-          item={item}
-          onUpdate={onUpdate}
-        />
+          className="animate-in slide-in-from-bottom-2 fade-in-0"
+          style={{ animationDelay: `${index * 100}ms` }}
+        >
+          <UserWITBItemCard
+            item={item}
+            onUpdate={onUpdate}
+          />
+        </div>
       ))}
     </div>
   )
