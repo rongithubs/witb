@@ -170,8 +170,19 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
             </p>
           )}
 
-          {/* Bottom Row - Purchase Info & Actions */}
-          <div className="flex items-center justify-between">
+          {/* Bottom Row - Actions & Purchase Info */}
+          <div className="flex items-center gap-4 flex-wrap">
+            {/* eBay Pricing */}
+            <PriceButton
+              witbItem={{
+                brand: item.brand,
+                model: item.model,
+                category: item.category
+              }}
+              size="sm"
+              className="text-xs"
+            />
+
             {/* Purchase Info */}
             <div className="flex flex-wrap gap-3 text-xs text-gray-500 dark:text-gray-500">
               {item.purchase_date && (
@@ -187,17 +198,6 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
                 </div>
               )}
             </div>
-
-            {/* eBay Pricing */}
-            <PriceButton
-              witbItem={{
-                brand: item.brand,
-                model: item.model,
-                category: item.category
-              }}
-              size="sm"
-              className="text-xs"
-            />
           </div>
         </div>
       </div>
