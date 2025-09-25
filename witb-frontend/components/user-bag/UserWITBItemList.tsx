@@ -109,14 +109,12 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
 
       {/* Main Content */}
       <div className="flex items-start gap-4">
-        {/* Brand Logo */}
+        {/* Category Badge - Leftmost Position */}
         <div className="flex-shrink-0">
-          <div className="w-16 h-12 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 p-2 shadow-sm overflow-hidden flex items-center justify-center">
-            <BrandLogo
-              brandName={item.brand}
-              className="w-full h-full"
-              fallbackClassName="text-xs text-center whitespace-nowrap"
-            />
+          <div className={`w-16 h-12 rounded-xl p-2 shadow-sm overflow-hidden flex items-center justify-center ${getCategoryColor(item.category)}`}>
+            <span className="text-sm font-bold text-center whitespace-nowrap">
+              {item.category}
+            </span>
           </div>
         </div>
 
@@ -124,9 +122,6 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
         <div className="flex-1 min-w-0">
           {/* Header Row */}
           <div className="flex items-center gap-2 mb-2 flex-wrap">
-            <div className={`inline-flex items-center justify-center rounded-md px-3 py-1 text-xs font-medium whitespace-nowrap overflow-hidden ${getCategoryColor(item.category)}`}>
-              {item.category}
-            </div>
             {item.carry_distance && (
               <div className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-50 dark:bg-emerald-900/20 rounded-md whitespace-nowrap overflow-hidden">
                 <Target className="h-3 w-3 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
@@ -137,7 +132,7 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
             )}
           </div>
 
-          {/* Equipment Name */}
+          {/* Equipment Name - Brand & Model */}
           <h4 className="font-semibold text-lg text-gray-900 dark:text-white mb-1 truncate">
             {item.model}
           </h4>
