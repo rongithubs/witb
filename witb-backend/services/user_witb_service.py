@@ -55,8 +55,10 @@ class UserWITBService:
             enriched_items = self._enrich_witb_items_with_urls(items)
 
             return schemas.UserBagResponse(
-                items=[schemas.UserWITBItem.model_validate(item) for item in enriched_items],
-                total=len(enriched_items)
+                items=[
+                    schemas.UserWITBItem.model_validate(item) for item in enriched_items
+                ],
+                total=len(enriched_items),
             )
         except SQLAlchemyError as e:
             logging.error(f"Error retrieving user bag: {e}")
@@ -69,7 +71,9 @@ class UserWITBService:
         try:
             item = await self.user_witb_repo.get_user_witb_item_by_id(item_id, user_id)
             if not item:
-                raise InvalidPlayerIdError(str(item_id))  # Reusing exception for simplicity
+                raise InvalidPlayerIdError(
+                    str(item_id)
+                )  # Reusing exception for simplicity
 
             # Enrich with brand URL
             enriched_items = self._enrich_witb_items_with_urls([item])
@@ -79,18 +83,25 @@ class UserWITBService:
             raise DatabaseOperationError("Failed to retrieve user WITB item")
 
     async def update_user_witb_item(
-        self, item_id: UserWITBItemId, user_id: UserId, update_data: schemas.UserWITBItemUpdate
+        self,
+        item_id: UserWITBItemId,
+        user_id: UserId,
+        update_data: schemas.UserWITBItemUpdate,
     ) -> schemas.UserWITBItem:
         """Update a user WITB item."""
         try:
             # Filter out None values to avoid overwriting with None
-            update_dict = {k: v for k, v in update_data.model_dump().items() if v is not None}
+            update_dict = {
+                k: v for k, v in update_data.model_dump().items() if v is not None
+            }
 
             updated_item = await self.user_witb_repo.update_user_witb_item(
                 item_id, user_id, update_dict
             )
             if not updated_item:
-                raise InvalidPlayerIdError(str(item_id))  # Reusing exception for simplicity
+                raise InvalidPlayerIdError(
+                    str(item_id)
+                )  # Reusing exception for simplicity
 
             # Enrich with brand URL
             enriched_items = self._enrich_witb_items_with_urls([updated_item])
@@ -104,17 +115,15 @@ class UserWITBService:
     ) -> bool:
         """Delete a user WITB item."""
         try:
-            print(f"DELETE SERVICE DEBUG - item_id: {item_id}, user_id: {user_id}")
             success = await self.user_witb_repo.delete_user_witb_item(item_id, user_id)
-            print(f"DELETE SERVICE DEBUG - Repository returned success: {success}")
             if not success:
-                print(f"DELETE SERVICE DEBUG - Item not found, raising InvalidPlayerIdError")
-                raise InvalidPlayerIdError(str(item_id))  # Reusing exception for simplicity
+                raise InvalidPlayerIdError(
+                    str(item_id)
+                )  # Reusing exception for simplicity
             return success
         except InvalidPlayerIdError:
             # Re-raise the specific error instead of wrapping it
             raise
         except SQLAlchemyError as e:
             logging.error(f"Error deleting user WITB item: {e}")
-            print(f"DELETE SERVICE DEBUG - SQLAlchemy error: {e}")
             raise DatabaseOperationError("Failed to delete user WITB item")
