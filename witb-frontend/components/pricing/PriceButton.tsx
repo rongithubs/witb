@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { DollarSign, ExternalLink, Loader2 } from 'lucide-react';
+import { ExternalLink, Loader2 } from 'lucide-react';
 import { WITBItem } from '@/types/schemas';
 import { useEBayPricing } from '@/hooks/useEBayPricing';
 import { PricingModal } from './PricingModal';
@@ -80,10 +80,8 @@ export function PriceButton({
         title={hasError ? `Error loading prices - click to retry` : `Check current eBay prices for ${witbItem.brand} ${witbItem.model}`}
       >
         <div className="flex items-center gap-1.5">
-          {isLoading ? (
+          {isLoading && (
             <Loader2 className={`${size === 'sm' ? 'h-3 w-3' : 'h-4 w-4'} animate-spin ${hasError ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`} />
-          ) : (
-            <DollarSign className={`${size === 'sm' ? 'h-3 w-3' : 'h-4 w-4'} ${hasError ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`} />
           )}
           <span className={`${size === 'sm' ? 'text-xs' : 'text-sm'} font-medium`}>
             {isLoading ? 'Loading...' : formatPriceRange()}
