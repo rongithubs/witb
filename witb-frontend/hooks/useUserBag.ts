@@ -10,12 +10,6 @@ export function useUserBag() {
       revalidateOnFocus: false,
       revalidateOnReconnect: true,
       errorRetryCount: 3,
-      onError: (error) => {
-        console.error('useUserBag error:', error)
-      },
-      onSuccess: (data) => {
-        console.log('useUserBag success:', data)
-      }
     }
   )
 

@@ -17,7 +17,9 @@ class UserWITBRepository:
     def __init__(self, db: AsyncSession):
         self.db = db
 
-    async def create_user_witb_item(self, user_id: UserId, item_data: dict) -> models.UserWITBItem:
+    async def create_user_witb_item(
+        self, user_id: UserId, item_data: dict
+    ) -> models.UserWITBItem:
         """Create a new user WITB item."""
         new_item = models.UserWITBItem(user_id=user_id, **item_data)
         self.db.add(new_item)
@@ -49,7 +51,7 @@ class UserWITBRepository:
         result = await self.db.execute(
             select(models.UserWITBItem).where(
                 models.UserWITBItem.id == item_id,
-                models.UserWITBItem.user_id == user_id
+                models.UserWITBItem.user_id == user_id,
             )
         )
         return result.scalars().first()
@@ -78,21 +80,15 @@ class UserWITBRepository:
         self, item_id: UserWITBItemId, user_id: UserId
     ) -> bool:
         """Delete a user WITB item."""
-        print(f"DELETE REPO DEBUG - Looking for item_id: {item_id}, user_id: {user_id}")
         item = await self.get_user_witb_item_by_id(item_id, user_id)
-        print(f"DELETE REPO DEBUG - Found item: {item}")
         if not item:
-            print(f"DELETE REPO DEBUG - Item not found, returning False")
             return False
 
-        print(f"DELETE REPO DEBUG - Deleting item: {item.id}")
         await self.db.delete(item)
         try:
             await self.db.commit()
-            print(f"DELETE REPO DEBUG - Successfully deleted and committed")
             return True
-        except IntegrityError as e:
-            print(f"DELETE REPO DEBUG - IntegrityError during commit: {e}")
+        except IntegrityError:
             await self.db.rollback()
             raise
 

@@ -24,7 +24,9 @@ async def get_user_bag(
     return await service.get_user_bag(UserId(current_user.id))
 
 
-@router.post("", response_model=schemas.UserWITBItem, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "", response_model=schemas.UserWITBItem, status_code=status.HTTP_201_CREATED
+)
 async def add_equipment_to_bag(
     item_data: schemas.UserWITBItemCreate,
     current_user: schemas.User = Depends(get_current_user_from_db),
@@ -47,8 +49,7 @@ async def get_user_bag_item(
         item_uuid = UserWITBItemId(uuid_obj)
     except ValueError:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid item ID format"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid item ID format"
         )
 
     service = UserWITBService(db)
@@ -68,12 +69,13 @@ async def update_user_bag_item(
         item_uuid = UserWITBItemId(uuid_obj)
     except ValueError:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid item ID format"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid item ID format"
         )
 
     service = UserWITBService(db)
-    return await service.update_user_witb_item(item_uuid, UserId(current_user.id), update_data)
+    return await service.update_user_witb_item(
+        item_uuid, UserId(current_user.id), update_data
+    )
 
 
 @router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -84,19 +86,12 @@ async def remove_equipment_from_bag(
 ):
     """Remove equipment from user's bag."""
     try:
-        # Add debug logging
-        print(f"DELETE DEBUG - Received item_id: {item_id}")
-        print(f"DELETE DEBUG - item_id type: {type(item_id)}")
-
-        # First convert string to UUID, then wrap with branded type
         uuid_obj = UUID(item_id)
         item_uuid = UserWITBItemId(uuid_obj)
-        print(f"DELETE DEBUG - Converted to UUID: {item_uuid}")
-    except ValueError as e:
-        print(f"DELETE DEBUG - UUID conversion failed: {e}")
+    except ValueError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Invalid item ID format: {item_id}. Expected UUID format."
+            detail=f"Invalid item ID format: {item_id}. Expected UUID format.",
         )
 
     service = UserWITBService(db)

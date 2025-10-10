@@ -41,20 +41,12 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
       return;
     }
 
-    console.log("DELETE DEBUG - Item ID:", item.id);
-    console.log("DELETE DEBUG - Item ID type:", typeof item.id);
-    console.log("DELETE DEBUG - Full item:", item);
-    console.log("DELETE DEBUG - URL will be:", `/user-bag/${item.id}`);
-
     setIsDeleting(true);
     try {
       await api.delete(`/user-bag/${item.id}`);
-      console.log("DELETE DEBUG - Success!");
       onUpdate();
     } catch (error) {
-      console.error("DELETE DEBUG - Error:", error);
-      console.error("DELETE DEBUG - Error type:", typeof error);
-      console.error("DELETE DEBUG - Error message:", (error as Error)?.message);
+      console.error("Failed to delete equipment:", error);
       alert("Failed to remove equipment. Please try again.");
     } finally {
       setIsDeleting(false);
