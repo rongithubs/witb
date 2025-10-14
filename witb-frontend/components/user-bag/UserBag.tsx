@@ -14,9 +14,6 @@ export function UserBag() {
   const { data: bagData, error, isLoading, refetch } = useUserBag()
   const [showAddForm, setShowAddForm] = useState(false)
 
-  // Debug logging
-  console.log('UserBag Debug:', { user, bagData, error, isLoading })
-
   if (!user) {
     return (
       <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">

@@ -54,10 +54,11 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
   };
 
   const formatDate = (dateString: string) => {
+    // Use UTC methods to avoid timezone hydration mismatches
     const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
+    const year = date.getUTCFullYear();
+    const month = date.getUTCMonth() + 1;
+    const day = date.getUTCDate();
     return `${month}/${day}/${year}`;
   };
 

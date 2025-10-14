@@ -36,8 +36,14 @@ const handleScrollToLeaderboard = () => {
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const { user, signOut } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  // Handle mounting to avoid hydration mismatch with portal
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleSignOut = async () => {
     setIsSigningOut(true);
@@ -206,7 +212,10 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   );
 
   // Render via Portal to document.body for proper layering
-  return typeof document !== "undefined"
-    ? createPortal(menuContent, document.body)
-    : null;
+  // Only render after mount to avoid hydration mismatch
+  if (!isMounted) {
+    return null;
+  }
+
+  return createPortal(menuContent, document.body);
 }
