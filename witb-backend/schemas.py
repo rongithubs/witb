@@ -81,6 +81,13 @@ class LeaderboardResponse(BaseModel):
     total_unique_combinations: int
 
 
+class BrandResponse(BaseModel):
+    """Schema for brands list response."""
+
+    brands: list[str]
+    total: int
+
+
 class UserBase(BaseModel):
     email: str | None = None
     phone: str | None = None

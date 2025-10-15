@@ -21,3 +21,12 @@ async def get_club_leaderboard(
     return await service.get_club_usage_leaderboard(
         category_filter=category, limit=limit
     )
+
+
+@router.get("/brands", response_model=schemas.BrandResponse)
+async def get_brands(
+    db: AsyncSession = Depends(get_db),
+):
+    """Get all unique brand names from database and static list."""
+    service = WitbService(db)
+    return await service.get_brands()

@@ -1,47 +1,52 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { api } from '@/lib/api'
-import { UserWITBItemCreate } from '@/types/schemas'
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { api } from "@/lib/api";
+import { UserWITBItemCreate } from "@/types/schemas";
+import { useBrands } from "@/hooks/useBrands";
 
 interface AddEquipmentFormProps {
-  onSuccess: () => void
-  onCancel: () => void
+  onSuccess: () => void;
+  onCancel: () => void;
 }
 
 const CATEGORIES = [
-  'Driver',
-  '3-Wood',
-  '5-Wood',
-  '7-Wood',
-  'Hybrid',
-  'Iron',
-  'Wedge',
-  'Putter',
-  'Ball',
-  'Grip'
-]
+  "Driver",
+  "3-Wood",
+  "5-Wood",
+  "7-Wood",
+  "Hybrid",
+  "Iron",
+  "Wedge",
+  "Putter",
+  "Ball",
+  "Grip",
+];
 
-export function AddEquipmentForm({ onSuccess, onCancel }: AddEquipmentFormProps) {
+export function AddEquipmentForm({
+  onSuccess,
+  onCancel,
+}: AddEquipmentFormProps) {
+  const { brands, isLoading: brandsLoading } = useBrands();
   const [formData, setFormData] = useState<UserWITBItemCreate>({
-    category: '',
-    brand: '',
-    model: '',
-    loft: '',
-    shaft: '',
+    category: "",
+    brand: "",
+    model: "",
+    loft: "",
+    shaft: "",
     carry_distance: undefined,
-    notes: '',
-    purchase_date: '',
+    notes: "",
+    purchase_date: "",
     purchase_price: undefined,
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setError(null)
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
 
     try {
       // Clean up form data
@@ -53,20 +58,20 @@ export function AddEquipmentForm({ onSuccess, onCancel }: AddEquipmentFormProps)
         purchase_date: formData.purchase_date || undefined,
         carry_distance: formData.carry_distance || undefined,
         purchase_price: formData.purchase_price || undefined,
-      }
+      };
 
-      await api.post('/user-bag', submitData)
-      onSuccess()
+      await api.post("/user-bag", submitData);
+      onSuccess();
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Failed to add equipment')
+      setError(err.response?.data?.detail || "Failed to add equipment");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   const handleInputChange = (field: keyof UserWITBItemCreate, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -78,12 +83,12 @@ export function AddEquipmentForm({ onSuccess, onCancel }: AddEquipmentFormProps)
           </label>
           <select
             value={formData.category}
-            onChange={(e) => handleInputChange('category', e.target.value)}
+            onChange={(e) => handleInputChange("category", e.target.value)}
             required
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
           >
             <option value="">Select category</option>
-            {CATEGORIES.map(category => (
+            {CATEGORIES.map((category) => (
               <option key={category} value={category}>
                 {category}
               </option>
@@ -98,12 +103,19 @@ export function AddEquipmentForm({ onSuccess, onCancel }: AddEquipmentFormProps)
           </label>
           <input
             type="text"
+            list="brand-suggestions"
             value={formData.brand}
-            onChange={(e) => handleInputChange('brand', e.target.value)}
+            onChange={(e) => handleInputChange("brand", e.target.value)}
             required
             placeholder="e.g., TaylorMade, Callaway"
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
+            disabled={brandsLoading}
           />
+          <datalist id="brand-suggestions">
+            {brands.map((brand) => (
+              <option key={brand} value={brand} />
+            ))}
+          </datalist>
         </div>
 
         {/* Model */}
@@ -114,7 +126,7 @@ export function AddEquipmentForm({ onSuccess, onCancel }: AddEquipmentFormProps)
           <input
             type="text"
             value={formData.model}
-            onChange={(e) => handleInputChange('model', e.target.value)}
+            onChange={(e) => handleInputChange("model", e.target.value)}
             required
             placeholder="e.g., Qi10, Stealth 2"
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
@@ -129,7 +141,7 @@ export function AddEquipmentForm({ onSuccess, onCancel }: AddEquipmentFormProps)
           <input
             type="text"
             value={formData.loft}
-            onChange={(e) => handleInputChange('loft', e.target.value)}
+            onChange={(e) => handleInputChange("loft", e.target.value)}
             placeholder="e.g., 9°, 15°"
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
           />
@@ -143,7 +155,7 @@ export function AddEquipmentForm({ onSuccess, onCancel }: AddEquipmentFormProps)
           <input
             type="text"
             value={formData.shaft}
-            onChange={(e) => handleInputChange('shaft', e.target.value)}
+            onChange={(e) => handleInputChange("shaft", e.target.value)}
             placeholder="e.g., Fujikura Ventus Blue"
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
           />
@@ -156,8 +168,13 @@ export function AddEquipmentForm({ onSuccess, onCancel }: AddEquipmentFormProps)
           </label>
           <input
             type="number"
-            value={formData.carry_distance || ''}
-            onChange={(e) => handleInputChange('carry_distance', e.target.value ? parseInt(e.target.value) : undefined)}
+            value={formData.carry_distance || ""}
+            onChange={(e) =>
+              handleInputChange(
+                "carry_distance",
+                e.target.value ? parseInt(e.target.value) : undefined,
+              )
+            }
             placeholder="250"
             min="0"
             max="400"
@@ -173,7 +190,7 @@ export function AddEquipmentForm({ onSuccess, onCancel }: AddEquipmentFormProps)
         </label>
         <textarea
           value={formData.notes}
-          onChange={(e) => handleInputChange('notes', e.target.value)}
+          onChange={(e) => handleInputChange("notes", e.target.value)}
           placeholder="Any additional notes about this club..."
           rows={3}
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
@@ -189,7 +206,7 @@ export function AddEquipmentForm({ onSuccess, onCancel }: AddEquipmentFormProps)
           <input
             type="date"
             value={formData.purchase_date}
-            onChange={(e) => handleInputChange('purchase_date', e.target.value)}
+            onChange={(e) => handleInputChange("purchase_date", e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
           />
         </div>
@@ -200,8 +217,13 @@ export function AddEquipmentForm({ onSuccess, onCancel }: AddEquipmentFormProps)
           </label>
           <input
             type="number"
-            value={formData.purchase_price || ''}
-            onChange={(e) => handleInputChange('purchase_price', e.target.value ? parseFloat(e.target.value) : undefined)}
+            value={formData.purchase_price || ""}
+            onChange={(e) =>
+              handleInputChange(
+                "purchase_price",
+                e.target.value ? parseFloat(e.target.value) : undefined,
+              )
+            }
             placeholder="299.99"
             min="0"
             step="0.01"
@@ -212,19 +234,22 @@ export function AddEquipmentForm({ onSuccess, onCancel }: AddEquipmentFormProps)
 
       {/* Error Message */}
       {error && (
-        <div className="text-red-600 dark:text-red-400 text-sm">
-          {error}
-        </div>
+        <div className="text-red-600 dark:text-red-400 text-sm">{error}</div>
       )}
 
       {/* Form Actions */}
       <div className="flex gap-3 pt-4">
         <Button
           type="submit"
-          disabled={isSubmitting || !formData.category || !formData.brand || !formData.model}
+          disabled={
+            isSubmitting ||
+            !formData.category ||
+            !formData.brand ||
+            !formData.model
+          }
           className="flex-1"
         >
-          {isSubmitting ? 'Adding...' : 'Add Equipment'}
+          {isSubmitting ? "Adding..." : "Add Equipment"}
         </Button>
         <Button
           type="button"
@@ -236,5 +261,5 @@ export function AddEquipmentForm({ onSuccess, onCancel }: AddEquipmentFormProps)
         </Button>
       </div>
     </form>
-  )
+  );
 }
