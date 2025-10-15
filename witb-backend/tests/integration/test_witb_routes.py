@@ -58,3 +58,40 @@ class TestWitbRoutes:
         # Test valid limit
         response = client.get("/witb/leaderboard?limit=10")
         assert response.status_code == 200
+
+    def test_get_brands_returns_valid_response(self, client: TestClient):
+        """Test GET /witb/brands returns brand list with static brands."""
+        # Act
+        response = client.get("/witb/brands")
+
+        # Assert
+        assert response.status_code == 200
+        data = response.json()
+
+        # Check response structure
+        assert "brands" in data
+        assert "total" in data
+        assert isinstance(data["brands"], list)
+        assert isinstance(data["total"], int)
+
+        # Should have at least static brands from BRAND_URLS
+        assert data["total"] > 0
+        assert len(data["brands"]) == data["total"]
+
+        # Check for some known static brands
+        assert "TaylorMade" in data["brands"]
+        assert "Callaway" in data["brands"]
+        assert "Titleist" in data["brands"]
+
+    def test_get_brands_returns_sorted_alphabetically(self, client: TestClient):
+        """Test GET /witb/brands returns brands sorted alphabetically."""
+        # Act
+        response = client.get("/witb/brands")
+
+        # Assert
+        assert response.status_code == 200
+        data = response.json()
+
+        # Check brands are sorted
+        brands = data["brands"]
+        assert brands == sorted(brands)

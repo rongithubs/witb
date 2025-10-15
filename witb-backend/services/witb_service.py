@@ -3,7 +3,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import schemas
-from brand_urls import get_brand_url
+from brand_urls import BRAND_URLS, get_brand_url
 from repositories.witb_repository import WITBRepository
 
 
@@ -46,3 +46,20 @@ class WitbService:
             total_categories=total_categories,
             total_unique_combinations=total_unique_combinations,
         )
+
+    async def get_brands(self) -> schemas.BrandResponse:
+        """Get all unique brands from database and static list."""
+        db_brands = await self.witb_repo.get_distinct_brands()
+        static_brands = list(BRAND_URLS.keys())
+
+        # Combine and deduplicate brands (case-insensitive)
+        all_brands_lower = {}
+        for brand in db_brands + static_brands:
+            brand_lower = brand.lower()
+            if brand_lower not in all_brands_lower:
+                all_brands_lower[brand_lower] = brand
+
+        # Get unique brands sorted alphabetically
+        unique_brands = sorted(all_brands_lower.values())
+
+        return schemas.BrandResponse(brands=unique_brands, total=len(unique_brands))

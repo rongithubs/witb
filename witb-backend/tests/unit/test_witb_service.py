@@ -133,3 +133,72 @@ class TestWitbService:
         assert result.total_categories == 0
         assert result.total_unique_combinations == 0
         assert result.categories == {}
+
+    async def test_get_brands_combines_database_and_static_brands(
+        self, witb_service, mock_witb_repo
+    ):
+        """Test get_brands returns combined brands from database and static list."""
+        # Arrange
+        db_brands = ["Ping", "Mizuno", "Wilson"]
+        mock_witb_repo.get_distinct_brands.return_value = db_brands
+
+        # Act
+        result = await witb_service.get_brands()
+
+        # Assert
+        assert isinstance(result, schemas.BrandResponse)
+        assert result.total > 0
+        assert "Ping" in result.brands
+        assert "Mizuno" in result.brands
+        assert "Wilson" in result.brands
+        assert "TaylorMade" in result.brands  # From BRAND_URLS
+        assert "Callaway" in result.brands  # From BRAND_URLS
+
+        # Check repository was called
+        mock_witb_repo.get_distinct_brands.assert_called_once()
+
+    async def test_get_brands_deduplicates_case_insensitive(
+        self, witb_service, mock_witb_repo
+    ):
+        """Test get_brands deduplicates brands case-insensitively."""
+        # Arrange
+        db_brands = ["taylormade", "CALLAWAY", "Ping"]
+        mock_witb_repo.get_distinct_brands.return_value = db_brands
+
+        # Act
+        result = await witb_service.get_brands()
+
+        # Assert
+        brand_names_lower = [b.lower() for b in result.brands]
+        assert brand_names_lower.count("taylormade") == 1
+        assert brand_names_lower.count("callaway") == 1
+        assert brand_names_lower.count("ping") == 1
+
+    async def test_get_brands_returns_sorted_alphabetically(
+        self, witb_service, mock_witb_repo
+    ):
+        """Test get_brands returns brands sorted alphabetically."""
+        # Arrange
+        db_brands = ["Zebra Golf", "Alpha Brand", "Mid Brand"]
+        mock_witb_repo.get_distinct_brands.return_value = db_brands
+
+        # Act
+        result = await witb_service.get_brands()
+
+        # Assert
+        assert result.brands == sorted(result.brands)
+
+    async def test_get_brands_handles_empty_database(
+        self, witb_service, mock_witb_repo
+    ):
+        """Test get_brands handles empty database response."""
+        # Arrange
+        mock_witb_repo.get_distinct_brands.return_value = []
+
+        # Act
+        result = await witb_service.get_brands()
+
+        # Assert
+        assert isinstance(result, schemas.BrandResponse)
+        assert result.total > 0  # Should still have static brands
+        assert "TaylorMade" in result.brands  # From BRAND_URLS
