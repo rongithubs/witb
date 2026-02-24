@@ -32,6 +32,9 @@ requests
 # AI/ML for scraping
 google-generativeai
 
+# Scheduling
+apscheduler>=3.10.0
+
 # Authentication with Supabase
 supabase>=2.10.0
 python-jose[cryptography]>=3.3.0
