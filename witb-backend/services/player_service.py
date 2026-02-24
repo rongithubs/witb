@@ -31,8 +31,8 @@ class PlayerService:
         self.db = db
 
     def _enrich_witb_items_with_urls(
-        self, items: list[models.WITBItem]
-    ) -> list[models.WITBItem]:
+        self, items: list[schemas.WITBItem]
+    ) -> list[schemas.WITBItem]:
         """Add brand URLs to WITB items that don't have specific product URLs."""
         for item in items:
             if not item.product_url and item.brand:
@@ -58,10 +58,9 @@ class PlayerService:
         if not player:
             raise PlayerNotFoundError(player_id)
 
-        # Enrich WITB items with brand URLs
-        self._enrich_witb_items_with_urls(player.witb_items)
-
-        return schemas.Player.model_validate(player)
+        player_schema = schemas.Player.model_validate(player)
+        self._enrich_witb_items_with_urls(player_schema.witb_items)
+        return player_schema
 
     async def get_players_paginated(
         self, page: int, per_page: int, tour: str | None = None
@@ -73,18 +72,18 @@ class PlayerService:
             offset, per_page, tour
         )
 
-        # Enrich WITB items with brand URLs
-        for player in players:
-            self._enrich_witb_items_with_urls(player.witb_items)
-
         # Get OWGR system info
         system_info = await self._get_system_info()
 
         # Calculate total pages
         total_pages = (total + per_page - 1) // per_page
 
+        player_schemas = [schemas.Player.model_validate(p) for p in players]
+        for player_schema in player_schemas:
+            self._enrich_witb_items_with_urls(player_schema.witb_items)
+
         return schemas.PaginatedPlayersResponse(
-            items=[schemas.Player.model_validate(p) for p in players],
+            items=player_schemas,
             total=total,
             page=page,
             per_page=per_page,
