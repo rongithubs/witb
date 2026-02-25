@@ -120,3 +120,15 @@ class WITBRepository:
                 leaderboard_data[category] = leaderboard_data[category][:limit]
 
         return leaderboard_data
+
+    async def get_distinct_brands(self) -> list[str]:
+        """Get all unique brands from WITB items."""
+        query = (
+            select(models.WITBItem.brand)
+            .distinct()
+            .where(models.WITBItem.brand.isnot(None))
+            .order_by(models.WITBItem.brand)
+        )
+        result = await self.db.execute(query)
+        brands = [row[0] for row in result.fetchall() if row[0]]
+        return brands
