@@ -277,7 +277,7 @@ export function PlayerTable({
         {players.map((player) => (
           <div key={player.id}>
             {/* Player Row */}
-            <div className="md:p-4 md:pr-6 sm:md:pr-8 md:lg:pr-12 md:hover:bg-gray-50 md:dark:hover:bg-gray-700/50 md:transition-colors">
+            <div className="md:py-2 md:px-4 md:pr-6 sm:md:pr-8 md:lg:pr-12 md:hover:bg-gray-50 md:dark:hover:bg-gray-700/50 md:transition-colors">
               {/* Mobile Minimal List Layout */}
               <div className="md:hidden">
                 <div className="flex items-center justify-between py-3 px-4 hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
@@ -341,7 +341,7 @@ export function PlayerTable({
 
                 {/* Player */}
                 <div className="col-span-3 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-blue-200 dark:bg-blue-800 flex items-center justify-center text-blue-700 dark:text-blue-200 text-sm font-bold flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-blue-200 dark:bg-blue-800 flex items-center justify-center text-blue-700 dark:text-blue-200 text-xs font-bold flex-shrink-0">
                     {player.name
                       .split(" ")
                       .map((n) => n[0])
@@ -351,7 +351,7 @@ export function PlayerTable({
                     <div className="font-semibold text-gray-900 dark:text-white">
                       {player.name}
                     </div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
                       Primary brand: {getPrimaryBrand(player.witb_items)}
                     </div>
                   </div>
@@ -371,7 +371,7 @@ export function PlayerTable({
                       <Badge
                         key={index}
                         variant="secondary"
-                        className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-2 py-1"
+                        className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-1.5 py-0.5"
                       >
                         {club.category}: {club.brand} {club.model.slice(0, 10)}
                         {club.model.length > 10 ? "..." : ""}
