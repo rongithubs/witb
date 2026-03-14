@@ -8,10 +8,10 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import uuid
 
-from sqlalchemy import select
+from sqlalchemy import delete, select
 
 from database import SessionLocal
-from models import Player, SystemUpdate
+from models import Player, SystemUpdate, WITBItem
 
 # Import the Gemini scraper function
 sys.path.append(
@@ -111,11 +111,29 @@ async def populate_ogwr_players():
                 print(f"❌ Error processing {player_data.get('name', 'Unknown')}: {e}")
                 continue
 
+        # Remove OGWR players who dropped out of the fresh top 50
+        fresh_names = {p["name"] for p in players_data}
+        result = await session.execute(
+            select(Player).filter(Player.tour == "OGWR")
+        )
+        all_ogwr = result.scalars().all()
+
+        deleted_count = 0
+        for player in all_ogwr:
+            if player.name not in fresh_names:
+                await session.execute(
+                    delete(WITBItem).where(WITBItem.player_id == player.id)
+                )
+                await session.delete(player)
+                print(f"🗑️  Removed stale OGWR player: {player.name}")
+                deleted_count += 1
+
         # Record the OWGR update in system updates table
         owgr_update_details = {
             "added_count": added_count,
             "updated_count": updated_count,
             "skipped_count": skipped_count,
+            "deleted_count": deleted_count,
             "total_processed": len(players_data),
         }
 
@@ -145,6 +163,7 @@ async def populate_ogwr_players():
             print(f"   ✅ Added: {added_count} new OWGR players")
             print(f"   🔄 Updated: {updated_count} existing OWGR players")
             print(f"   ⏭️  Skipped: {skipped_count} players")
+            print(f"   🗑️  Deleted: {deleted_count} stale OGWR players")
             print(f"   📊 Total players processed: {len(players_data)}")
             print("   🕒 OWGR update timestamp recorded")
         except Exception as e:

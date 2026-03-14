@@ -4,7 +4,8 @@ WITB Data Models
 Shared data structures for WITB scraping system.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from datetime import datetime
 from typing import List, Optional
 
 @dataclass
@@ -26,6 +27,7 @@ class PlayerWITB:
     witb_items: List[WITBItem]
     source_url: str
     player_id: str
+    last_updated: Optional[datetime] = None
 
 @dataclass
 class PlayerInfo:

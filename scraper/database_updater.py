@@ -7,6 +7,7 @@ Handles updating the database with scraped WITB data.
 import sqlite3
 import uuid
 import json
+from datetime import datetime
 from typing import List, Dict
 from witb_models import PlayerWITB
 
@@ -23,12 +24,15 @@ class DatabaseUpdater:
             # Clear existing WITB items
             cursor.execute("DELETE FROM witb_items WHERE player_id = ?", (player_witb.player_id,))
             
+            update_date = player_witb.last_updated or datetime.now()
+            update_date_str = update_date.isoformat()
+
             # Add new WITB items
             for item in player_witb.witb_items:
                 item_id = str(uuid.uuid4())
                 cursor.execute("""
-                    INSERT INTO witb_items (id, player_id, category, brand, model, loft, shaft)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    INSERT INTO witb_items (id, player_id, category, brand, model, loft, shaft, last_updated)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     item_id,
                     player_witb.player_id,
@@ -36,9 +40,15 @@ class DatabaseUpdater:
                     item.brand,
                     item.model,
                     item.loft,
-                    item.shaft
+                    item.shaft,
+                    update_date_str,
                 ))
-            
+
+            cursor.execute(
+                "UPDATE players SET last_updated = ? WHERE id = ?",
+                (update_date_str, player_witb.player_id),
+            )
+
             conn.commit()
             conn.close()
             return True
