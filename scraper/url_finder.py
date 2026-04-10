@@ -33,19 +33,28 @@ class URLFinder:
             'Upgrade-Insecure-Requests': '1',
         })
     
-    def get_all_players_from_db(self, limit: int = 50) -> List[PlayerInfo]:
-        """Get all players from the database."""
+    def get_all_players_from_db(self, limit: int = 50, tour: str = None) -> List[PlayerInfo]:
+        """Get all players from the database, optionally filtered by tour."""
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
-            
-            cursor.execute("""
-                SELECT id, name, country, tour, ranking 
-                FROM players 
-                WHERE ranking IS NOT NULL 
-                ORDER BY ranking ASC 
-                LIMIT ?
-            """, (limit,))
+
+            if tour:
+                cursor.execute("""
+                    SELECT id, name, country, tour, ranking
+                    FROM players
+                    WHERE ranking IS NOT NULL AND tour = ?
+                    ORDER BY ranking ASC
+                    LIMIT ?
+                """, (tour, limit))
+            else:
+                cursor.execute("""
+                    SELECT id, name, country, tour, ranking
+                    FROM players
+                    WHERE ranking IS NOT NULL
+                    ORDER BY ranking ASC
+                    LIMIT ?
+                """, (limit,))
             
             players = cursor.fetchall()
             conn.close()

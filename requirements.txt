@@ -32,6 +32,9 @@ requests
 # AI/ML for scraping
 google-generativeai
 
+# Headless browser for sites that block plain HTTP requests
+playwright
+
 # Scheduling
 apscheduler>=3.10.0
 
