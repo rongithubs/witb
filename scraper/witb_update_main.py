@@ -7,14 +7,17 @@ Coordinates URL finding, scraping, and database updates for WITB data.
 import argparse
 from url_finder import URLFinder
 from witb_scraper import WITBScraper
+from golfwrx_scraper import GolfWRXScraper
 from database_updater import DatabaseUpdater
 
 def main():
     """Main function to orchestrate the WITB scraping process."""
     parser = argparse.ArgumentParser(description='WITB Scraper for PGA Club Tracker')
     parser.add_argument('--limit', type=int, default=50, help='Number of players to process (default: 50)')
-    parser.add_argument('--find-urls-only', action='store_true', help='Only find URLs, don\'t scrape')
-    parser.add_argument('--scrape-only', action='store_true', help='Skip URL finding, use existing data')
+    parser.add_argument('--source', choices=['pga', 'golfwrx'], default='pga', help='Data source: pga (PGA Club Tracker) or golfwrx (GolfWRX + BeautifulSoup)')
+    parser.add_argument('--tour', default=None, help='Filter by tour (e.g. OGWR, LPGA). Default: all tours')
+    parser.add_argument('--find-urls-only', action='store_true', help='Only find URLs, don\'t scrape (pga source only)')
+    parser.add_argument('--scrape-only', action='store_true', help='Skip URL finding, use existing data (pga source only)')
     parser.add_argument('--no-db-update', action='store_true', help='Don\'t update database')
     parser.add_argument('--output', default='witb_data.json', help='Output JSON filename')
     parser.add_argument('--quiet', action='store_true', help='Minimize output')
@@ -29,48 +32,49 @@ def main():
     
     # Initialize components
     url_finder = URLFinder()
-    scraper = WITBScraper()
     db_updater = DatabaseUpdater()
-    
+
     # Step 1: Get players from database
     if verbose:
         print(f"Loading {args.limit} players from database...")
-    
-    players = url_finder.get_all_players_from_db(limit=args.limit)
+
+    players = url_finder.get_all_players_from_db(limit=args.limit, tour=args.tour)
     if not players:
         print("No players found in database!")
         return
-    
+
     if verbose:
         print(f"Loaded {len(players)} players")
-    
-    # Step 2: Find valid URLs (unless skipping)
-    if not args.scrape_only:
+
+    # Step 2 + 3: Find URLs and scrape WITB data
+    if args.source == 'golfwrx':
         if verbose:
-            print("\nFinding valid WITB URLs...")
-        
-        valid_players = url_finder.find_valid_urls(players, verbose=verbose)
-        
-        if not valid_players:
-            print("No valid URLs found!")
-            return
-        
-        if args.find_urls_only:
-            if verbose:
-                print(f"\nURL finding complete. Found {len(valid_players)} valid URLs.")
-            return
+            print(f"\nScraping WITB data from GolfWRX (Playwright + Gemini) for {len(players)} players...")
+        scraper = GolfWRXScraper()
+        scraped_data = scraper.scrape_multiple_players(players, verbose=verbose)
     else:
-        # For scrape-only mode, assume all players have URLs
-        valid_players = [p for p in players if p.url]
-        if not valid_players:
-            print("No players with URLs found! Run URL finding first.")
-            return
-    
-    # Step 3: Scrape WITB data
-    if verbose:
-        print(f"\nScraping WITB data for {len(valid_players)} players...")
-    
-    scraped_data = scraper.scrape_multiple_players(valid_players, verbose=verbose)
+        scraper_pga = WITBScraper()
+
+        if not args.scrape_only:
+            if verbose:
+                print("\nFinding valid WITB URLs...")
+            valid_players = url_finder.find_valid_urls(players, verbose=verbose)
+            if not valid_players:
+                print("No valid URLs found!")
+                return
+            if args.find_urls_only:
+                if verbose:
+                    print(f"\nURL finding complete. Found {len(valid_players)} valid URLs.")
+                return
+        else:
+            valid_players = [p for p in players if p.url]
+            if not valid_players:
+                print("No players with URLs found! Run URL finding first.")
+                return
+
+        if verbose:
+            print(f"\nScraping WITB data for {len(valid_players)} players...")
+        scraped_data = scraper_pga.scrape_multiple_players(valid_players, verbose=verbose)
     
     if not scraped_data:
         print("No WITB data was scraped!")
