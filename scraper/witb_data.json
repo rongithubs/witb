@@ -4,49 +4,56 @@
     "country": "USA",
     "tour": "OGWR",
     "ranking": 1,
-    "player_id": "300e7a4577414bc79d26c4ac6ae0d97f",
-    "source_url": "https://www.pgaclubtracker.com/players/scottie-scheffler-witb-whats-in-the-bag",
+    "player_id": "490a1d1d-f14c-4759-aa42-4e467c0b719a",
+    "source_url": "https://www.golfwrx.com/776844/scottie-scheffler-witb-2026-april/",
     "witb_items": [
       {
         "category": "Driver",
         "brand": "TaylorMade",
-        "model": "Qi4D",
+        "model": "Qi10",
         "loft": "8 degrees",
         "shaft": "Fujikura Ventus Black 7 X"
       },
       {
-        "category": "3-Wood",
+        "category": "3-wood",
         "brand": "TaylorMade",
-        "model": "Qi4D",
+        "model": "Qi10",
         "loft": "15 degrees",
         "shaft": "Fujikura Ventus Black 8 X"
       },
       {
-        "category": "Iron",
-        "brand": "Srixon",
-        "model": "Z U85",
-        "loft": "3, 4",
-        "shaft": "Nippon N.S. Pro Modus 3 Hybrid Prototype 10 X"
+        "category": "7-wood",
+        "brand": "TaylorMade",
+        "model": "Qi4D",
+        "loft": "21 degrees",
+        "shaft": "Fujikura Ventus Black 9 X"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
+        "brand": "Srixon",
+        "model": "ZU85",
+        "loft": "4",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (4-PW)"
+      },
+      {
+        "category": "Irons",
         "brand": "TaylorMade",
         "model": "P7TW",
         "loft": "5-PW",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (4-PW)"
       },
       {
-        "category": "Wedge",
+        "category": "Wedges",
         "brand": "Titleist",
         "model": "Vokey Design SM8",
-        "loft": "50-12F, 56-14F",
+        "loft": "50-12F, 56-14F @55",
         "shaft": "True Temper Dynamic Gold Tour Issue S400"
       },
       {
-        "category": "Wedge",
+        "category": "Wedges",
         "brand": "Titleist",
-        "model": "Vokey Design WedgeWorks",
-        "loft": "60-06K",
+        "model": "Vokey Design WedgeWorks SM9",
+        "loft": "60-T",
         "shaft": "True Temper Dynamic Gold Tour Issue S400"
       },
       {
@@ -54,17 +61,10 @@
         "brand": "TaylorMade",
         "model": "Spider Tour X",
         "loft": null,
-        "shaft": null
+        "shaft": "Golf Pride Pro Only"
       },
       {
-        "category": "Grip",
-        "brand": "Golf Pride",
-        "model": "Pro Only",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
         "model": "Tour Velvet",
         "loft": null,
@@ -84,69 +84,41 @@
     "country": "Northern Ireland",
     "tour": "OGWR",
     "ranking": 2,
-    "player_id": "25778649d206468cb864529c758ba5d5",
-    "source_url": "https://www.pgaclubtracker.com/players/rory-mcilroy-witb-whats-in-the-bag",
+    "player_id": "ee010760-8703-4f3d-88d6-537613260c23",
+    "source_url": "https://www.golfwrx.com/776486/bks-breakdowns-rory-mcilroys-winning-witb-from-the-2026-masters/",
     "witb_items": [
       {
         "category": "Driver",
         "brand": "TaylorMade",
-        "model": "Qi10",
-        "loft": "\u201cDot\u201d, 9 degrees @8.25",
-        "shaft": "Fujikura Ventus Black 6 X"
+        "model": "Qi4D",
+        "loft": "9 degrees @8",
+        "shaft": "Fujikura Ventus Black 6 X (45 5/8 inches)"
       },
       {
-        "category": "3-Wood",
+        "category": "3-wood",
         "brand": "TaylorMade",
         "model": "Qi10",
         "loft": "15 degrees",
         "shaft": "Fujikura Ventus Black 8 X"
       },
       {
-        "category": "5-Wood",
+        "category": "5-wood",
         "brand": "TaylorMade",
-        "model": "Qi10",
+        "model": "Qi4D",
         "loft": "18 degrees",
-        "shaft": "Fujikura Ventus Black 9 X"
-      },
-      {
-        "category": "Iron",
-        "brand": "TaylorMade",
-        "model": "P770 Proto",
-        "loft": "4",
-        "shaft": "True Temper Project X HZRDUS Black 105 HY TX"
-      },
-      {
-        "category": "Iron",
-        "brand": "TaylorMade",
-        "model": "Rors Proto",
-        "loft": "5-9",
-        "shaft": "True Temper Project X 7.0"
-      },
-      {
-        "category": "Wedge",
-        "brand": "TaylorMade",
-        "model": "MG4",
-        "loft": "46-09SB, 50-09SB, 54-11SB, 60-08LB @61",
-        "shaft": "True Temper Project X 6.5"
+        "shaft": "Fujikura Ventus Black 8 X"
       },
       {
         "category": "Putter",
         "brand": "TaylorMade",
         "model": "Spider Tour X",
         "loft": null,
-        "shaft": null
+        "shaft": "SuperStroke Zenergy Pistol Tour"
       },
       {
-        "category": "Grip",
-        "brand": "SuperStroke",
-        "model": "Zenergy Pistol Tour",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
-        "model": "MCC",
+        "model": "MCC 60 Ribbed",
         "loft": null,
         "shaft": null
       },
@@ -160,151 +132,64 @@
     ]
   },
   {
-    "name": "Xander Schauffele",
-    "country": "USA",
+    "name": "Matt Fitzpatrick",
+    "country": "England",
     "tour": "OGWR",
     "ranking": 3,
-    "player_id": "a69816542fdb45eaa82ce49d08890d36",
-    "source_url": "https://www.pgaclubtracker.com/players/xander-schauffele-witb-whats-in-the-bag",
-    "witb_items": [
-      {
-        "category": "Driver",
-        "brand": "Callaway",
-        "model": "Elyte Triple Diamond",
-        "loft": "10.5 degrees @9.5",
-        "shaft": "Mitsubishi Diamana PD 70 TX"
-      },
-      {
-        "category": "Mini Driver",
-        "brand": "Callaway",
-        "model": "Paradym Ai Smoke Ti 340",
-        "loft": "13.5 degrees @12.5",
-        "shaft": "Mitsubishi Diamana PD 80 TX"
-      },
-      {
-        "category": "3-Wood",
-        "brand": "Callaway",
-        "model": "Elyte HL",
-        "loft": "16.5 degrees",
-        "shaft": "Mitsubishi Diamana PD 80 TX"
-      },
-      {
-        "category": "Hybrid",
-        "brand": "Callaway",
-        "model": "Apex UW",
-        "loft": "21 degrees @19.7",
-        "shaft": "Mitsubishi Diamana D-Limited 90 TX"
-      },
-      {
-        "category": "Iron",
-        "brand": "Callaway",
-        "model": "Apex TCB",
-        "loft": "4-10",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100 (4-10"
-      },
-      {
-        "category": "Wedge",
-        "brand": "Callaway",
-        "model": "Opus",
-        "loft": "52-10S",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
-      },
-      {
-        "category": "Wedge",
-        "brand": "Titleist",
-        "model": "Vokey Design SM10",
-        "loft": "56-10S @57, 60-04T",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
-      },
-      {
-        "category": "Putter",
-        "brand": "Odyssey",
-        "model": "Toulon Design Las Vegas Prototype 7CH",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
-        "brand": "SuperStroke",
-        "model": "Zenergy Tour 2.0",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
-        "brand": "Golf Pride",
-        "model": "MCC Align",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Ball",
-        "brand": "Callaway",
-        "model": "Chrome Tour",
-        "loft": null,
-        "shaft": null
-      }
-    ]
-  },
-  {
-    "name": "Russell Henley",
-    "country": "USA",
-    "tour": "OGWR",
-    "ranking": 4,
-    "player_id": "315047338022407c8731b51dc32ebcab",
-    "source_url": "https://www.pgaclubtracker.com/players/russell-henley-witb-whats-in-the-bag",
+    "player_id": "6e7a2354-0c25-46fa-9a07-6a01960e990a",
+    "source_url": "https://www.golfwrx.com/776833/matt-fitzpatricks-winning-witb-2026-rbc-heritage/",
     "witb_items": [
       {
         "category": "Driver",
         "brand": "Titleist",
         "model": "GT3",
-        "loft": "10 degrees",
-        "shaft": "True Temper Project X HZRDUS Smoke Black 70 6.5 TX"
+        "loft": "9 degrees, A1 SureFit",
+        "shaft": "Mitsubishi Tensei AV Raw Orange 65 TX"
       },
       {
-        "category": "3-Wood",
-        "brand": "Titleist",
-        "model": "GT3",
-        "loft": "16.5 degrees",
-        "shaft": "True Temper Project X HZRDUS Smoke Black 80 TX"
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "Qi35",
+        "loft": "15 degrees",
+        "shaft": "Mitsubishi Tensei AV Raw Orange 75 TX"
       },
       {
-        "category": "Hybrid",
-        "brand": "Titleist",
-        "model": "TSi2",
-        "loft": "21 degrees",
-        "shaft": "Mitsubishi MMT Hybrid 100 TX"
+        "category": "5-wood",
+        "brand": "TaylorMade",
+        "model": "Qi35",
+        "loft": "18 degrees",
+        "shaft": "Mitsubishi Tensei 1K Pro Orange 80 TX"
       },
       {
-        "category": "Iron",
-        "brand": "Titleist",
-        "model": "T200",
+        "category": "Irons",
+        "brand": "PING",
+        "model": "i210",
         "loft": "4",
-        "shaft": "True Temper Dynamic Gold AMT 4-6"
+        "shaft": "Ping CFS X-Stiff (4), KBS Tour (5-9)"
       },
       {
-        "category": "Iron",
-        "brand": "Titleist",
-        "model": "T100",
+        "category": "Irons",
+        "brand": "PING",
+        "model": "S55",
         "loft": "5-9",
-        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+        "shaft": "Ping CFS X-Stiff (4), KBS Tour (5-9)"
       },
       {
-        "category": "Wedge",
+        "category": "Wedges",
         "brand": "Titleist",
         "model": "Vokey Design SM10",
-        "loft": "48-10F @47, 50-08F @51, 54-10S @55, 60-04T",
-        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+        "loft": "48-10F, 52-12F @52.5, 56-08M, 60-08M @61.5",
+        "shaft": "True Temper Dynamic Gold Tour Issue S300"
       },
       {
         "category": "Putter",
-        "brand": "Titleist",
-        "model": "Scotty Cameron T5 Prototype",
+        "brand": "Bettinardi",
+        "model": "BB1 Fitz",
         "loft": null,
         "shaft": null
       },
       {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
         "model": "Tour Velvet",
         "loft": null,
@@ -320,80 +205,160 @@
     ]
   },
   {
-    "name": "Justin Thomas",
+    "name": "Cameron Young",
     "country": "USA",
     "tour": "OGWR",
-    "ranking": 5,
-    "player_id": "1f0a58f7ae534c7ba72b605f016c0913",
-    "source_url": "https://www.pgaclubtracker.com/players/justin-thomas-witb-whats-in-the-bag",
+    "ranking": 4,
+    "player_id": "6586472c-4540-4132-8d15-0c6cbf1691d2",
+    "source_url": "https://www.golfwrx.com/776385/cameron-young-witb-2026-april/",
     "witb_items": [
       {
         "category": "Driver",
         "brand": "Titleist",
-        "model": "GT2",
-        "loft": "10 degrees, D2 SureFit setting",
-        "shaft": "Mitsubishi Diamana Prototype"
+        "model": "GT3",
+        "loft": "11 degrees, D1 SureFit setting",
+        "shaft": "Mitsubishi Diamana PD 60 TX"
       },
       {
-        "category": "3-Wood",
+        "category": "3-wood",
         "brand": "Titleist",
-        "model": "TS3",
-        "loft": "15 degrees, A1 SureFit setting",
-        "shaft": "Mitsubishi Tensei AV Raw Blue 85 TX"
+        "model": "GT1",
+        "loft": "14.5 degrees",
+        "shaft": "Mitsubishi Diamana PD 80 TX"
       },
       {
-        "category": "5-Wood",
+        "category": "7-wood",
         "brand": "Titleist",
-        "model": "915 Fd",
-        "loft": "18 degrees, B3 SureFit setting",
-        "shaft": "Fujikura Motore Speeder VC 9.2 X"
+        "model": "GTS3",
+        "loft": "21\u00a0 degrees",
+        "shaft": "Mitsubishi Tensei 1K Blue 90 TX"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Titleist",
         "model": "T200",
         "loft": "4",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+        "shaft": "True Temper Dynamic Gold X7 (4-9)"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Titleist",
         "model": "T100",
         "loft": "5",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+        "shaft": "True Temper Dynamic Gold X7 (4-9)"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Titleist",
-        "model": "621.JT",
+        "model": "631.CY Prototype",
         "loft": "6-9",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+        "shaft": "True Temper Dynamic Gold X7 (4-9)"
       },
       {
-        "category": "Wedge",
+        "category": "Wedges",
         "brand": "Titleist",
-        "model": "Vokey Design SM10",
-        "loft": "46-10F @47.5, 52-12F @52.5, 56-14F @57, 60-04T @60.5",
-        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+        "model": "Vokey Design SM11",
+        "loft": "48-10F, 52-12F, 56-14F @57",
+        "shaft": "True Temper Dynamic Gold X7 (48-56), True Temper Dynamic Gold Tour Issue X100 (60)"
       },
       {
         "category": "Putter",
-        "brand": "Titleist",
-        "model": "Scotty Cameron Phantom T5 Tour Prototype",
+        "brand": "Scotty Cameron",
+        "model": "Phantom 9.5R Tour Prototype",
         "loft": null,
-        "shaft": null
+        "shaft": "SuperStroke Zenergy Pistol 1.0"
       },
       {
-        "category": "Grip",
-        "brand": "SuperStroke",
-        "model": "Zenergy Pistol Tour",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
-        "model": "Tour Velvet Cord",
+        "model": "MCC Plus4 Align Max",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "ProV1x Prototype",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Justin Rose",
+    "country": "England",
+    "tour": "OGWR",
+    "ranking": 5,
+    "player_id": "cec7022c-0366-462b-89d8-97e676ba825a",
+    "source_url": "https://www.golfwrx.com/776304/justin-rose-witb-2026-april/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Callaway",
+        "model": "Paradym Ai Smoke Triple Diamond Max",
+        "loft": "9 degrees",
+        "shaft": "Mitsubishi Diamana WB 63 TX"
+      },
+      {
+        "category": "Mini driver",
+        "brand": "Callaway",
+        "model": "Quantum Mini",
+        "loft": "13.5 degrees",
+        "shaft": "Mitsubishi Diamana WB 63 TX"
+      },
+      {
+        "category": "7-wood",
+        "brand": "TaylorMade",
+        "model": "Qi4D",
+        "loft": "21 degrees",
+        "shaft": "Project X HZRDUS Smoke Black RDX 80 TX"
+      },
+      {
+        "category": "Irons",
+        "brand": "Srixon",
+        "model": "ZX Mk II U",
+        "loft": "4",
+        "shaft": "KBS C-Taper 125 S+"
+      },
+      {
+        "category": "Irons",
+        "brand": "Miura",
+        "model": "TC-502",
+        "loft": "5",
+        "shaft": "KBS C-Taper 125 S+"
+      },
+      {
+        "category": "Irons",
+        "brand": "Miura",
+        "model": "MC-502",
+        "loft": "6-PW",
+        "shaft": "KBS C-Taper 125 S+"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM10",
+        "loft": "52-08F, 56-08M",
+        "shaft": "KBS C-Taper 125 S+ (52), True Temper Dynamic Gold Tour Issue S400 (56, 60)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Cleveland",
+        "model": "RTZ Tour Rack Prototype",
+        "loft": "60",
+        "shaft": "KBS C-Taper 125 S+ (52), True Temper Dynamic Gold Tour Issue S400 (56, 60)"
+      },
+      {
+        "category": "Putter",
+        "brand": "Scotty Cameron",
+        "model": "Phantom 5 Tour Prototype",
+        "loft": null,
+        "shaft": "SuperStroke Zenergy Claw 1.0"
+      },
+      {
+        "category": "Grips",
+        "brand": "Lamkin",
+        "model": "JR Rel",
         "loft": null,
         "shaft": null
       },
@@ -407,151 +372,71 @@
     ]
   },
   {
-    "name": "Tommy Fleetwood",
-    "country": "England",
-    "tour": "OGWR",
-    "ranking": 6,
-    "player_id": "13138c026b1f4c66851ef861745bc833",
-    "source_url": "https://www.pgaclubtracker.com/players/tommy-fleetwood-witb-whats-in-the-bag",
-    "witb_items": [
-      {
-        "category": "Driver",
-        "brand": "TaylorMade",
-        "model": "Qi35 \u201cDot\u201d",
-        "loft": "10.5 degrees @9.8",
-        "shaft": "Fujikura Ventus TR Blue 6 X"
-      },
-      {
-        "category": "Mini Driver",
-        "brand": "TaylorMade",
-        "model": "R7 Quad",
-        "loft": "13.5 degrees @13",
-        "shaft": "Fujikura Ventus TR Blue 6 X"
-      },
-      {
-        "category": "5-Wood",
-        "brand": "TaylorMade",
-        "model": "Qi35",
-        "loft": "18 degrees",
-        "shaft": "Mitsubishi Kuro Kage 80 TX"
-      },
-      {
-        "category": "9-Wood",
-        "brand": "TaylorMade",
-        "model": "Qi10",
-        "loft": "24 degrees",
-        "shaft": "Mitsubishi Kuro Kage 80 TX"
-      },
-      {
-        "category": "Iron",
-        "brand": "TaylorMade",
-        "model": "P7TW",
-        "loft": "5-PW",
-        "shaft": "True Temper Project X 6.5"
-      },
-      {
-        "category": "Wedge",
-        "brand": "TaylorMade",
-        "model": "Hi-Toe 4",
-        "loft": "52-09",
-        "shaft": "True Temper Dynamic Gold Tour Issue S400"
-      },
-      {
-        "category": "Wedge",
-        "brand": "TaylorMade",
-        "model": "MG Prototype",
-        "loft": "56-12, 60-10",
-        "shaft": "True Temper Dynamic Gold Tour Issue S400"
-      },
-      {
-        "category": "Putter",
-        "brand": "TaylorMade",
-        "model": "Spider Tour Black",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Ball",
-        "brand": "TaylorMade",
-        "model": "TP5x Pix",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
-        "brand": "Golf Pride",
-        "model": "Tour Velvet Cord",
-        "loft": null,
-        "shaft": null
-      }
-    ]
-  },
-  {
     "name": "Collin Morikawa",
     "country": "USA",
     "tour": "OGWR",
-    "ranking": 8,
-    "player_id": "c29120c4c5984fb29872a88494fcd64d",
-    "source_url": "https://www.pgaclubtracker.com/players/collin-morikawa-witb-whats-in-the-bag",
+    "ranking": 6,
+    "player_id": "817e804b-bd8f-4468-9b15-b78cf1d058c4",
+    "source_url": "https://www.golfwrx.com/773388/bks-breakdowns-collin-morikawas-winning-2026-att-pebble-beach-pro-am-witb/",
     "witb_items": [
       {
         "category": "Driver",
         "brand": "TaylorMade",
-        "model": "Qi35 LS",
-        "loft": "9 degrees",
-        "shaft": "Mitsubishi Diamana D+ Limited 60 TX"
+        "model": "Qi4D LS",
+        "loft": "8 degrees",
+        "shaft": "Mitsubishi Diamana D+ 60 TX"
       },
       {
-        "category": "3-Wood",
+        "category": "3-wood",
         "brand": "TaylorMade",
-        "model": "SIM Titanium",
-        "loft": "14 degrees",
+        "model": "Qi4D Tour",
+        "loft": "15 degrees",
         "shaft": "Mitsubishi Diamana D+ Limited 80 TX"
       },
       {
-        "category": "5-Wood",
+        "category": "5-wood",
         "brand": "TaylorMade",
-        "model": "Qi10",
+        "model": "Qi4D Tour",
         "loft": "18 degrees",
         "shaft": "Mitsubishi Diamana D+ Limited 80 TX"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "TaylorMade",
-        "model": "P7CB",
-        "loft": "4, 5, 6",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+        "model": "PDHY",
+        "loft": "4",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (4-PW)"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
+        "brand": "TaylorMade",
+        "model": "P7CB",
+        "loft": "5, 6",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (4-PW)"
+      },
+      {
+        "category": "Irons",
         "brand": "TaylorMade",
         "model": "P730",
         "loft": "7-PW",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (4-PW)"
       },
       {
-        "category": "Wedge",
+        "category": "Wedges",
         "brand": "TaylorMade",
-        "model": "MG4",
-        "loft": "50-SB09, 56-LB08, 60-11TW",
+        "model": "MG5",
+        "loft": "50-09 SB, 56-08 LB, 60-TW",
         "shaft": "True Temper Dynamic Gold Tour Issue S400"
       },
       {
         "category": "Putter",
         "brand": "TaylorMade",
-        "model": "TP Soto",
+        "model": "Spider Tour X",
         "loft": null,
         "shaft": null
       },
       {
-        "category": "Grip",
-        "brand": "SuperStroke",
-        "model": "Zenergy Tour 2.0",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
         "model": "Z-Grip Cord",
         "loft": null,
@@ -567,247 +452,292 @@
     ]
   },
   {
-    "name": "Robert MacIntyre",
-    "country": "Scotland",
+    "name": "Tommy Fleetwood",
+    "country": "England",
     "tour": "OGWR",
-    "ranking": 9,
-    "player_id": "798b1d3851bf4945aca1a6aad16f36f1",
-    "source_url": "https://www.pgaclubtracker.com/players/robert-macintyre-witb-whats-in-the-bag",
+    "ranking": 7,
+    "player_id": "60726ce4-d95a-4887-95f2-1e5bfe48c99f",
+    "source_url": "https://www.golfwrx.com/773262/tommy-fleetwood-witb-2026-february/",
     "witb_items": [
       {
         "category": "Driver",
-        "brand": "Titleist",
-        "model": "TSR2",
-        "loft": "9 degrees",
-        "shaft": "Graphite Design Tour AD DI 7 X"
-      },
-      {
-        "category": "3-Wood",
         "brand": "TaylorMade",
-        "model": "AeroBurner",
-        "loft": "15 degrees",
-        "shaft": "Mitsubishi Tensei AV Raw White 85 TX"
-      },
-      {
-        "category": "Hybrid",
-        "brand": "TaylorMade",
-        "model": "Stealth 2 Rescue",
-        "loft": "19 degrees",
-        "shaft": "Graphite Design Tour AD DI 105 X"
-      },
-      {
-        "category": "Iron",
-        "brand": "Titleist",
-        "model": "620 CB",
-        "loft": "4-9",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
-      },
-      {
-        "category": "Wedge",
-        "brand": "Titleist",
-        "model": "Vokey Design SM10",
-        "loft": "46-10F",
-        "shaft": "True Temper Dynamic Gold X100 Onyx"
-      },
-      {
-        "category": "Wedge",
-        "brand": "Titleist",
-        "model": "Vokey Design SM9",
-        "loft": "50-08F @51",
-        "shaft": "True Temper Dynamic Gold X100 Onyx"
-      },
-      {
-        "category": "Wedge",
-        "brand": "Titleist",
-        "model": "Vokey Design SM9",
-        "loft": "56-10S",
-        "shaft": "True Temper Dynamic Gold S400 Onyx"
-      },
-      {
-        "category": "Wedge",
-        "brand": "Titleist",
-        "model": "Vokey Design WedgeWorks",
-        "loft": "60-06 K",
-        "shaft": "True Temper Dynamic Gold S400 Onyx"
-      },
-      {
-        "category": "Putter",
-        "brand": "TaylorMade",
-        "model": "Spider Tour X",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
-        "brand": "SuperStroke",
-        "model": "Zenergy Pistol 1.0",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
-        "brand": "Golf Pride",
-        "model": "Z-Grip Cord",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Ball",
-        "brand": "Titleist",
-        "model": "Pro V1",
-        "loft": null,
-        "shaft": null
-      }
-    ]
-  },
-  {
-    "name": "Harris English",
-    "country": "USA",
-    "tour": "OGWR",
-    "ranking": 10,
-    "player_id": "9ac825bc0fcb4860a7e80096f534d2e6",
-    "source_url": "https://www.pgaclubtracker.com/players/harris-english-witb-whats-in-the-bag",
-    "witb_items": [
-      {
-        "category": "Driver",
-        "brand": "PING",
-        "model": "G430 LST",
+        "model": "Qi4D LS",
         "loft": "10.5 degrees",
         "shaft": "Fujikura Ventus TR Blue 6 X"
       },
       {
-        "category": "3-Wood",
-        "brand": "PING",
-        "model": "G400",
-        "loft": "14.5 degrees",
-        "shaft": "Fujikura Atmos Tour Spec Blue 7 X"
+        "category": "Mini driver",
+        "brand": "TaylorMade",
+        "model": "R7 Quad",
+        "loft": "13.5 degrees",
+        "shaft": "Fujikura Ventus TR Blue 6 X"
       },
       {
-        "category": "Iron",
-        "brand": "PING",
-        "model": "G410 Crossover",
-        "loft": "3",
-        "shaft": "Fujikura Atmos HB Tour Spec Black 9 X"
+        "category": "5-wood",
+        "brand": "TaylorMade",
+        "model": "Qi35",
+        "loft": "18 degrees",
+        "shaft": "Mitsubishi Kuro Kage 80 TX"
       },
       {
-        "category": "Iron",
-        "brand": "PING",
-        "model": "Blueprint T",
-        "loft": "4-9",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+        "category": "Irons",
+        "brand": "TaylorMade",
+        "model": "GAPR Lo",
+        "loft": "4",
+        "shaft": "Project X 6.5"
       },
       {
-        "category": "Wedge",
-        "brand": "PING",
-        "model": "Glide 4.0",
-        "loft": "46-S12, 52-S12, 56 S-12",
+        "category": "Irons",
+        "brand": "TaylorMade",
+        "model": "P7TW",
+        "loft": "5-PW",
+        "shaft": "Project X 6.5"
+      },
+      {
+        "category": "Wedges",
+        "brand": "TaylorMade",
+        "model": "Hi-Toe 4",
+        "loft": "52-09",
         "shaft": "True Temper Dynamic Gold Tour Issue S400"
       },
       {
-        "category": "Wedge",
-        "brand": "PING",
-        "model": "Glide Forged",
-        "loft": "60",
+        "category": "Wedges",
+        "brand": "TaylorMade",
+        "model": "MG5",
+        "loft": "60-09",
         "shaft": "True Temper Dynamic Gold Tour Issue S400"
       },
       {
         "category": "Putter",
-        "brand": "PING",
-        "model": "Scottsdale Hohum",
+        "brand": "TaylorMade",
+        "model": "Spider Tour Black",
         "loft": null,
-        "shaft": null
+        "shaft": "SuperStroke Mid Slim 2.0"
       },
       {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
-        "model": "MCC Align",
+        "model": "Tour Velvet Cord",
         "loft": null,
         "shaft": null
       },
       {
         "category": "Ball",
-        "brand": "Titleist",
-        "model": "Pro V1",
+        "brand": "TaylorMade",
+        "model": "TP5x Pix",
         "loft": null,
         "shaft": null
       }
     ]
   },
   {
-    "name": "Keegan Bradley",
+    "name": "Russell Henley",
     "country": "USA",
     "tour": "OGWR",
-    "ranking": 11,
-    "player_id": "4ad34bba169444f4a5e81d5adba1a42d",
-    "source_url": "https://www.pgaclubtracker.com/players/keegan-bradley-witb-whats-in-the-bag",
+    "ranking": 8,
+    "player_id": "de8d52b8-846e-4761-93cc-16a41f86acfa",
+    "source_url": "https://www.golfwrx.com/776411/russell-henley-witb-2026-april/",
     "witb_items": [
       {
         "category": "Driver",
-        "brand": "PING",
-        "model": "G430 LST",
-        "loft": "10.5 degrees",
-        "shaft": "Fujikura Ventus Black 6 X"
+        "brand": "Titleist",
+        "model": "TSi3",
+        "loft": "10 degrees",
+        "shaft": "Project X HZRDUS Smoke Black 70 6.5 TX"
       },
       {
-        "category": "3-Wood",
-        "brand": "TaylorMade",
-        "model": "Qi10 HL",
+        "category": "3-wood",
+        "brand": "Titleist",
+        "model": "TS3",
         "loft": "16.5 degrees",
-        "shaft": "Aldila Rogue White 130 MSI 70 TX"
+        "shaft": "Project X HZRDUS Smoke Black 80 TX"
       },
       {
-        "category": "7-Wood",
-        "brand": "TaylorMade",
-        "model": "Qi35",
+        "category": "Hybrid",
+        "brand": "Titleist",
+        "model": "TSi2",
         "loft": "21 degrees",
-        "shaft": "Aldila Rogue White 130 MSI 70 TX"
+        "shaft": "Mitsubishi MMT Hybrid 100 TX"
       },
       {
-        "category": "Iron",
-        "brand": "Srixon",
-        "model": "ZX5 MKII",
-        "loft": "3-5",
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "T250",
+        "loft": "4",
+        "shaft": "True Temper Dynamic Gold AMT (4-6), True Temper Dynamic Gold Tour Issue S400 (7-9)"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "T100",
+        "loft": "5-9",
+        "shaft": "True Temper Dynamic Gold AMT (4-6), True Temper Dynamic Gold Tour Issue S400 (7-9)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM11",
+        "loft": "48-10F @47, 50-08F @51, 54-10S @55, 60-04T",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (48), S400 (47)"
+      },
+      {
+        "category": "Putter",
+        "brand": "Scotty Cameron",
+        "model": "Phantom X5 Tour Prototype",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1x",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Xander Schauffele",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 9,
+    "player_id": "2979641c-9dea-4d5f-a5a1-6df8f75f1437",
+    "source_url": "https://www.golfwrx.com/767973/bks-breakdowns-xander-schauffeles-winning-witb-2025-baycurrent-classic/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Callaway",
+        "model": "Paradym Ai Smoke Triple Diamond",
+        "loft": "10.5 degrees",
+        "shaft": "Mitsubishi Diamana PD 70 TX"
+      },
+      {
+        "category": "3-wood",
+        "brand": "Callaway",
+        "model": "Elyte Triple Diamond HL",
+        "loft": "16.5 degrees",
+        "shaft": "Mitsubishi Diamana PD 80 TX"
+      },
+      {
+        "category": "Hybrid",
+        "brand": "Callaway",
+        "model": "Apex UW",
+        "loft": "21 degrees @19.7",
+        "shaft": "Mitsubishi Diamana D-Limited 90 TX"
+      },
+      {
+        "category": "Irons",
+        "brand": "Callaway",
+        "model": "Apex TCB \u201924",
+        "loft": "4-10",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (4-10)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Callaway",
+        "model": "Opus SP",
+        "loft": "52-10S",
         "shaft": "True Temper Dynamic Gold Tour Issue X100"
       },
       {
-        "category": "Iron",
-        "brand": "Srixon",
-        "model": "ZX7 MKII",
-        "loft": "6-9",
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM10",
+        "loft": "56-10S @57, 60-04T @61",
         "shaft": "True Temper Dynamic Gold Tour Issue X100"
-      },
-      {
-        "category": "Iron",
-        "brand": "Srixon",
-        "model": "Z-Forged II",
-        "loft": "PW",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
-      },
-      {
-        "category": "Wedge",
-        "brand": "Cleveland",
-        "model": "RTZ Tour Rack",
-        "loft": "52-10 Mid, 56-10 Mid, 58-06 LOW",
-        "shaft": "True Temper Dynamic Gold Tour Issue S400"
       },
       {
         "category": "Putter",
         "brand": "Odyssey",
-        "model": "Ai-ONE Jailbird Cruiser",
+        "model": "Toulon Design Las Vegas Prototype 7CH",
         "loft": null,
-        "shaft": null
+        "shaft": "SuperStroke Zenergy Tour 2.0"
       },
       {
-        "category": "Grip",
-        "brand": "SuperStroke",
-        "model": "Zenergy WristLock",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
-        "model": "Tour Velvet Plus4",
+        "model": "MCC Plus4 Align Max",
+        "loft": "Woods/irons",
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "MCC Align",
+        "loft": "Wedges",
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Callaway",
+        "model": "Chrome Tour Dot",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "J.J. Spaun",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 10,
+    "player_id": "1a445922-7a93-44b3-a10a-2b46a48725b0",
+    "source_url": "https://www.golfwrx.com/775935/bks-breakdowns-j-j-spauns-winning-witb-at-the-2026-valero-texas-open/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Titleist",
+        "model": "GT3",
+        "loft": "9 degrees",
+        "shaft": "Fujikura Ventus Black VeloCore+ 6 X"
+      },
+      {
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "Qi10",
+        "loft": "15 degrees",
+        "shaft": "Mitsubishi Diamana PD 70 TX"
+      },
+      {
+        "category": "7-wood",
+        "brand": "TaylorMade",
+        "model": "Qi10",
+        "loft": "21 degrees",
+        "shaft": "Mitsubishi Diamana PD 80 TX"
+      },
+      {
+        "category": "Irons",
+        "brand": "Srixon",
+        "model": "ZXi5",
+        "loft": "4",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (4-PW)"
+      },
+      {
+        "category": "Irons",
+        "brand": "Srixon",
+        "model": "ZXi7",
+        "loft": "5-PW",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (4-PW)"
+      },
+      {
+        "category": "Putter",
+        "brand": "L.A.B. Golf",
+        "model": "DF3",
+        "loft": null,
+        "shaft": "TPT Putter"
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet",
         "loft": null,
         "shaft": null
       },
@@ -821,87 +751,146 @@
     ]
   },
   {
-    "name": "Justin Rose",
-    "country": "England",
+    "name": "Chris Gotterup",
+    "country": "USA",
     "tour": "OGWR",
-    "ranking": 12,
-    "player_id": "6fea5d44e95d4130af19ae544327014a",
-    "source_url": "https://www.pgaclubtracker.com/players/justin-rose-witb-whats-in-the-bag",
+    "ranking": 11,
+    "player_id": "1870b227-9b2b-4409-9f55-f6a80f0a73a4",
+    "source_url": "https://www.golfwrx.com/773105/bks-breakdowns-chris-gotterups-winning-witb-2026-wm-phoenix-open/",
     "witb_items": [
       {
         "category": "Driver",
-        "brand": "Titleist",
-        "model": "GT2",
-        "loft": "9 degrees",
-        "shaft": "Mitsubishi Diamana WB 63 TX"
+        "brand": "PING",
+        "model": "G440 LST",
+        "loft": "7.5 degrees",
+        "shaft": "Project X HZRDUS Smoke Black 70 TX"
       },
       {
-        "category": "3-Wood",
+        "category": "Mini driver",
         "brand": "TaylorMade",
-        "model": "M6",
-        "loft": "15 degrees",
-        "shaft": "True Temper Project X HZRDUS Smoke Black RDX 80 TX"
+        "model": "BRNR Mini Copper",
+        "loft": "13.5 degrees",
+        "shaft": "Project X HZRDUS Smoke Black RDX 80 TX"
       },
       {
-        "category": "7-Wood",
+        "category": "5-wood",
         "brand": "TaylorMade",
-        "model": "M6",
-        "loft": "21 degrees",
-        "shaft": "True Temper Project X HZRDUS Smoke Black RDX 80 TX"
+        "model": "Qi35",
+        "loft": "18 degrees",
+        "shaft": "Mitsubishi Diamana WB 83 TX"
       },
       {
-        "category": "Iron",
-        "brand": "Miura",
-        "model": "MC-502",
-        "loft": "4-PW",
-        "shaft": "KBS C-Taper 125 S+"
+        "category": "Irons",
+        "brand": "Bridgestone",
+        "model": "Tour B 220 MB",
+        "loft": "4-9",
+        "shaft": "KBS C-Taper 130 X"
       },
       {
         "category": "Wedge",
-        "brand": "Titleist",
-        "model": "Vokey Design SM9",
-        "loft": "52-08F, 56-10S",
-        "shaft": "True Temper Dynamic Gold Tour Issue Onyx S400"
+        "brand": "TaylorMade",
+        "model": "MG5",
+        "loft": null,
+        "shaft": null
       },
       {
-        "category": "Wedge",
-        "brand": "Titleist",
-        "model": "Vokey Design WedgeWorks",
-        "loft": "60-L",
-        "shaft": "True Temper Dynamic Gold Tour Issue Onyx S400"
-      },
-      {
-        "category": "Putter",
-        "brand": "Axis1",
-        "model": "Prototype",
+        "category": "Wedges",
+        "brand": "TaylorMade",
+        "model": "MG5",
         "loft": null,
         "shaft": null
       },
       {
         "category": "Putter",
-        "brand": "Titleist",
-        "model": "Scotty Cameron T-5 Tour Prototype",
+        "brand": "TaylorMade",
+        "model": "Spider X Tour",
         "loft": null,
-        "shaft": null
+        "shaft": "SuperStroke Zenergy Pistol 2.0"
       },
       {
-        "category": "Grip",
-        "brand": "SuperStroke",
-        "model": "Zenergy Claw 1.0",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
-        "brand": "Lamkin",
-        "model": "JR Rel",
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Z Grip Cord",
         "loft": null,
         "shaft": null
       },
       {
         "category": "Ball",
+        "brand": "Bridgestone",
+        "model": "Tour B X Mindset",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Robert MacIntyre",
+    "country": "Scotland",
+    "tour": "OGWR",
+    "ranking": 12,
+    "player_id": "cec2bdb5-43bf-4c78-83b6-5d6ff99ec5ea",
+    "source_url": "https://www.golfwrx.com/765002/robert-macintyre-witb-2025-august/",
+    "witb_items": [
+      {
+        "category": "Driver",
         "brand": "Titleist",
-        "model": "Pro V1 Left Dot",
+        "model": "TSR2",
+        "loft": "9 degrees, B3 SureFit setting",
+        "shaft": "Graphite Design Tour AD DI 7 X"
+      },
+      {
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "AeroBurner",
+        "loft": "15 degrees",
+        "shaft": "Mitsubishi Tensei AV Raw White 85 TX"
+      },
+      {
+        "category": "Hybrid",
+        "brand": "TaylorMade",
+        "model": "Stealth 2 Rescue",
+        "loft": "19 degrees",
+        "shaft": "Graphite Design Tour AD DI 105 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "620 CB",
+        "loft": "4-9",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM10",
+        "loft": "46-10F",
+        "shaft": "True Temper Dynamic Gold X100 Onyx (46, 50), Dynamic Gold S400 Onyx (56, 60)"
+      },
+      {
+        "category": "Putter",
+        "brand": "TaylorMade",
+        "model": "Spider Tour X",
+        "loft": null,
+        "shaft": "SuperStroke Zenergy Pistol 1.0"
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Z-Grip Cord",
+        "loft": "woods, wedges",
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Grip",
+        "model": "Master",
+        "loft": "irons",
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1",
         "loft": null,
         "shaft": null
       }
@@ -912,8 +901,8 @@
     "country": "Austria",
     "tour": "OGWR",
     "ranking": 13,
-    "player_id": "28aff1b9035946d9a1c40125cf3fab46",
-    "source_url": "https://www.pgaclubtracker.com/players/sepp-straka-witb-whats-in-the-bag",
+    "player_id": "08ee1684-cf7e-4338-bf05-cbbce9c19e70",
+    "source_url": "https://www.golfwrx.com/760842/sepp-straka-witb-2025-may/",
     "witb_items": [
       {
         "category": "Driver",
@@ -923,38 +912,38 @@
         "shaft": "Fujikura Ventus VeloCore+ Blue 6 X"
       },
       {
-        "category": "3-Wood",
+        "category": "3-wood",
         "brand": "Callaway",
         "model": "Paradym Ai Smoke Triple Diamond",
         "loft": "15 degrees",
-        "shaft": "Mitsubishi Tensei 1K Red 80 TX"
+        "shaft": "Mitsubishi Tensei 1K Red 70 TX"
       },
       {
-        "category": "7-Wood",
+        "category": "7-wood",
         "brand": "Callaway",
         "model": "Paradym Ai Smoke Triple Diamond",
         "loft": "20 degrees",
         "shaft": "Mitsubishi Tensei 1K Orange 80 TX"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Srixon",
         "model": "ZXi5",
         "loft": "4, 5",
         "shaft": "True Temper Dynamic Gold Tour Issue X100"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Srixon",
         "model": "ZXi7",
         "loft": "6-9",
         "shaft": "True Temper Dynamic Gold Tour Issue X100"
       },
       {
-        "category": "Wedge",
+        "category": "Wedges",
         "brand": "Cleveland",
         "model": "RTZ",
-        "loft": "46, 52, 56, 60",
+        "loft": "46-10 MID, 52-10 MID, 56-12 FULL, 60-12 FULL",
         "shaft": "True Temper Dynamic Gold Tour Issue S400"
       },
       {
@@ -962,17 +951,10 @@
         "brand": "Odyssey",
         "model": "Tuttle Stroke Lab",
         "loft": null,
-        "shaft": null
+        "shaft": "SuperStroke Zenergy Pistol Tour"
       },
       {
-        "category": "Grip",
-        "brand": "SuperStroke",
-        "model": "Zenergy Pistol Tour",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
         "model": "Tour Velvet Midsize",
         "loft": null,
@@ -988,64 +970,57 @@
     ]
   },
   {
-    "name": "Viktor Hovland",
-    "country": "Norway",
+    "name": "Ludvig \u00c5berg",
+    "country": "Sweden",
     "tour": "OGWR",
-    "ranking": 15,
-    "player_id": "eff554a33ea1421eba50a2b307656d2c",
-    "source_url": "https://www.pgaclubtracker.com/players/viktor-hovland-witb-whats-in-the-bag",
+    "ranking": 14,
+    "player_id": "7650defd-e5eb-40f6-9964-b96e489b3544",
+    "source_url": "https://www.golfwrx.com/774661/ludvig-aberg-witb-2026-march/",
     "witb_items": [
       {
         "category": "Driver",
-        "brand": "PING",
-        "model": "G425 LST",
-        "loft": "9 degrees @8.5",
-        "shaft": "Fujikura Speeder 661 TR X"
-      },
-      {
-        "category": "3-Wood",
-        "brand": "TaylorMade",
-        "model": "SIM Titanium",
-        "loft": "15 degrees",
-        "shaft": "Fujikura Ventus Black 7 X"
-      },
-      {
-        "category": "Iron",
         "brand": "Titleist",
-        "model": "U505",
-        "loft": "3",
-        "shaft": "Graphite Design Tour AD DI Hybrid 85 X"
+        "model": "TSR2",
+        "loft": "9 degrees, D4 SureFit setting",
+        "shaft": "Fujikura Ventus Black 6 X"
       },
       {
-        "category": "Iron",
-        "brand": "PING",
-        "model": "i210",
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "Stealth 2",
+        "loft": "15 degrees",
+        "shaft": "Fujikura Ventus TR Blue 8 X"
+      },
+      {
+        "category": "7-wood",
+        "brand": "TaylorMade",
+        "model": "Stealth 2",
+        "loft": "21 degrees",
+        "shaft": "Fujikura Ventus TR Blue 9 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "T100",
         "loft": "4-PW",
-        "shaft": "KBS Tour-V 120 X"
+        "shaft": "KBS Tour 130 X"
       },
       {
-        "category": "Wedge",
-        "brand": "PING",
-        "model": "S159",
-        "loft": "50-12S, 56-12S",
-        "shaft": "True Temper Dynamic Gold Tour Issue S400"
-      },
-      {
-        "category": "Wedge",
-        "brand": "PING",
-        "model": "Glide 2.0",
-        "loft": "60-TS",
-        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM11",
+        "loft": "50-08F, 54-10S",
+        "shaft": "KBS Tour 130 X"
       },
       {
         "category": "Putter",
-        "brand": "PING",
-        "model": "PLD DS 72 Prototype",
+        "brand": "Odyssey",
+        "model": "Ai-One #1",
         "loft": null,
         "shaft": null
       },
       {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
         "model": "MCC",
         "loft": null,
@@ -1054,7 +1029,7 @@
       {
         "category": "Ball",
         "brand": "Titleist",
-        "model": "Pro V1",
+        "model": "Pro V1x",
         "loft": null,
         "shaft": null
       }
@@ -1064,40 +1039,40 @@
     "name": "Hideki Matsuyama",
     "country": "Japan",
     "tour": "OGWR",
-    "ranking": 16,
-    "player_id": "40fff88ae58a4d68856470dd324fb8e8",
-    "source_url": "https://www.pgaclubtracker.com/players/hideki-matsuyama-witb-whats-in-the-bag",
+    "ranking": 15,
+    "player_id": "861e35b1-7702-49b2-842a-c9b0ff00d813",
+    "source_url": "https://www.golfwrx.com/773030/hideki-matsuyama-witb-2026-february/",
     "witb_items": [
       {
         "category": "Driver",
         "brand": "Srixon",
         "model": "ZXi LS",
         "loft": "9 degrees",
-        "shaft": "Graphite Design Tour AD DI 8 TX"
+        "shaft": "Graphite Design Tour AD FI 8 TX"
       },
       {
-        "category": "3-Wood",
+        "category": "3-wood",
         "brand": "TaylorMade",
         "model": "Qi10",
         "loft": "15 degrees",
         "shaft": "Graphite Design Tour AD DI 9 TX"
       },
       {
-        "category": "5-Wood",
+        "category": "5-wood",
         "brand": "Cobra",
         "model": "King RadSpeed Tour",
         "loft": "17.5 degrees @19",
         "shaft": "Graphite Design Tour AD DI 10 TX"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Srixon",
         "model": "Z-Forged II",
         "loft": "4-9",
-        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+        "shaft": "True Temper Dynamic Gold Tour Issue S400 (4-PW)"
       },
       {
-        "category": "Wedge",
+        "category": "Wedges",
         "brand": "Cleveland",
         "model": "RTX 4 Forged Prototype",
         "loft": "48, 52-10, 56-08, 60-08",
@@ -1105,22 +1080,22 @@
       },
       {
         "category": "Putter",
-        "brand": "Titleist",
-        "model": "Scotty Cameron GSS Prototype",
+        "brand": "Scotty Cameron",
+        "model": "GSS",
         "loft": null,
-        "shaft": null
+        "shaft": "Scotty Cameron"
       },
       {
         "category": "Ball",
-        "brand": "Srixon",
-        "model": "Z-Star XV",
+        "brand": "2025",
+        "model": "Srixon Z-Star XV",
         "loft": null,
         "shaft": null
       },
       {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Iomic",
-        "model": "X-Evolution",
+        "model": "X-Evolution 2.3",
         "loft": null,
         "shaft": null
       }
@@ -1128,11 +1103,11 @@
   },
   {
     "name": "Ben Griffin",
-    "country": "Unknown",
+    "country": "USA",
     "tour": "OGWR",
-    "ranking": 17,
-    "player_id": "0f2273efd1084b1c82200b375947a0b4",
-    "source_url": "https://www.pgaclubtracker.com/players/ben-griffin-witb-whats-in-the-bag",
+    "ranking": 16,
+    "player_id": "46e7c346-46b0-46b9-b4d6-4a696f3bb8c3",
+    "source_url": "https://www.golfwrx.com/772912/ben-griffin-witb-2026-february/",
     "witb_items": [
       {
         "category": "Driver",
@@ -1142,38 +1117,38 @@
         "shaft": "UST Mamiya Lin-Q Powercore White V1 7 TX"
       },
       {
-        "category": "3-Wood",
+        "category": "3-wood",
         "brand": "TaylorMade",
-        "model": "Qi10",
+        "model": "Qi4D",
         "loft": "15 degrees",
         "shaft": "UST Mamiya Lin-Q Powercore White 8 TX"
       },
       {
-        "category": "7-Wood",
+        "category": "7-wood",
         "brand": "TaylorMade",
-        "model": "Qi10",
+        "model": "Qi4D",
         "loft": "21 degrees",
-        "shaft": "UST Mamiya Lin-Q Powercore White 9 TX"
+        "shaft": "UST Mamiya Lin-Q Powercore White 8 TX"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Mizuno",
-        "model": "Pro S-3",
+        "model": "Pro M-13",
+        "loft": "2",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+      },
+      {
+        "category": "Irons",
+        "brand": "Mizuno",
+        "model": "Pro S3",
         "loft": "4-PW",
         "shaft": "True Temper Dynamic Gold Tour Issue X100"
       },
       {
-        "category": "Wedge",
-        "brand": "Mizuno",
-        "model": "Pro T-1",
-        "loft": "52-10S @51",
-        "shaft": "True Temper Dynamic Gold Tour Issue S400"
-      },
-      {
-        "category": "Wedge",
+        "category": "Wedges",
         "brand": "TaylorMade",
         "model": "MG5",
-        "loft": "56, 60-SB09",
+        "loft": "52-SB09, 56-SB12, 60-LB08",
         "shaft": "True Temper Dynamic Gold Tour Issue S400"
       },
       {
@@ -1181,10 +1156,10 @@
         "brand": "TaylorMade",
         "model": "Spider Tour X",
         "loft": null,
-        "shaft": null
+        "shaft": "SuperStroke Zenergy 1.0PT"
       },
       {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
         "model": "MCC",
         "loft": null,
@@ -1200,238 +1175,71 @@
     ]
   },
   {
-    "name": "Maverick McNealy",
-    "country": "Unknown",
+    "name": "Justin Thomas",
+    "country": "USA",
     "tour": "OGWR",
-    "ranking": 18,
-    "player_id": "7eff005bf51f430bb13448eb9b1db7a3",
-    "source_url": "https://www.pgaclubtracker.com/players/maverick-mcnealy-witb-whats-in-the-bag",
-    "witb_items": [
-      {
-        "category": "Driver",
-        "brand": "TaylorMade",
-        "model": "Qi10",
-        "loft": "\u201cDot\u201d 10.5 degrees",
-        "shaft": "Graphite Design Tour AD XC 6 TX"
-      },
-      {
-        "category": "3-Wood",
-        "brand": "TaylorMade",
-        "model": "Stealth 2",
-        "loft": "16.5 degrees",
-        "shaft": "Fujikura Ventus Black 7 X"
-      },
-      {
-        "category": "7-Wood",
-        "brand": "TaylorMade",
-        "model": "Stealth 2",
-        "loft": "21 degrees",
-        "shaft": "Fujikura Ventus Red 8 X"
-      },
-      {
-        "category": "Iron",
-        "brand": "TaylorMade",
-        "model": "P7CB",
-        "loft": "4-9",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
-      },
-      {
-        "category": "Wedge",
-        "brand": "Titleist",
-        "model": "Vokey Design SM10",
-        "loft": "46-10F, 50-08F, 54-08M",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
-      },
-      {
-        "category": "Wedge",
-        "brand": "Titleist",
-        "model": "Vokey Design WedgeWorks",
-        "loft": "58-L @59",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
-      },
-      {
-        "category": "Putter",
-        "brand": "Odyssey",
-        "model": "Toulon Design Prototype",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
-        "brand": "Golf Pride",
-        "model": "MCC",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Ball",
-        "brand": "Titleist",
-        "model": "Pro V1x",
-        "loft": null,
-        "shaft": null
-      }
-    ]
-  },
-  {
-    "name": "Bryson DeChambeau",
-    "country": "Unknown",
-    "tour": "OGWR",
-    "ranking": 19,
-    "player_id": "4129cd936a934237a71e8839824b7489",
-    "source_url": "https://www.pgaclubtracker.com/players/bryson-dechambeau-witb-whats-in-the-bag",
-    "witb_items": [
-      {
-        "category": "Driver",
-        "brand": "Krank",
-        "model": "Formula Fire Pro",
-        "loft": "5 degrees @4",
-        "shaft": "LA Golf Tour AXS Blue"
-      },
-      {
-        "category": "Driver",
-        "brand": "LA Golf",
-        "model": "Driver",
-        "loft": null,
-        "shaft": "LA Golf ("
-      },
-      {
-        "category": "3-Wood",
-        "brand": "Krank",
-        "model": "Formula Fire",
-        "loft": "10 degrees",
-        "shaft": "LA Golf Tour AXS Blue"
-      },
-      {
-        "category": "3+-Wood",
-        "brand": "Krank",
-        "model": "Formula Fire",
-        "loft": "13 degrees",
-        "shaft": "LA Golf Tour AXS Blue"
-      },
-      {
-        "category": "Iron",
-        "brand": "Avoda",
-        "model": "Prototype",
-        "loft": "5-PW",
-        "shaft": "LA Golf Bryson Series"
-      },
-      {
-        "category": "Wedge",
-        "brand": "PING",
-        "model": "S159",
-        "loft": "46 @45, 50",
-        "shaft": "LA Golf Bryson Series"
-      },
-      {
-        "category": "Wedge",
-        "brand": "PING",
-        "model": "Glide 4.0",
-        "loft": "56-S @54, 60-W",
-        "shaft": "LA Golf Bryson Series"
-      },
-      {
-        "category": "Putter",
-        "brand": "LA Golf",
-        "model": "SIK Pro C-Series Armlock Proto",
-        "loft": null,
-        "shaft": "LA Golf C2L-180"
-      },
-      {
-        "category": "Grip",
-        "brand": "JumboMax",
-        "model": "JumboFlat 17",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
-        "brand": "JumboMax",
-        "model": "Tour Series",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Ball",
-        "brand": "Titleist",
-        "model": "Pro V1x",
-        "loft": null,
-        "shaft": null
-      }
-    ]
-  },
-  {
-    "name": "Cameron Young",
-    "country": "Unknown",
-    "tour": "OGWR",
-    "ranking": 20,
-    "player_id": "9c205d7ca7434fe781d496bc37c19590",
-    "source_url": "https://www.pgaclubtracker.com/players/cameron-young-witb-whats-in-the-bag",
+    "ranking": 17,
+    "player_id": "598b36f4-1412-47ce-b8a7-e86d6678d31c",
+    "source_url": "https://www.golfwrx.com/765715/justin-thomas-witb-2025-september/",
     "witb_items": [
       {
         "category": "Driver",
         "brand": "Titleist",
         "model": "GT2",
-        "loft": "9 degrees, D1 SureFit setting",
-        "shaft": "Mitsubishi Tensei 1K Orange 70 TX"
+        "loft": "9 degrees, A1 SureFit setting",
+        "shaft": "Mitsubishi Diamana Prototype"
       },
       {
-        "category": "Mini Driver",
+        "category": "3-wood",
         "brand": "Titleist",
-        "model": "GT280",
-        "loft": "13 degrees, A1 SureFit setting",
-        "shaft": "Mitsubishi Tensei 1K Orange 80 TX"
+        "model": "TS3",
+        "loft": "15 degrees, A1 SureFit setting",
+        "shaft": "Mitsubishi Tensei AV Raw Blue 85 TX"
       },
       {
-        "category": "Iron",
+        "category": "5-wood",
         "brand": "Titleist",
-        "model": "U-505",
-        "loft": "3",
-        "shaft": "Mitsubishi MMT Utility 105 TX"
+        "model": "915 Fd",
+        "loft": "18 degrees, B3 SureFit setting",
+        "shaft": "Fujikura Motore Speeder VC 9.2 X"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Titleist",
         "model": "T200",
         "loft": "4",
-        "shaft": "True Temper Dynamic Gold X7"
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Titleist",
         "model": "T100",
         "loft": "5",
-        "shaft": "True Temper Dynamic Gold X7"
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Titleist",
-        "model": "631.CY",
+        "model": "621.JT",
         "loft": "6-9",
-        "shaft": "True Temper Dynamic Gold X7"
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
       },
       {
-        "category": "Wedge",
+        "category": "Wedges",
         "brand": "Titleist",
         "model": "Vokey Design SM10",
-        "loft": "48-10F, 52-12F, 56-14F @57",
-        "shaft": "True Temper Dynamic Gold X7"
-      },
-      {
-        "category": "Wedge",
-        "brand": "Titleist",
-        "model": "Vokey Design WedgeWorks",
-        "loft": "60-K* @62",
-        "shaft": "True Temper Dynamic Gold X7"
+        "loft": "46-10F @47.5, 52-12F @52.5, 56-14F @57, 60-04T @60.5",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (46), True Temper Dynamic Gold Tour Issue S400 (52-60)"
       },
       {
         "category": "Putter",
-        "brand": "Titleist",
-        "model": "Scotty Cameron Phantom 9.5 Tour Prototype",
+        "brand": "Scotty Cameron",
+        "model": "Phantom 5 Tour Prototype",
         "loft": null,
-        "shaft": null
+        "shaft": "SuperStroke Zenergy Pistol Tour"
       },
       {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
         "model": "Tour Velvet Cord",
         "loft": null,
@@ -1440,73 +1248,393 @@
       {
         "category": "Ball",
         "brand": "Titleist",
-        "model": "Pro V1 Left Dot",
+        "model": "Pro V1x",
         "loft": null,
         "shaft": null
       }
     ]
   },
   {
-    "name": "Patrick Cantlay",
+    "name": "Harris English",
     "country": "USA",
     "tour": "OGWR",
+    "ranking": 18,
+    "player_id": "6274f317-c96c-4985-9853-5ccf9ce61b97",
+    "source_url": "https://www.golfwrx.com/753443/harris-english-witb-2025-january/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "PING",
+        "model": "G430 LST (10.5 degrees)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "Fujikura Ventus TR Blue 6 X"
+      },
+      {
+        "category": "3-wood",
+        "brand": "PING",
+        "model": "G400 (14.5 degrees)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "Fujikura Atmos Tour Spec Blue 7 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "PING",
+        "model": "G410 Crossover (3)\u00a0Buy here",
+        "loft": null,
+        "shaft": "Fujikura Atmos HB Tour Spec Black 9 X (3), True Temper Dynamic Gold Tour Issue X100 (4-9)"
+      },
+      {
+        "category": "Irons",
+        "brand": "PING",
+        "model": "Blueprint T (4-9)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "Fujikura Atmos HB Tour Spec Black 9 X (3), True Temper Dynamic Gold Tour Issue X100 (4-9)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "PING",
+        "model": "Glide 4.0 (46-S12, 52-S12, 56 S-12)\u00a0Buy here",
+        "loft": null,
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (46),\u00a0True Temper Dynamic Gold Tour Issue S400 (52-60)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "PING",
+        "model": "Glide Forged (60)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (46),\u00a0True Temper Dynamic Gold Tour Issue S400 (52-60)"
+      },
+      {
+        "category": "Putter",
+        "brand": "PING",
+        "model": "Scottsdale Hohum\u00a0Buy here.",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "MCC Align",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Jacob Bridgeman",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 19,
+    "player_id": "0ce5386e-acda-4f56-b4f5-9e9677c73527",
+    "source_url": "https://www.golfwrx.com/773738/bk-breakdowns-jacob-bridgemans-2026-genesis-invitational-winning-witb/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "TaylorMade",
+        "model": "Qi35 LS",
+        "loft": "10.5 degrees @ 10",
+        "shaft": "Project X HZRDUS Smoke Green 60 6.5"
+      },
+      {
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "Qi4D",
+        "loft": "16.5 degrees",
+        "shaft": "Project X Denali Blue 80 TX"
+      },
+      {
+        "category": "7-wood",
+        "brand": "TaylorMade",
+        "model": "Qi4D",
+        "loft": "21 degrees",
+        "shaft": "Graphite Design Tour AD XC-8X"
+      },
+      {
+        "category": "Irons",
+        "brand": "TaylorMade",
+        "model": "TP UDI",
+        "loft": "4",
+        "shaft": "Project X 6.5"
+      },
+      {
+        "category": "Irons",
+        "brand": "TaylorMade",
+        "model": "P770",
+        "loft": "5",
+        "shaft": "Project X 6.5"
+      },
+      {
+        "category": "Irons",
+        "brand": "TaylorMade",
+        "model": "P7CB",
+        "loft": "6-PW",
+        "shaft": "Project X 6.5"
+      },
+      {
+        "category": "Wedges",
+        "brand": "TaylorMade",
+        "model": "MG5",
+        "loft": "50-09SB, 54-11SB, 60-08LB",
+        "shaft": "Project X 6.5 (50-54), True Temper Dynamic Gold Tour Issue S400 (60)"
+      },
+      {
+        "category": "Putter",
+        "brand": "TaylorMade",
+        "model": "Spider Tour",
+        "loft": null,
+        "shaft": "SuperStroke Zenergy 2.0 PT"
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet Cord",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "TaylorMade",
+        "model": "TP5x",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Jon Rahm",
+    "country": "Spain",
+    "tour": "OGWR",
+    "ranking": 20,
+    "player_id": "52f3a771-86d9-4d5e-ace8-00115df76af9",
+    "source_url": "https://www.golfwrx.com/759489/jon-rahm-witb-2025-may/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Callaway",
+        "model": "Elyte Triple Diamond",
+        "loft": "10.5 degrees",
+        "shaft": "Fujikura Ventus Black 7 X"
+      },
+      {
+        "category": "3-wood",
+        "brand": "Callaway",
+        "model": "Paradym Ai Smoke Triple Diamond T",
+        "loft": "High Launch, 16 degrees",
+        "shaft": "Graphite Design Tour AD DI 8 X"
+      },
+      {
+        "category": "5-wood",
+        "brand": "Callaway",
+        "model": "Paradym Ai Smoke Triple Diamond T",
+        "loft": "18 degrees",
+        "shaft": "Graphite Design Tour AD DI 8 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "Callaway",
+        "model": "Apex UT",
+        "loft": "21 degrees",
+        "shaft": "KBS Tour Hybrid Prototype 105 X (21), Project X 6.5 (4-PW)"
+      },
+      {
+        "category": "Irons",
+        "brand": "Callaway",
+        "model": "Apex Pro",
+        "loft": "4",
+        "shaft": "KBS Tour Hybrid Prototype 105 X (21), Project X 6.5 (4-PW)"
+      },
+      {
+        "category": "Irons",
+        "brand": "Callaway",
+        "model": "Apex TCB",
+        "loft": "5-10",
+        "shaft": "KBS Tour Hybrid Prototype 105 X (21), Project X 6.5 (4-PW)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Callaway",
+        "model": "Jaws Raw",
+        "loft": "52-10, 56-12",
+        "shaft": "Project X 125 6.5"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Callaway",
+        "model": "Opus Prototype",
+        "loft": "60-04C",
+        "shaft": "Project X 125 6.5"
+      },
+      {
+        "category": "Putter",
+        "brand": "Odyssey",
+        "model": "Ai-One Rossie S",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "MCC midsize",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Callaway",
+        "model": "Chrome Tour",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Alex Noren",
+    "country": "Sweden",
+    "tour": "OGWR",
     "ranking": 21,
-    "player_id": "fbfc7fe8457242c19bc8a0e1db770190",
-    "source_url": "https://www.pgaclubtracker.com/players/patrick-cantlay-witb-whats-in-the-bag",
+    "player_id": "fc17306d-d548-44a0-b03f-f0559d8e3a83",
+    "source_url": "https://www.golfwrx.com/761111/alex-noren-witb-2025-june/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Callaway",
+        "model": "Paradym Ai Smoke Max D",
+        "loft": "9 degrees @7, draw setting",
+        "shaft": "Graphite Design Tour AD VF 6 X"
+      },
+      {
+        "category": "3-wood",
+        "brand": "Callaway",
+        "model": "Elyte",
+        "loft": "15 degrees @14, D",
+        "shaft": "Mitsubishi Diamana BB 83 TX"
+      },
+      {
+        "category": "Hybrid",
+        "brand": "Callaway",
+        "model": "Apex UW",
+        "loft": "19 degrees",
+        "shaft": "Project X HZRDUS Black"
+      },
+      {
+        "category": "Irons",
+        "brand": "Callaway",
+        "model": "Apex TCB",
+        "loft": "4-9",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Callaway",
+        "model": "Opus",
+        "loft": "46-10S, 50-10S, 56-10C",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (46),\u00a0True Temper Dynamic Gold Tour Issue S400 (50-60)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Callaway",
+        "model": "Jaws Raw",
+        "loft": "60-08C",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (46),\u00a0True Temper Dynamic Gold Tour Issue S400 (50-60)"
+      },
+      {
+        "category": "Putter",
+        "brand": "Odyssey",
+        "model": "O-Works #1W",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Callaway",
+        "model": "Chrome Tour",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Patrick Reed",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 22,
+    "player_id": "f65f3730-cb97-4915-bb3d-18bab36ff20a",
+    "source_url": "https://www.golfwrx.com/776375/patrick-reed-witb-2026-april/",
     "witb_items": [
       {
         "category": "Driver",
         "brand": "Titleist",
-        "model": "GT2",
-        "loft": "9 degrees",
-        "shaft": "Mitsubishi Diamana ZF 60 TX"
+        "model": "GT3",
+        "loft": "8 degrees",
+        "shaft": "Aldila Rogue Silver 125 M.S.I. 70 TX"
       },
       {
-        "category": "3-Wood",
-        "brand": "Titleist",
-        "model": "915 F",
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "Qi35",
         "loft": "15 degrees",
-        "shaft": "Mitsubishi Diamana ZF 70 TX"
+        "shaft": "Fujikura Ventus Blue 7 X"
       },
       {
-        "category": "7-Wood",
-        "brand": "Titleist",
-        "model": "TS2",
+        "category": "7-wood",
+        "brand": "Callaway",
+        "model": "Elyte",
         "loft": "21 degrees",
-        "shaft": "Mitsubishi Diamana ZF 80 TX"
+        "shaft": "Fujikura Ventus Blue 8 X"
       },
       {
-        "category": "Iron",
-        "brand": "Srixon",
-        "model": "ZX5 MKII",
+        "category": "Irons",
+        "brand": "Grindworks",
+        "model": "PR-202",
         "loft": "4",
-        "shaft": "True Temper Dynamic Gold 120 X100"
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
       },
       {
-        "category": "Iron",
-        "brand": "Titleist",
-        "model": "718 AP2",
-        "loft": "5-9",
-        "shaft": "True Temper Dynamic Gold 120 X100"
+        "category": "Irons",
+        "brand": "Grindworks",
+        "model": "PR-101A",
+        "loft": "5-PW",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
       },
       {
-        "category": "Wedge",
-        "brand": "Titleist",
-        "model": "Vokey Design SM7",
-        "loft": "46-10F @47, 52-08F @51",
-        "shaft": "True Temper Dynamic Gold S300"
+        "category": "Wedges",
+        "brand": "Cleveland",
+        "model": "RTX6 Tour Rack",
+        "loft": "52-10 Mid",
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
       },
       {
-        "category": "Wedge",
+        "category": "Wedges",
         "brand": "Titleist",
         "model": "Vokey Design SM10",
-        "loft": "56-08M @57, 60-08M @61",
-        "shaft": "True Temper Dynamic Gold S200"
+        "loft": "56, 60",
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
       },
       {
         "category": "Putter",
-        "brand": "Titleist",
-        "model": "Scotty Cameron Phantom X 7.2 Tour prototype",
+        "brand": "Scotty Cameron",
+        "model": "Tour Rat I Tour Prototype",
         "loft": null,
         "shaft": null
       },
@@ -1518,9 +1646,360 @@
         "shaft": null
       },
       {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
-        "model": "Tour Velvet",
+        "model": "MCC",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Tyrrell Hatton",
+    "country": "England",
+    "tour": "OGWR",
+    "ranking": 23,
+    "player_id": "96d47e8f-b37a-467d-aae5-5c298d1aa2ea",
+    "source_url": "https://www.golfwrx.com/759961/tyrrell-hatton-witb-2025-may/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "PING",
+        "model": "G440 Max",
+        "loft": "9 degrees",
+        "shaft": "Fujikura Ventus TR Red 6 X"
+      },
+      {
+        "category": "3-wood",
+        "brand": "PING",
+        "model": "G440 Max",
+        "loft": "15 degrees",
+        "shaft": "Mitsubishi Diamana TB 70 TX"
+      },
+      {
+        "category": "7-wood",
+        "brand": "PING",
+        "model": "G430 Max",
+        "loft": "21 degrees @19.25",
+        "shaft": "Mitsubishi Diamana TB 80 TX"
+      },
+      {
+        "category": "Irons",
+        "brand": "PING",
+        "model": "i230",
+        "loft": "3-6",
+        "shaft": "Nippon N.S. Pro Modus3 Tour 120 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "PING",
+        "model": "Blueprint S",
+        "loft": "7-PW",
+        "shaft": "Nippon N.S. Pro Modus3 Tour 120 X"
+      },
+      {
+        "category": "Wedges",
+        "brand": "PING",
+        "model": "S159 4.0",
+        "loft": "50-12S, 54-12S",
+        "shaft": "Nippon N.S. Pro Modus 3 Tour 120 X (50), True Temper Dynamic Gold Tour Issue X100 (54, 60)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Vokey",
+        "model": "Design WedgeWorks",
+        "loft": "60-04T",
+        "shaft": "Nippon N.S. Pro Modus 3 Tour 120 X (50), True Temper Dynamic Gold Tour Issue X100 (54, 60)"
+      },
+      {
+        "category": "Putter",
+        "brand": "PING",
+        "model": "PLD Oslo Prototype",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "MC Plus 4",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1x",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Akshay Bhatia",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 24,
+    "player_id": "cf92fd6d-4623-457d-b8c6-38ed04ef2cd7",
+    "source_url": "https://www.golfwrx.com/774312/akshay-bhatias-winning-witb-2026-arnold-palmer-invitational/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Callaway",
+        "model": "Rogue ST",
+        "loft": "9 degrees",
+        "shaft": "Fujikura Ventus Black 7 X"
+      },
+      {
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "Qi10",
+        "loft": "15 degrees",
+        "shaft": "Fujikura Ventus Black 8 X"
+      },
+      {
+        "category": "Hybrid",
+        "brand": "Callaway",
+        "model": "Apex UW Prototype",
+        "loft": "19 degrees",
+        "shaft": "Fujikura Ventus Black 10 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "Callaway",
+        "model": "X Forged UT",
+        "loft": "22 degrees",
+        "shaft": "KBS $-Taper 125 S+"
+      },
+      {
+        "category": "Irons",
+        "brand": "Callaway",
+        "model": "Apex TCB Raw",
+        "loft": "5-PW",
+        "shaft": "KBS $-Taper 125 S+"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Callaway",
+        "model": "Opus SP",
+        "loft": "50-10S, 54-10S, 60-08C",
+        "shaft": "KBS Hi-Rev 2.0 135 X"
+      },
+      {
+        "category": "Putter",
+        "brand": "Odyssey",
+        "model": "Jailbird 380",
+        "loft": null,
+        "shaft": "SuperStroke Zenergy Split"
+      },
+      {
+        "category": "Ball",
+        "brand": "Callaway",
+        "model": "Chrome Tour",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Viktor Hovland",
+    "country": "Norway",
+    "tour": "OGWR",
+    "ranking": 25,
+    "player_id": "87039771-705b-4834-b310-4f6a2a8cea59",
+    "source_url": "https://www.golfwrx.com/756456/viktor-hovlands-winning-witb-2025-valspar-championship/",
+    "witb_items": [
+      {
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "Sim Ti (15 degrees)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "Fujikura Ventus Black 7 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "U505 (3)\u00a0Buy here",
+        "loft": null,
+        "shaft": "Graphite Design Tour AD DI Hybrid 85 X (3), KBS Tour-V 120 X (4-PW)"
+      },
+      {
+        "category": "Irons",
+        "brand": "PING",
+        "model": "i210 (4-PW)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "Graphite Design Tour AD DI Hybrid 85 X (3), KBS Tour-V 120 X (4-PW)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "PING",
+        "model": "s159 (50-12S, 56-12S)\u00a0Buy here",
+        "loft": null,
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "category": "Wedges",
+        "brand": "PING",
+        "model": "Glide 2.0 (60-TS)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "category": "Putter",
+        "brand": "PING",
+        "model": "PLD DS 72 Prototype\u00a0Buy here.",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "MCC",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1\u00a0Buy here.",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Si Woo Kim",
+    "country": "South Korea",
+    "tour": "OGWR",
+    "ranking": 26,
+    "player_id": "bf8e2fd0-3add-4c04-be40-fcb9efcc9c49",
+    "source_url": "https://www.golfwrx.com/773326/anthony-kim-witb-2026-february/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Callaway",
+        "model": "Quantum Triple Diamond",
+        "loft": "10 degrees",
+        "shaft": "Mitsubishi Diamana D+ Limited 60 TX"
+      },
+      {
+        "category": "3-wood",
+        "brand": "Callaway",
+        "model": "Paradym Ai Smoke Triple Diamond",
+        "loft": "15 degrees",
+        "shaft": "Fujikura Ventus Blue 7 X"
+      },
+      {
+        "category": "5-wood",
+        "brand": "Callaway",
+        "model": "Elyte Triple Diamond",
+        "loft": "18 degrees",
+        "shaft": "Fujikura Ventus Black 8 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "T250",
+        "loft": "4",
+        "shaft": "True Temper Dynamic Gold S400"
+      },
+      {
+        "category": "Irons",
+        "brand": "TaylorMade",
+        "model": "P7 TW",
+        "loft": "5-9",
+        "shaft": "True Temper Dynamic Gold S400"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM11",
+        "loft": "44-10F @ 45, 50-12F @ 49, 54.12D @ 55, 58.04T @ 59",
+        "shaft": "True Temper Dynamic Gold S400"
+      },
+      {
+        "category": "Putter",
+        "brand": "Scotty Cameron",
+        "model": "TourType Timeless GSS tour prototype",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet Cord",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "2025",
+        "model": "Titleist Pro V1",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Keegan Bradley",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 27,
+    "player_id": "e9af0138-1ba5-4123-b317-253f32019172",
+    "source_url": "https://www.golfwrx.com/770018/bks-breakdowns-keegan-bradleys-the-skins-game-witb/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "PING",
+        "model": "G430 LST",
+        "loft": "10.5 degrees",
+        "shaft": "Fujikura Ventus Black 6 X"
+      },
+      {
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "Qi10 HL",
+        "loft": "16.5 degrees",
+        "shaft": "Aldila Rogue White 130 MSI 70 TX"
+      },
+      {
+        "category": "7-wood",
+        "brand": "TaylorMade",
+        "model": "Qi35",
+        "loft": "21 degrees",
+        "shaft": "Aldila Rogue White 130 MSI 70 TX"
+      },
+      {
+        "category": "Irons",
+        "brand": "Srixon",
+        "model": "ZX5 Mk II (3-5). Srixon ZX7 Mk II",
+        "loft": "6-9",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+      },
+      {
+        "category": "Irons",
+        "brand": "Srixon",
+        "model": "Z-Forged II",
+        "loft": "PW",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Cleveland",
+        "model": "RTZ Tour Rack",
+        "loft": "52-10 Mid, 56-10 Mid, 58-06 LOW",
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "category": "Putter",
+        "brand": "Odyssey",
+        "model": "Ai-One Cruiser Jailbird",
+        "loft": null,
+        "shaft": "SuperStroke Zenergy WristLock"
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet Plus4",
         "loft": null,
         "shaft": null
       }
@@ -1530,23 +2009,23 @@
     "name": "Sam Burns",
     "country": "USA",
     "tour": "OGWR",
-    "ranking": 22,
-    "player_id": "4a9e3b12fb394a22bd5923606fe37309",
-    "source_url": "https://www.pgaclubtracker.com/players/sam-burns-witb-whats-in-the-bag",
+    "ranking": 29,
+    "player_id": "f2bb941b-485c-45b6-91ec-9696ec74ff18",
+    "source_url": "https://www.golfwrx.com/776284/sam-burns-witb-2026-april/",
     "witb_items": [
       {
         "category": "Driver",
         "brand": "Callaway",
-        "model": "Paradym Triple Diamond S",
+        "model": "Quantum Triple Diamond S",
         "loft": "9 degrees @10",
         "shaft": "Fujikura Ventus Blue 7 TX"
       },
       {
-        "category": "3-Wood",
+        "category": "3-wood",
         "brand": "Callaway",
-        "model": "Elyte Triple Diamond",
+        "model": "Quantum Triple Diamond",
         "loft": "15 degrees @16",
-        "shaft": "Mitsubishi Tensei 1K Black 75 TX"
+        "shaft": "Mitsubishi Tensei 1K White 70 TX"
       },
       {
         "category": "Hybrid",
@@ -1556,28 +2035,28 @@
         "shaft": "Fujikura Ventus Blue 8 X"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Callaway",
-        "model": "Apex TCB",
+        "model": "Apex MB",
         "loft": "4-PW",
-        "shaft": "True Temper Project X 6.5"
+        "shaft": "Project X 6.5 (4-PW)"
       },
       {
-        "category": "Wedge",
+        "category": "Wedges",
         "brand": "Titleist",
-        "model": "Vokey Design SM10",
-        "loft": "50-12F, 56-14F @55, 60-08M",
-        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+        "model": "Vokey Design SM11",
+        "loft": "50-12F, 56 @55, 60",
+        "shaft": "True Temper Dynamic Gold S400 Tour Issue"
       },
       {
         "category": "Putter",
         "brand": "Odyssey",
-        "model": "Ai-ONE #7 SB",
+        "model": "Ai-One #7 S",
         "loft": null,
         "shaft": null
       },
       {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
         "model": "Tour Velvet Align",
         "loft": null,
@@ -1593,53 +2072,359 @@
     ]
   },
   {
+    "name": "Maverick McNealy",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 30,
+    "player_id": "9325ec2f-7ae3-49e5-ad60-6df22ccf0626",
+    "source_url": "https://www.golfwrx.com/772805/maverick-mcnealy-witb-2026-february/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "TaylorMade",
+        "model": "Qi10 \u201cDot\u201d",
+        "loft": "10.5 degrees",
+        "shaft": "Graphite Design Tour AD XC 6 TX (45 3/8 inches, tipped 1.75 inches)"
+      },
+      {
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "Stealth 2",
+        "loft": "16.5 degrees",
+        "shaft": "Fujikura Ventus Black 7 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "TaylorMade",
+        "model": "P7CB",
+        "loft": "4-9",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+      },
+      {
+        "category": "Wedges",
+        "brand": "TaylorMade",
+        "model": "MG4",
+        "loft": "48-SB09, 52-SB09, 56-SB12",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (46),\u00a0True Temper Dynamic Gold Tour Issue S400 (52-60)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Cleveland",
+        "model": "RTZ",
+        "loft": "60",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 (46),\u00a0True Temper Dynamic Gold Tour Issue S400 (52-60)"
+      },
+      {
+        "category": "Putter",
+        "brand": "Odyssey",
+        "model": "Toulon Design Prototype",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "MCC",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1x",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Patrick Cantlay",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 31,
+    "player_id": "0381d82a-da6d-4f64-a9fb-b263649653c7",
+    "source_url": "https://www.golfwrx.com/765261/patrick-cantlay-witb-2025-august/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Titleist",
+        "model": "GT2",
+        "loft": "9 degrees",
+        "shaft": "Mitsubishi Diamana ZF 60 TX"
+      },
+      {
+        "category": "3-wood",
+        "brand": "Titleist",
+        "model": "915F",
+        "loft": "15 degrees",
+        "shaft": "Mitsubishi Diamana ZF 70 TX"
+      },
+      {
+        "category": "7-wood",
+        "brand": "Titleist",
+        "model": "TS2",
+        "loft": "21 degrees",
+        "shaft": "Mitsubishi Diamana ZF 80 TX"
+      },
+      {
+        "category": "Irons",
+        "brand": "Srixon",
+        "model": "ZX5 Mk II",
+        "loft": "4",
+        "shaft": "True Temper Dynamic Gold 120 X100"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "718 AP2",
+        "loft": "5-9",
+        "shaft": "True Temper Dynamic Gold 120 X100"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM7",
+        "loft": "46-10F @47, 52-08F @51",
+        "shaft": "True Temper Dynamic Gold S300 (46-56), S200 (60)"
+      },
+      {
+        "category": "Putter",
+        "brand": "Scotty Cameron",
+        "model": "Phantom 7.2 Tour Prototype",
+        "loft": null,
+        "shaft": "SuperSroke Zenergy Flatso 1.0"
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1x",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Min Woo Lee",
+    "country": "Australia",
+    "tour": "OGWR",
+    "ranking": 32,
+    "player_id": "a795a08b-f273-4e73-a0bd-56638d992e66",
+    "source_url": "https://www.golfwrx.com/775193/min-woo-lee-witb-2026-march/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Callaway",
+        "model": "Quantum Triple Diamond",
+        "loft": "10.5 degrees",
+        "shaft": "Fujikura Ventus Black VeloCore+ 7 X"
+      },
+      {
+        "category": "Mini driver",
+        "brand": "Callaway",
+        "model": "Quantum Mini",
+        "loft": "13.5 degrees",
+        "shaft": "Fujikura Ventus Blue 9 X"
+      },
+      {
+        "category": "Hybrid",
+        "brand": "Callaway",
+        "model": "Apex UW",
+        "loft": "21 degrees",
+        "shaft": "Fujikura Ventus Blue 9 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "Callaway",
+        "model": "X Forged",
+        "loft": "4, 5",
+        "shaft": "Nippon N.S. Pro Modus3 Tour 125 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "Callaway",
+        "model": "Forged Prototype",
+        "loft": "6-10",
+        "shaft": "Nippon N.S. Pro Modus3 Tour 125 X"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Callaway",
+        "model": "Opus SP",
+        "loft": "50-10S",
+        "shaft": "Nippon N.S. Pro Modus3 Tour 120 S"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM9",
+        "loft": "56-08M @55",
+        "shaft": "Nippon N.S. Pro Modus3 Tour 120 S"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design WedgeWorks",
+        "loft": "60-T",
+        "shaft": "Nippon N.S. Pro Modus3 Tour 120 S"
+      },
+      {
+        "category": "Putter",
+        "brand": "Odyssey",
+        "model": "TRTL",
+        "loft": null,
+        "shaft": "SuperStroke Zenergy 2.0PT"
+      },
+      {
+        "category": "Grips",
+        "brand": "Grip",
+        "model": "Master",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "ZGrip Cord",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Callaway",
+        "model": "Chrome Tour X",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Kurt Kitayama",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 34,
+    "player_id": "f898b6f2-f466-4c64-bbf4-17548f34b864",
+    "source_url": "https://www.golfwrx.com/763903/bks-breakdowns-kurt-kitayamas-winning-witb-3m-open/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Titleist",
+        "model": "GT3",
+        "loft": "11 degrees, D1 SureFit setting",
+        "shaft": "Graphite Design Tour AD VF 7 TX"
+      },
+      {
+        "category": "3-wood",
+        "brand": "Titleist",
+        "model": "GT1 3Tour",
+        "loft": "14.5 degrees, A3 SureFit setting",
+        "shaft": "Graphite Design Tour AD DI 8 TX"
+      },
+      {
+        "category": "7-wood",
+        "brand": "Titleist",
+        "model": "GT1",
+        "loft": "21 degrees, A1 SureFit setting",
+        "shaft": "Graphite Design Tour AD DI 9 TX"
+      },
+      {
+        "category": "Irons",
+        "brand": "TaylorMade",
+        "model": "P7CB",
+        "loft": "4",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+      },
+      {
+        "category": "Irons",
+        "brand": "TaylorMade",
+        "model": "P7MB",
+        "loft": "5-PW",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM10",
+        "loft": "52-12F, 56-14F",
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Vokey",
+        "model": "Design WedgeWorks",
+        "loft": "60-K*",
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "category": "Putter",
+        "brand": "Scotty Cameron",
+        "model": "Studio Style Newport 2 Tour Prototype",
+        "loft": null,
+        "shaft": "SuperStroke Zenergy 1.0PT"
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
     "name": "Shane Lowry",
     "country": "Ireland",
     "tour": "OGWR",
-    "ranking": 23,
-    "player_id": "fb14e2ae03ac4161831c089466f6fd65",
-    "source_url": "https://www.pgaclubtracker.com/players/shane-lowry-witb-whats-in-the-bag",
+    "ranking": 35,
+    "player_id": "9e16957f-52b2-4f53-9607-5880bc17b609",
+    "source_url": "https://www.golfwrx.com/773954/shane-lowry-witb-2026-march/",
     "witb_items": [
       {
         "category": "Driver",
         "brand": "Srixon",
-        "model": "ZXi LS",
+        "model": "ZXi LS Prototype",
         "loft": "9 degrees",
         "shaft": "Mitsubishi Diamana D+ White 70 TX"
       },
       {
-        "category": "3-Wood",
+        "category": "3-wood",
         "brand": "TaylorMade",
         "model": "Qi35",
         "loft": "16.5 degrees",
         "shaft": "Graphite Design Tour AD DI 8 X"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Srixon",
-        "model": "ZXiU",
-        "loft": "3, 20 degrees",
-        "shaft": "Fujikura Ventus Blue 9 X"
+        "model": "ZXi Utility",
+        "loft": "3/20 degrees",
+        "shaft": "Fujikura Ventus VeloCore+ Blue HB 9 X (3), KBS Tour 130 X (4-PW)"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Srixon",
         "model": "ZXi5",
         "loft": "4, 5",
-        "shaft": "KBS Tour 130 X"
+        "shaft": "Fujikura Ventus VeloCore+ Blue HB 9 X (3), KBS Tour 130 X (4-PW)"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "Srixon",
         "model": "ZXi7",
         "loft": "6-PW",
-        "shaft": "KBS Tour 130 X"
+        "shaft": "Fujikura Ventus VeloCore+ Blue HB 9 X (3), KBS Tour 130 X (4-PW)"
       },
       {
-        "category": "Wedge",
+        "category": "Wedges",
         "brand": "Cleveland",
         "model": "RTZ",
-        "loft": "52-MID, 56-MID, 60-ADAPT",
+        "loft": "52-MID, 56-MID, 60-LOW",
         "shaft": "KBS Tour Wedge X Black"
       },
       {
@@ -1647,17 +2432,10 @@
         "brand": "TaylorMade",
         "model": "Spider Tour Z",
         "loft": null,
-        "shaft": null
+        "shaft": "SuperStroke Zenergy Pistol Tour"
       },
       {
-        "category": "Grip",
-        "brand": "SuperStroke",
-        "model": "Zenergy Pistol Tour",
-        "loft": null,
-        "shaft": null
-      },
-      {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
         "model": "Tour Velvet",
         "loft": null,
@@ -1673,12 +2451,516 @@
     ]
   },
   {
-    "name": "Corey Conners",
-    "country": "Unknown",
+    "name": "Nicolai H\u00f8jgaard",
+    "country": "Denmark",
     "tour": "OGWR",
-    "ranking": 24,
-    "player_id": "afcb8a434d1d44df93637c3cecf5d979",
-    "source_url": "https://www.pgaclubtracker.com/players/corey-conners-witb-whats-in-the-bag",
+    "ranking": 36,
+    "player_id": "8c54a4c9-faa4-492e-a264-a474fbe0e6ce",
+    "source_url": "https://www.golfwrx.com/758146/nicolai-hojgaard-witb-2025-april/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Callaway",
+        "model": "Paradym Ai Smoke Triple Diamond",
+        "loft": "10.5 degrees",
+        "shaft": "Mitsubishi Tensei 1K Blue 60 TX"
+      },
+      {
+        "category": "3-wood",
+        "brand": "Callaway",
+        "model": "Elyte Triple Diamond",
+        "loft": "15 degrees",
+        "shaft": "Graphite Design Tour AD-VF 8 TX"
+      },
+      {
+        "category": "7-wood",
+        "brand": "Callaway",
+        "model": "Elyte Triple Diamond",
+        "loft": "21 degrees",
+        "shaft": "Mitsubishi Tensei AV Raw White 85 TX"
+      },
+      {
+        "category": "Irons",
+        "brand": "Callaway",
+        "model": "X-Forged \u201924",
+        "loft": "4-PW",
+        "shaft": "KBS $-Taper 130"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Callaway",
+        "model": "Opus Raw",
+        "loft": "52, 56, 60-12X",
+        "shaft": "KBS Wedge 130 X"
+      },
+      {
+        "category": "Putter",
+        "brand": "Odyssey",
+        "model": "Ai-One Milled 8 T DB",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Callaway",
+        "model": "Chrome Tour X",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Jake Knapp",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 37,
+    "player_id": "a1a78571-f4f3-4e43-b071-3283f21e012d",
+    "source_url": "https://www.golfwrx.com/764539/jake-knapp-witb-2025-august/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "PING",
+        "model": "G440 LST",
+        "loft": "9 degrees @8.5",
+        "shaft": "Project X HZRDUS T1100 75 6.5"
+      },
+      {
+        "category": "Mini driver",
+        "brand": "PXG",
+        "model": "Secret Weapon",
+        "loft": "13 degrees",
+        "shaft": "Project X HZRDUS T1100 95 6.5"
+      },
+      {
+        "category": "5-wood",
+        "brand": "TaylorMade",
+        "model": "Qi10",
+        "loft": "18 degrees",
+        "shaft": "Project X HZRDUS T1100 95 6.5"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "T250",
+        "loft": "3",
+        "shaft": "KBS Tour C-Taper 130 X (3-PW)"
+      },
+      {
+        "category": "Irons",
+        "brand": "PXG",
+        "model": "0211 ST",
+        "loft": "4-PW",
+        "shaft": "KBS Tour C-Taper 130 X (3-PW)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "PXG",
+        "model": "Sugar Daddy II",
+        "loft": "52-10",
+        "shaft": "KBS Tour C-Taper 130 X (52, 56), Nippon N.S. Pro Modus3 WV 125 (60)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM9",
+        "loft": "56-08M",
+        "shaft": "KBS Tour C-Taper 130 X (52, 56), Nippon N.S. Pro Modus3 WV 125 (60)"
+      },
+      {
+        "category": "Putter",
+        "brand": "Scotty Cameron",
+        "model": "Phantom T-5.2",
+        "loft": null,
+        "shaft": "SuperStroke Zenergy Tour SGP1.0"
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "MCC",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1 Left Dot",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Jason Day",
+    "country": "Australia",
+    "tour": "OGWR",
+    "ranking": 38,
+    "player_id": "674c4113-b22c-4e03-9057-3179994c576b",
+    "source_url": "https://www.golfwrx.com/761544/jason-day-witb-2025-june/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "PING",
+        "model": "G440 LST",
+        "loft": "10.5 degrees",
+        "shaft": "Fujikura Ventus VeloCore+ Black 6 X"
+      },
+      {
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "Qi35",
+        "loft": "15 degrees",
+        "shaft": "Mitsubishi Kuro Kage Silver 80 X"
+      },
+      {
+        "category": "7-wood",
+        "brand": "TaylorMade",
+        "model": "Qi35",
+        "loft": "21 degrees",
+        "shaft": "Mitsubishi Kuro Kage Silver 80 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "TaylorMade",
+        "model": "P790",
+        "loft": "4",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+      },
+      {
+        "category": "Irons",
+        "brand": "TaylorMade",
+        "model": "P7CB",
+        "loft": "5-PW",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM10",
+        "loft": "52-08F, 56-10S",
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design WedgeWorks",
+        "loft": "60-L",
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "category": "Putter",
+        "brand": "TaylorMade",
+        "model": "Itsy Bitsy Spider Limited Red",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet Cord",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Bridgestone",
+        "model": "Tour B X",
+        "loft": "with Mindset",
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Marco Penge",
+    "country": "England",
+    "tour": "OGWR",
+    "ranking": 39,
+    "player_id": "1328337c-90d1-4bca-9656-91aa27f7b06a",
+    "source_url": "https://www.golfwrx.com/763256/marco-penge-witb-2025-july/",
+    "witb_items": [
+      {
+        "category": "Mini driver",
+        "brand": "TaylorMade",
+        "model": "BRNR Copper",
+        "loft": "13. degrees",
+        "shaft": "Fujikura Ventus TR Blue 7 X"
+      },
+      {
+        "category": "Utility iron",
+        "brand": "Mizuno",
+        "model": "Pro Fli Hi",
+        "loft": "2",
+        "shaft": "Fujikura Ventus Blue HB 10 TX"
+      },
+      {
+        "category": "Irons",
+        "brand": "Mizuno",
+        "model": "Pro S-3",
+        "loft": "4-PW",
+        "shaft": null
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM10",
+        "loft": "50, 56",
+        "shaft": null
+      },
+      {
+        "category": "Putter",
+        "brand": "Titleist",
+        "model": "T 5.2 Tour Prototype",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Daniel Berger",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 40,
+    "player_id": "44b234c6-d3a7-48d0-9173-0ac585a81fc1",
+    "source_url": "https://www.golfwrx.com/776589/daniel-berger-witb-2026-april/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "PING",
+        "model": "G430 LST",
+        "loft": "10.5 degrees",
+        "shaft": "Fujikura Ventus TR Black 6 X"
+      },
+      {
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "Qi4D",
+        "loft": "15 degrees",
+        "shaft": "Fujikura Ventus Blue VeloCore+ 7 X"
+      },
+      {
+        "category": "7-wood",
+        "brand": "TaylorMade",
+        "model": "Qi4D",
+        "loft": "15 degrees",
+        "shaft": "Fujikura Ventus Black VeloCore+ 8 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "PING",
+        "model": "Blueprint S",
+        "loft": "4-PW",
+        "shaft": "Project X 6.5 (4-PW)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "PING",
+        "model": "S259",
+        "loft": "50-12S",
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM10",
+        "loft": "56-08M",
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "category": "Putter",
+        "brand": "PING",
+        "model": "PLD Oslo",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Wrap",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Aaron Rai",
+    "country": "England",
+    "tour": "OGWR",
+    "ranking": 41,
+    "player_id": "a118051c-f58e-42b5-883b-fa694cab777b",
+    "source_url": "https://www.golfwrx.com/761259/aaron-rai-witb-2025-june/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "TaylorMade",
+        "model": "M6",
+        "loft": "9 degrees @8.25",
+        "shaft": "Mitsubishi Diamana BB 73 TX"
+      },
+      {
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "Qi10",
+        "loft": "15 degrees",
+        "shaft": "Fujikura Ventus Blue 8 X"
+      },
+      {
+        "category": "5-wood",
+        "brand": "TaylorMade",
+        "model": "Qi10",
+        "loft": "18 degrees",
+        "shaft": "Fujikura Ventus Blue 8 X"
+      },
+      {
+        "category": "Hybrid",
+        "brand": "Titleist",
+        "model": "GT2",
+        "loft": "24 degrees, D1 SureFit setting",
+        "shaft": "Mitsubishi Tensei CK Pro White Hybrid 90 TX"
+      },
+      {
+        "category": "Irons",
+        "brand": "TaylorMade",
+        "model": "P7TW",
+        "loft": "5-9",
+        "shaft": "True Temper Dynamic Gold S300"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM9",
+        "loft": "P, S, L",
+        "shaft": "True Temper Dynamic Gold Tour Issue S300"
+      },
+      {
+        "category": "Putter",
+        "brand": "TaylorMade",
+        "model": "HydroBlast TP DuPage",
+        "loft": null,
+        "shaft": "SuperStroke Zenergy Tour 1.0P"
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "Tour Velvet",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Michael Kim",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 43,
+    "player_id": "00472d58-2944-4df2-a44f-8484307d8cde",
+    "source_url": "https://www.golfwrx.com/766792/michael-kims-winning-witb-2025-fedex-open-de-france/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Titleist",
+        "model": "GT2 (11 degrees) Buy here.",
+        "loft": null,
+        "shaft": "Graphite Design Tour AD DI 6 X"
+      },
+      {
+        "category": "3-wood",
+        "brand": "TaylorMade",
+        "model": "Qi10 (15 degrees)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "Graphite Design Tour AD UB 7 TX"
+      },
+      {
+        "category": "7-wood",
+        "brand": "TaylorMade",
+        "model": "Qi10 (21 degrees)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "Graphite Design Tour AD UB 8 TX"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "T250 (4)\u00a0Buy here",
+        "loft": null,
+        "shaft": "Nippon N.S. Pro Modus3 Tour 120 S"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "T100 (5-PW)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "Nippon N.S. Pro Modus3 Tour 120 S"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM10 (52-12F, 56-14F)\u00a0Buy here",
+        "loft": null,
+        "shaft": "True Temper Dynamic Gold S300"
+      },
+      {
+        "category": "Wedges",
+        "brand": "WedgeWorks",
+        "model": "(60-L)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "True Temper Dynamic Gold S300"
+      },
+      {
+        "category": "Putter",
+        "brand": "TaylorMade",
+        "model": "Spider 5K-ZT\u00a0Buy here.",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "MCC",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1x\u00a0Buy here.",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Corey Conners",
+    "country": "Canada",
+    "tour": "OGWR",
+    "ranking": 44,
+    "player_id": "f7ec1384-6770-4457-852d-ff313ed3e9e7",
+    "source_url": "https://www.golfwrx.com/760840/corey-conners-witb-2025-may/",
     "witb_items": [
       {
         "category": "Driver",
@@ -1688,49 +2970,49 @@
         "shaft": "UST Mamiya Elements LIN-Q M40X White 6F5"
       },
       {
-        "category": "3-Wood",
+        "category": "3-wood",
         "brand": "PING",
         "model": "G440 Max",
         "loft": "15 degrees @14",
         "shaft": "UST Mamiya Elements LIN-Q M40X Blue 7F5"
       },
       {
-        "category": "5-Wood",
+        "category": "5-wood",
         "brand": "PING",
         "model": "G440 Max",
         "loft": "19 degrees",
         "shaft": "UST Mamiya Elements LIN-Q M40X Blue 6F5"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "PING",
         "model": "i230",
         "loft": "4-5",
-        "shaft": "True Temper Project X 120 6.0"
+        "shaft": "Project X 120 6.0"
       },
       {
-        "category": "Iron",
+        "category": "Irons",
         "brand": "PING",
         "model": "Blueprint T",
         "loft": "6-PW",
-        "shaft": "True Temper Project X 120 6.0"
+        "shaft": "Project X 120 6.0"
       },
       {
-        "category": "Wedge",
+        "category": "Wedges",
         "brand": "PING",
-        "model": "S159",
+        "model": "s159",
         "loft": "50-S12, 56-S12, 60-H",
-        "shaft": "True Temper Project X 120 6.0"
+        "shaft": "Project X 120 6.0"
       },
       {
         "category": "Putter",
         "brand": "PING",
         "model": "PLD Prime Tyne S",
         "loft": null,
-        "shaft": null
+        "shaft": "Garsen Golf Quad Tour"
       },
       {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
         "model": "MCC",
         "loft": null,
@@ -1746,80 +3028,278 @@
     ]
   },
   {
-    "name": "Tyrrell Hatton",
-    "country": "England",
+    "name": "Gary Woodland",
+    "country": "USA",
     "tour": "OGWR",
-    "ranking": 25,
-    "player_id": "a78f6fcd12084ab594ce48f803635374",
-    "source_url": "https://www.pgaclubtracker.com/players/tyrrell-hatton-witb-whats-in-the-bag",
+    "ranking": 45,
+    "player_id": "ea928f0b-d650-467e-98d0-435c6bcf0f67",
+    "source_url": "https://www.golfwrx.com/775415/gary-woodland-winning-witb-2026-texas-childrens-houston-open/",
     "witb_items": [
       {
-        "category": "Driver",
-        "brand": "PING",
-        "model": "G440 Max",
-        "loft": "9 degrees",
-        "shaft": "Fujikura Ventus TR Red 6 X"
-      },
-      {
-        "category": "3-Wood",
+        "category": "3-wood",
         "brand": "PING",
         "model": "G440 Max",
         "loft": "15 degrees",
-        "shaft": "Mitsubishi Diamana TB 70 TX"
+        "shaft": "Accra Tour Z XTreme 4100 M5"
       },
       {
-        "category": "7-Wood",
-        "brand": "PING",
-        "model": "G430 Max",
-        "loft": "21 degrees @19.25",
-        "shaft": "Mitsubishi Diamana TB 80 TX"
+        "category": "Utility iron",
+        "brand": "Wilson",
+        "model": "Staff Model Utility",
+        "loft": "18 degrees",
+        "shaft": "KBS Tour C-Taper 130 X"
       },
       {
-        "category": "Iron",
-        "brand": "PING",
-        "model": "i230",
-        "loft": "3-6",
-        "shaft": "Nippon NS Pro Modus3 Tour 120 X"
+        "category": "Irons",
+        "brand": "Cobra",
+        "model": "King Tour",
+        "loft": "4, 5",
+        "shaft": "KBS Tour C-Taper 130 X"
       },
       {
-        "category": "Iron",
-        "brand": "PING",
-        "model": "Blueprint S",
-        "loft": "7-PW",
-        "shaft": "Nippon NS Pro Modus3 Tour 120 X"
+        "category": "Irons",
+        "brand": "Cobra",
+        "model": "King MB",
+        "loft": "6-PW",
+        "shaft": "KBS Tour C-Taper 130 X"
       },
       {
-        "category": "Wedge",
-        "brand": "PING",
-        "model": "S159 4.0",
-        "loft": "50-12S, 54-12S",
-        "shaft": "Nippon NS Pro Modus 3 Tour 120 X"
+        "category": "Wedges",
+        "brand": "Cobra",
+        "model": "King",
+        "loft": "48",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 Onyx (48), True Temper Dynamic Gold S400 (52-60)"
       },
       {
-        "category": "Wedge",
-        "brand": "Titleist",
-        "model": "Vokey Design WedgeWorks",
-        "loft": "60-04T",
-        "shaft": "True Temper Dynamic Gold Tour Issue X100"
+        "category": "Wedges",
+        "brand": "Cobra",
+        "model": "SB",
+        "loft": "52, 56",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 Onyx (48), True Temper Dynamic Gold S400 (52-60)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Cleveland",
+        "model": "RTZ Tour Rack",
+        "loft": "60",
+        "shaft": "True Temper Dynamic Gold Tour Issue X100 Onyx (48), True Temper Dynamic Gold S400 (52-60)"
       },
       {
         "category": "Putter",
-        "brand": "PING",
-        "model": "PLD Oslo Prototype",
+        "brand": "Scotty Cameron",
+        "model": "GoLo Tour Prototype",
         "loft": null,
-        "shaft": null
+        "shaft": "SuperStroke Zenergy Pistol 2.0"
       },
       {
-        "category": "Grip",
+        "category": "Grips",
         "brand": "Golf Pride",
-        "model": "MC Plus 4",
+        "model": "Tour Velvet Align",
         "loft": null,
         "shaft": null
       },
       {
         "category": "Ball",
         "brand": "Titleist",
-        "model": "Pro V1x",
+        "model": "Pro V1",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Matt McCarty",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 47,
+    "player_id": "51aef2d3-f1ff-4e32-ae9d-91f956750393",
+    "source_url": "https://www.golfwrx.com/748065/matt-mccartys-winning-witb-2024-black-desert-championship/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "PING",
+        "model": "G430 LST (10.5 degrees) Buy here.",
+        "loft": null,
+        "shaft": "Fujikura Ventus Blue 6 X"
+      },
+      {
+        "category": "3-wood",
+        "brand": "PING",
+        "model": "G410 (14.5 degrees)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "Fujikura Ventus Blue 7 X"
+      },
+      {
+        "category": "7-wood",
+        "brand": "PING",
+        "model": "G430 Max (21 degrees)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "Fujikura Ventus Black 8 X"
+      },
+      {
+        "category": "Irons",
+        "brand": "PING",
+        "model": "Blueprint S (4-PW)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "True Temper Dynamic Gold 120 X100"
+      },
+      {
+        "category": "Wedges",
+        "brand": "PING",
+        "model": "Glide Forged Pro (50-S10, 54-S10, 60-T6)\u00a0Buy here.",
+        "loft": null,
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "category": "Grips",
+        "brand": "Lamkin",
+        "model": "Crossline Cord",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "TaylorMade",
+        "model": "TP5 Buy here.",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Michael Brennan",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 49,
+    "player_id": "700e9f82-a7bd-4f43-a9f3-ff0e643cf887",
+    "source_url": "https://www.golfwrx.com/768554/bks-breakdowns-michael-brennans-winning-witb-2025-bank-of-utah-championship/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Titleist",
+        "model": "GT3",
+        "loft": "9 degrees",
+        "shaft": "Project X HZRDUS Smoke Blue RDX 70 TX"
+      },
+      {
+        "category": "3-wood",
+        "brand": "Titleist",
+        "model": "GT1",
+        "loft": "14.5 degrees",
+        "shaft": "Project X HZRDUS Yellow 80 TX"
+      },
+      {
+        "category": "Utility iron",
+        "brand": "Titleist",
+        "model": "T150",
+        "loft": "3",
+        "shaft": "Project X HZRDUS Black 105 HY"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "T100",
+        "loft": "4-5",
+        "shaft": "Project X 6.5"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "620 CB",
+        "loft": "6-9",
+        "shaft": "Project X 6.5"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM10",
+        "loft": "46-10F, 50-12F, 54-10S",
+        "shaft": "Project X 6.5 (46), True Temper Dynamic Gold Tour Issue S400 (50-60)"
+      },
+      {
+        "category": "Putter",
+        "brand": "Scotty Cameron",
+        "model": "Phantom 7.2 Tour Prototype",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Grips",
+        "brand": "Golf Pride",
+        "model": "ZGrip Cord",
+        "loft": null,
+        "shaft": null
+      }
+    ]
+  },
+  {
+    "name": "Brian Harman",
+    "country": "USA",
+    "tour": "OGWR",
+    "ranking": 50,
+    "player_id": "bbeda9fd-ecee-4b52-83b2-1a6803c1a864",
+    "source_url": "https://www.golfwrx.com/763536/brian-harman-witb-2025-july/",
+    "witb_items": [
+      {
+        "category": "Driver",
+        "brand": "Titleist",
+        "model": "TSi2",
+        "loft": "9 degrees, B3 SureFit setting",
+        "shaft": "Graphite Design Tour AD IZ 5 S"
+      },
+      {
+        "category": "3-wood",
+        "brand": "Titleist",
+        "model": "GT2",
+        "loft": "13.5 degrees",
+        "shaft": "Fujikura Speeder 661 Evolution II S"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "U-500",
+        "loft": "3-5",
+        "shaft": "Project X HZRDUS Smoke Black 90 (3, 4), True Temper Dynamic Gold Tour Issue S300 (5-PW)"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "T100",
+        "loft": "6",
+        "shaft": "Project X HZRDUS Smoke Black 90 (3, 4), True Temper Dynamic Gold Tour Issue S300 (5-PW)"
+      },
+      {
+        "category": "Irons",
+        "brand": "Titleist",
+        "model": "620 CB",
+        "loft": "7-PW",
+        "shaft": "Project X HZRDUS Smoke Black 90 (3, 4), True Temper Dynamic Gold Tour Issue S300 (5-PW)"
+      },
+      {
+        "category": "Wedges",
+        "brand": "Titleist",
+        "model": "Vokey Design SM9",
+        "loft": "50-08F, 54-10S",
+        "shaft": "True Temper Dynamic Gold Tour Issue S400"
+      },
+      {
+        "category": "Putter",
+        "brand": "TaylorMade",
+        "model": "Spider ZT\u00a0Buy here.",
+        "loft": null,
+        "shaft": null
+      },
+      {
+        "category": "Ball",
+        "brand": "Titleist",
+        "model": "Pro V1",
         "loft": null,
         "shaft": null
       }

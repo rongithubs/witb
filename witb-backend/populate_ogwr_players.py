@@ -27,7 +27,7 @@ async def populate_ogwr_players():
     print("🏌️ Starting to populate database with top 50 OGWR players...")
 
     # Get scraped player data using Gemini AI
-    players_data = fetch_ogwr_with_gemini()
+    players_data = await fetch_ogwr_with_gemini()
 
     if not players_data:
         print("❌ No player data found from Gemini scraper")

@@ -4,17 +4,19 @@ URL Finder Module
 Discovers and validates PGA Club Tracker URLs for players.
 """
 
-import sqlite3
-import requests
 import re
 import time
 import random
+import requests
 from typing import List
+
+from sqlalchemy import text
+
+from db_session import SessionLocal
 from witb_models import PlayerInfo
 
 class URLFinder:
-    def __init__(self, db_path: str = "../witb-backend/dev.db"):
-        self.db_path = db_path
+    def __init__(self):
         self.base_url = "https://www.pgaclubtracker.com/players"
         self.session = requests.Session()
         
@@ -34,45 +36,25 @@ class URLFinder:
         })
     
     def get_all_players_from_db(self, limit: int = 50, tour: str = None) -> List[PlayerInfo]:
-        """Get all players from the database, optionally filtered by tour."""
         try:
-            conn = sqlite3.connect(self.db_path)
-            cursor = conn.cursor()
+            with SessionLocal() as session:
+                if tour:
+                    result = session.execute(
+                        text("SELECT id, name, country, tour, ranking FROM players WHERE ranking IS NOT NULL AND tour = :tour ORDER BY ranking ASC LIMIT :limit"),
+                        {"tour": tour, "limit": limit},
+                    )
+                else:
+                    result = session.execute(
+                        text("SELECT id, name, country, tour, ranking FROM players WHERE ranking IS NOT NULL ORDER BY ranking ASC LIMIT :limit"),
+                        {"limit": limit},
+                    )
+                rows = result.fetchall()
 
-            if tour:
-                cursor.execute("""
-                    SELECT id, name, country, tour, ranking
-                    FROM players
-                    WHERE ranking IS NOT NULL AND tour = ?
-                    ORDER BY ranking ASC
-                    LIMIT ?
-                """, (tour, limit))
-            else:
-                cursor.execute("""
-                    SELECT id, name, country, tour, ranking
-                    FROM players
-                    WHERE ranking IS NOT NULL
-                    ORDER BY ranking ASC
-                    LIMIT ?
-                """, (limit,))
-            
-            players = cursor.fetchall()
-            conn.close()
-            
-            player_list = []
-            for player in players:
-                player_info = PlayerInfo(
-                    id=player[0],
-                    name=player[1],
-                    country=player[2],
-                    tour=player[3],
-                    ranking=player[4]
-                )
-                player_list.append(player_info)
-            
-            return player_list
-            
-        except sqlite3.Error as e:
+            return [
+                PlayerInfo(id=str(r.id), name=r.name, country=r.country, tour=r.tour, ranking=r.ranking)
+                for r in rows
+            ]
+        except Exception as e:
             print(f"Database error: {e}")
             return []
     
