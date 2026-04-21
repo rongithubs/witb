@@ -15,7 +15,7 @@ import {
   LeaderboardSkeleton,
   LeaderboardFooter,
 } from "@/components/leaderboard";
-import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 export function ClubLeaderboard() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
