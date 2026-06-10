@@ -123,9 +123,9 @@ describe('leaderboard-utils', () => {
       expect(getDisplayItems(undefined, 'Driver')).toEqual([]);
     });
 
-    test('returns specific category items', () => {
+    test('returns specific category items annotated with their category', () => {
       const result = getDisplayItems(mockLeaderboardData, 'Driver');
-      expect(result).toEqual([mockClubItem]);
+      expect(result).toEqual([{ ...mockClubItem, category: 'Driver' }]);
     });
 
     test('returns empty array for non-existent category', () => {

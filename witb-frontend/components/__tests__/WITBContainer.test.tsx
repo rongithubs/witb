@@ -39,7 +39,7 @@ describe('WITBContainer', () => {
   })
 
   test('handles expansion toggle in card variant', () => {
-    const mockOnExpansionChange = jest.fn()
+    const mockOnExpansionChange = vi.fn()
     
     render(
       <WITBContainer 
@@ -68,20 +68,23 @@ describe('WITBContainer', () => {
     )
 
     expect(screen.getByText('Complete WITB - Tiger Woods')).toBeInTheDocument()
-    expect(screen.getByText('Driver')).toBeInTheDocument()
+    expect(screen.getAllByText('Driver')).toHaveLength(2)
   })
 
   test('starts collapsed when initialExpanded is false', () => {
     render(
-      <WITBContainer 
-        items={mockWITBItems} 
-        playerName="Tiger Woods" 
+      <WITBContainer
+        items={mockWITBItems}
+        playerName="Tiger Woods"
         variant="card"
         initialExpanded={false}
       />
     )
 
     expect(screen.getByText('View Full Bag')).toBeInTheDocument()
-    expect(screen.queryByText('Complete WITB - Tiger Woods')).not.toBeInTheDocument()
+    const collapsedContent = screen
+      .getByText('Complete WITB - Tiger Woods')
+      .closest('.max-h-0.opacity-0')
+    expect(collapsedContent).not.toBeNull()
   })
 })

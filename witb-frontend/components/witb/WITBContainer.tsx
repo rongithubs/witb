@@ -36,11 +36,10 @@ export function WITBContainer({
           <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">
             Equipment Bag
           </h4>
-          <WITBExpansionControls 
+          <WITBExpansionControls
             isExpanded={isExpanded}
             onToggle={toggleExpansion}
             variant="mobile"
-            playerName={playerName}
           />
         </div>
         
@@ -61,9 +60,8 @@ export function WITBContainer({
               <h5 className="text-base font-semibold text-gray-900 dark:text-white mb-4">
                 Complete WITB - {playerName}
               </h5>
-              <WITBItemList 
-                items={items} 
-                playerName={playerName}
+              <WITBItemList
+                items={items}
                 isExpanded={isExpanded}
               />
             </div>
@@ -91,9 +89,8 @@ export function WITBContainer({
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Complete WITB - {playerName}
           </h3>
-          <WITBItemList 
-            items={items} 
-            playerName={playerName}
+          <WITBItemList
+            items={items}
             isExpanded={isExpanded}
           />
         </div>

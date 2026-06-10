@@ -113,13 +113,10 @@ class ApiClient {
 export const apiClient = new ApiClient()
 
 // SWR fetcher function
-export const fetcher = async (url: string) => {
-  console.log('Fetcher called for URL:', url)
-  const response = await apiClient.get(url)
-  console.log('Fetcher response:', response)
-  if (response.error) {
-    console.error('Fetcher error:', response.error)
-    throw new Error(response.error)
+export const fetcher = async <T>(url: string): Promise<T> => {
+  const response = await apiClient.get<T>(url)
+  if (response.error || response.data === undefined) {
+    throw new Error(response.error ?? 'Empty response')
   }
   return response.data
 }

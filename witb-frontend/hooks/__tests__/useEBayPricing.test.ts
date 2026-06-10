@@ -1,7 +1,7 @@
 import { describe, expect, test, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useEBayPricing } from "../useEBayPricing";
-import type { WITBItem } from "@/types/schemas";
+import type { WITBItem, EBaySearchResponse } from "@/types/schemas";
 
 // Mock the ebayApi
 vi.mock("@/utils/ebayApi", () => ({
@@ -28,7 +28,7 @@ describe("useEBayPricing", () => {
     listingCount: 15,
   };
 
-  const mockSearchResponse = {
+  const mockSearchResponse: EBaySearchResponse = {
     products: [
       {
         product_id: "test-1",
@@ -74,11 +74,9 @@ describe("useEBayPricing", () => {
       },
     ],
     total_found: 2,
-    search_params: {
-      brand: "TaylorMade",
-      model: "Qi10",
-      category: "Driver",
-    },
+    page: 1,
+    per_page: 10,
+    search_query: "TaylorMade Qi10 Driver",
   };
 
   beforeEach(() => {
@@ -151,8 +149,8 @@ describe("useEBayPricing", () => {
   });
 
   test("fetchPriceData should set loading state during API call", async () => {
-    let resolvePromise: (value: any) => void;
-    const delayedPromise = new Promise((resolve) => {
+    let resolvePromise: (value: EBaySearchResponse) => void;
+    const delayedPromise = new Promise<EBaySearchResponse>((resolve) => {
       resolvePromise = resolve;
     });
     mockEBayApi.searchForWITBItem.mockReturnValueOnce(delayedPromise);
@@ -285,7 +283,9 @@ describe("useEBayPricing", () => {
     mockEBayApi.searchForWITBItem.mockResolvedValueOnce({
       products: [],
       total_found: 0,
-      search_params: { brand: "TaylorMade", model: "Qi10", category: "Driver" },
+      page: 1,
+      per_page: 10,
+      search_query: "TaylorMade Qi10 Driver",
     });
     
     return act(async () => {
@@ -301,10 +301,12 @@ describe("useEBayPricing", () => {
   });
 
   test("calculatePriceSummary should handle single product", () => {
-    const singleProductResponse = {
+    const singleProductResponse: EBaySearchResponse = {
       products: [mockSearchResponse.products[0]], // Just first product
       total_found: 1,
-      search_params: { brand: "TaylorMade", model: "Qi10", category: "Driver" },
+      page: 1,
+      per_page: 10,
+      search_query: "TaylorMade Qi10 Driver",
     };
     
     mockEBayApi.searchForWITBItem.mockResolvedValueOnce(singleProductResponse);
