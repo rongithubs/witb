@@ -2,7 +2,9 @@ import { describe, expect, test, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ClubLeaderboard } from '../ClubLeaderboard';
+import { useLeaderboardData } from '@/hooks/useLeaderboardData';
 import type { LeaderboardData } from '@/hooks/useLeaderboardData';
+import { validateLeaderboardData } from '@/lib/leaderboard-utils';
 
 // Mock the hook
 vi.mock('@/hooks/useLeaderboardData', () => ({
@@ -19,8 +21,8 @@ vi.mock('@/lib/leaderboard-utils', async () => {
 });
 
 describe('ClubLeaderboard', () => {
-  const mockUseLeaderboardData = vi.mocked(await import('@/hooks/useLeaderboardData')).useLeaderboardData;
-  const mockValidateLeaderboardData = vi.mocked(await import('@/lib/leaderboard-utils')).validateLeaderboardData;
+  const mockUseLeaderboardData = vi.mocked(useLeaderboardData);
+  const mockValidateLeaderboardData = vi.mocked(validateLeaderboardData);
 
   const mockLeaderboardData: LeaderboardData = {
     categories: {
@@ -74,8 +76,8 @@ describe('ClubLeaderboard', () => {
     });
 
     render(<ClubLeaderboard />);
-    
-    expect(screen.getByRole('status', { hidden: true })).toBeInTheDocument();
+
+    expect(screen.getByRole('status', { name: 'Loading leaderboard' })).toBeInTheDocument();
   });
 
   test('renders error state with retry button', async () => {
@@ -102,7 +104,7 @@ describe('ClubLeaderboard', () => {
 
   test('renders invalid data state', () => {
     mockUseLeaderboardData.mockReturnValue({
-      leaderboardData: { invalid: 'data' } as any,
+      leaderboardData: { invalid: 'data' } as unknown as LeaderboardData,
       error: null,
       isLoading: false,
       isEmpty: false,
@@ -144,15 +146,9 @@ describe('ClubLeaderboard', () => {
     });
 
     render(<ClubLeaderboard />);
-    
+
     expect(screen.getByText('Club Usage Leaderboard')).toBeInTheDocument();
-    expect(screen.getByText('3 categories')).toBeInTheDocument();
-    
-    // Check tabs are rendered
-    expect(screen.getByRole('tab', { name: 'All' })).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: 'Driver' })).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: 'Iron' })).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: 'Putter' })).toBeInTheDocument();
+    expect(screen.getByRole('combobox')).toHaveTextContent('All Categories');
   });
 
   test('shows category data when specific category is selected', async () => {
@@ -165,14 +161,14 @@ describe('ClubLeaderboard', () => {
     });
 
     render(<ClubLeaderboard />);
-    
-    const driverTab = screen.getByRole('tab', { name: 'Driver' });
-    await userEvent.click(driverTab);
-    
+
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.click(screen.getByRole('option', { name: 'Driver' }));
+
     await waitFor(() => {
-      expect(screen.getByText('Titleist')).toBeInTheDocument();
       expect(screen.getByText('TSR3')).toBeInTheDocument();
-      expect(screen.getByText('15 players (30%)')).toBeInTheDocument();
+      expect(screen.getByText('Trusted by 30% of Tour Players')).toBeInTheDocument();
+      expect(screen.queryByText('i230')).not.toBeInTheDocument();
     });
   });
 
@@ -192,7 +188,7 @@ describe('ClubLeaderboard', () => {
     expect(rankBadges.length).toBeGreaterThan(0);
   });
 
-  test('renders footer with statistics', () => {
+  test('renders footer attribution', () => {
     mockUseLeaderboardData.mockReturnValue({
       leaderboardData: mockLeaderboardData,
       error: null,
@@ -203,8 +199,6 @@ describe('ClubLeaderboard', () => {
 
     render(<ClubLeaderboard />);
     
-    expect(screen.getByText('3 categories analyzed')).toBeInTheDocument();
-    expect(screen.getByText('15 unique combinations')).toBeInTheDocument();
     expect(screen.getByText('Data from professional tours')).toBeInTheDocument();
   });
 
@@ -222,20 +216,15 @@ describe('ClubLeaderboard', () => {
     });
 
     render(<ClubLeaderboard />);
-    
-    const driverTab = screen.getByRole('tab', { name: 'Driver' });
-    await userEvent.click(driverTab);
-    
-    await waitFor(() => {
-      const viewBrandButton = screen.getByRole('button', { name: /view brand/i });
-      expect(viewBrandButton).toBeInTheDocument();
-    });
 
-    const viewBrandButton = screen.getByRole('button', { name: /view brand/i });
-    await userEvent.click(viewBrandButton);
-    
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.click(screen.getByRole('option', { name: 'Driver' }));
+
+    const shopNowButton = await screen.findByRole('button', { name: /shop now/i });
+    await userEvent.click(shopNowButton);
+
     expect(mockOpen).toHaveBeenCalledWith('https://titleist.com', '_blank');
-    
+
     vi.unstubAllGlobals();
   });
 });

@@ -2,7 +2,11 @@ import styles from "@/components/ui/glassmorphism.module.css";
 
 export function LeaderboardSkeleton() {
   return (
-    <div className={styles.glassContainer + " p-6"}>
+    <div
+      role="status"
+      aria-label="Loading leaderboard"
+      className={styles.glassContainer + " p-6"}
+    >
       <div className="animate-pulse space-y-4">
         <div className="h-8 bg-gray-200 dark:bg-white/20 rounded w-48"></div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

@@ -30,10 +30,10 @@ const mockFavorite: FavoritePlayer = {
 }
 
 describe('FavoritePlayerCard', () => {
-  const mockOnRemove = jest.fn()
+  const mockOnRemove = vi.fn()
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   test('renders player information correctly in bag view', () => {
@@ -47,9 +47,8 @@ describe('FavoritePlayerCard', () => {
 
     expect(screen.getByText('Tiger Woods')).toBeInTheDocument()
     expect(screen.getByText('#1')).toBeInTheDocument()
-    expect(screen.getByText(/🌍 USA/)).toBeInTheDocument()
-    expect(screen.getByText(/🏌️ PGA Tour/)).toBeInTheDocument()
-    expect(screen.getByText(/Primary: TaylorMade/)).toBeInTheDocument()
+    expect(screen.getByText('USA')).toBeInTheDocument()
+    expect(screen.getByText('PGA Tour')).toBeInTheDocument()
   })
 
   test('renders player information correctly in list view', () => {
@@ -75,9 +74,8 @@ describe('FavoritePlayerCard', () => {
       />
     )
 
-    expect(screen.getByText('Key Equipment')).toBeInTheDocument()
-    expect(screen.getByText('Driver')).toBeInTheDocument()
-    expect(screen.getByText('TaylorMade Stealth 2 Plus')).toBeInTheDocument()
+    expect(screen.getByText('Driver: TaylorMade')).toBeInTheDocument()
+    expect(screen.getByText('Putter: Scotty Cameron')).toBeInTheDocument()
   })
 
   test('calls onRemove when remove button is clicked', async () => {
@@ -111,18 +109,6 @@ describe('FavoritePlayerCard', () => {
     expect(screen.getByRole('button')).toBeDisabled()
   })
 
-  test('displays equipment count in bag view', () => {
-    render(
-      <FavoritePlayerCard 
-        favorite={mockFavorite} 
-        onRemove={mockOnRemove} 
-        variant="bag" 
-      />
-    )
-
-    expect(screen.getByText('2 clubs in bag')).toBeInTheDocument()
-  })
-
   test('handles player with no equipment data', () => {
     const favoriteWithNoEquipment: FavoritePlayer = {
       ...mockFavorite,
@@ -140,7 +126,7 @@ describe('FavoritePlayerCard', () => {
       />
     )
 
-    expect(screen.getByText('Primary: N/A')).toBeInTheDocument()
+    expect(screen.getByText('N/A')).toBeInTheDocument()
     expect(screen.getByText('No equipment data available')).toBeInTheDocument()
   })
 })

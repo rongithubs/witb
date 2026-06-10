@@ -20,28 +20,27 @@ const mockWITBItems: WITBItem[] = [
 ]
 
 // Mock window.open
-const mockWindowOpen = jest.fn()
+const mockWindowOpen = vi.fn()
 Object.defineProperty(window, 'open', {
   value: mockWindowOpen,
 })
 
 describe('WITBItemList', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
-  test('renders equipment items correctly on mobile view', () => {
+  test('renders each equipment item in both mobile and desktop views', () => {
     render(<WITBItemList items={mockWITBItems} />)
 
-    // Check that items are rendered
-    expect(screen.getByText('Driver')).toBeInTheDocument()
-    expect(screen.getByText('TaylorMade')).toBeInTheDocument()
-    expect(screen.getByText('Stealth 2 Plus')).toBeInTheDocument()
-    expect(screen.getByText('9°')).toBeInTheDocument()
-    
-    expect(screen.getByText('Putter')).toBeInTheDocument()
-    expect(screen.getByText('Scotty Cameron')).toBeInTheDocument()
-    expect(screen.getByText('GSS Newport 2')).toBeInTheDocument()
+    expect(screen.getAllByText('Driver')).toHaveLength(2)
+    expect(screen.getAllByText('TaylorMade')).toHaveLength(2)
+    expect(screen.getAllByText('Stealth 2 Plus')).toHaveLength(2)
+    expect(screen.getAllByText('9°')).toHaveLength(2)
+
+    expect(screen.getAllByText('Putter')).toHaveLength(2)
+    expect(screen.getAllByText('Scotty Cameron')).toHaveLength(2)
+    expect(screen.getAllByText('GSS Newport 2')).toHaveLength(2)
   })
 
   test('renders desktop table view', () => {
@@ -86,7 +85,7 @@ describe('WITBItemList', () => {
     render(<WITBItemList items={mockWITBItems} />)
 
     expect(screen.getByText('Shaft:')).toBeInTheDocument()
-    expect(screen.getByText('Mitsubishi Diamana D+ 60 TX')).toBeInTheDocument()
+    expect(screen.getAllByText('Mitsubishi Diamana D+ 60 TX')).toHaveLength(2)
   })
 
   test('handles items without optional fields', () => {
@@ -100,9 +99,9 @@ describe('WITBItemList', () => {
 
     render(<WITBItemList items={itemsWithoutOptionalFields} />)
 
-    expect(screen.getByText('Iron')).toBeInTheDocument()
-    expect(screen.getByText('Titleist')).toBeInTheDocument()
-    expect(screen.getByText('T100')).toBeInTheDocument()
+    expect(screen.getAllByText('Iron')).toHaveLength(2)
+    expect(screen.getAllByText('Titleist')).toHaveLength(2)
+    expect(screen.getAllByText('T100')).toHaveLength(2)
     
     // Should show dash for missing fields in table
     const dashElements = screen.getAllByText('-')

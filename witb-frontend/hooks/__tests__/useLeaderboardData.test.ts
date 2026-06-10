@@ -1,5 +1,6 @@
 import { describe, expect, test, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
+import useSWR from 'swr';
 import { useLeaderboardData } from '../useLeaderboardData';
 
 // Mock SWR
@@ -13,7 +14,7 @@ vi.mock('@/lib/fetcher', () => ({
 }));
 
 describe('useLeaderboardData', () => {
-  const mockSWR = vi.mocked(await import('swr')).default;
+  const mockSWR = vi.mocked(useSWR);
 
   test('returns expected structure from SWR', () => {
     const mockData = {
@@ -26,6 +27,7 @@ describe('useLeaderboardData', () => {
       data: mockData,
       error: null,
       isLoading: false,
+      isValidating: false,
       mutate: vi.fn()
     });
 
@@ -43,6 +45,7 @@ describe('useLeaderboardData', () => {
       data: undefined,
       error: null,
       isLoading: true,
+      isValidating: false,
       mutate: vi.fn()
     });
 
@@ -59,6 +62,7 @@ describe('useLeaderboardData', () => {
       data: undefined,
       error: mockError,
       isLoading: false,
+      isValidating: false,
       mutate: vi.fn()
     });
 
@@ -74,6 +78,7 @@ describe('useLeaderboardData', () => {
       data: undefined,
       error: null,
       isLoading: false,
+      isValidating: false,
       mutate: vi.fn()
     });
 
@@ -90,6 +95,7 @@ describe('useLeaderboardData', () => {
       data: undefined,
       error: null,
       isLoading: false,
+      isValidating: false,
       mutate: vi.fn()
     });
 

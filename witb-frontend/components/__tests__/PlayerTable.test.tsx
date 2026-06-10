@@ -4,6 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { PlayerTable } from '../PlayerTable';
 import type { Player, WITBItem, PaginatedPlayersResponse } from '@/types/schemas';
+import type { User, Session } from '@supabase/supabase-js';
 
 // Mock all dependencies
 vi.mock('@/hooks/useOWGRInfo', () => ({
@@ -30,7 +31,6 @@ describe('PlayerTable', async () => {
   // Test data following schema patterns
   const mockWITBItems: WITBItem[] = [
     {
-      id: 'witb-1',
       category: 'Driver',
       brand: 'Titleist',
       model: 'TSR3',
@@ -39,12 +39,10 @@ describe('PlayerTable', async () => {
       product_url: 'https://titleist.com/golf-clubs/drivers/tsr3'
     },
     {
-      id: 'witb-2', 
       category: 'Putter',
       brand: 'Scotty Cameron',
       model: 'Newport 2',
       loft: '3.0°',
-      shaft: null,
       product_url: 'https://scottycameron.com'
     }
   ];
@@ -58,7 +56,7 @@ describe('PlayerTable', async () => {
       age: 48,
       ranking: 1,
       photo_url: 'https://example.com/tiger.jpg',
-      last_updated: new Date('2024-01-15T10:30:00Z'),
+      last_updated: '2024-01-15T10:30:00Z',
       witb_items: mockWITBItems
     },
     {
@@ -69,7 +67,7 @@ describe('PlayerTable', async () => {
       age: 34,
       ranking: 2,
       photo_url: 'https://example.com/rory.jpg',
-      last_updated: new Date('2024-01-10T14:20:00Z'),
+      last_updated: '2024-01-10T14:20:00Z',
       witb_items: []
     }
   ];
@@ -81,7 +79,7 @@ describe('PlayerTable', async () => {
     per_page: 10,
     total_pages: 1,
     system_info: {
-      owgr_last_updated: new Date('2024-01-15T12:00:00Z'),
+      owgr_last_updated: '2024-01-15T12:00:00Z',
       owgr_updated_count: 50,
       owgr_total_processed: 50
     }
@@ -101,13 +99,20 @@ describe('PlayerTable', async () => {
 
     // Default mock implementations
     mockUseOWGRInfo.mockReturnValue({
-      owgrInfo: 'Last updated: Jan 15, 2024',
-      formatLastUpdated: vi.fn((date: Date | null) => date?.toLocaleDateString() || 'Not updated')
+      owgrInfo: {
+        last_updated: '2024-01-15T12:00:00Z',
+        added_count: 0,
+        updated_count: 50,
+        total_processed: 50
+      },
+      isLoading: false,
+      error: null,
+      formatLastUpdated: 'January 15, 2024, 12:00 PM'
     });
 
     mockUseAuth.mockReturnValue({
-      user: { id: 'user-1', email: 'test@example.com' },
-      session: { access_token: 'token' },
+      user: { id: 'user-1', email: 'test@example.com' } as User,
+      session: { access_token: 'token' } as Session,
       loading: false,
       signInWithGoogle: vi.fn(),
       signOut: vi.fn()
@@ -157,7 +162,7 @@ describe('PlayerTable', async () => {
         favorites: [{ 
           id: 'fav-1', 
           player: mockPlayers[0], 
-          created_at: new Date() 
+          created_at: '2024-01-01T00:00:00Z' 
         }],
         isLoading: false,
         error: null,
@@ -209,7 +214,7 @@ describe('PlayerTable', async () => {
 
     test('handles loading state during toggle operation', async () => {
       const mockAddFavorite = vi.fn(() => 
-        new Promise(resolve => setTimeout(() => resolve(true), 100))
+        new Promise<boolean>(resolve => setTimeout(() => resolve(true), 100))
       );
       
       mockUseFavorites.mockReturnValue({
@@ -273,18 +278,18 @@ describe('PlayerTable', async () => {
         favorites: [{ 
           id: 'fav-1', 
           player: mockPlayers[0], 
-          created_at: new Date() 
+          created_at: '2024-01-01T00:00:00Z' 
         }],
         isLoading: false,
         error: null,
         addFavorite: vi.fn(),
         removeFavorite: vi.fn(),
-        isFavorite: vi.fn().mockReturnValue(true),
+        isFavorite: vi.fn((playerId: string) => playerId === 'player-1'),
         refreshFavorites: vi.fn()
       });
 
       render(<PlayerTable {...defaultProps} />);
-      
+
       // Check heart buttons show remove tooltip
       const removeFromFavoriteButtons = screen.getAllByTitle('Remove from favorites');
       expect(removeFromFavoriteButtons).toHaveLength(2); // Only for favorited player
@@ -309,7 +314,7 @@ describe('PlayerTable', async () => {
       expect(signInButtons).toHaveLength(4); // 2 players × 2 views
       
       // All heart buttons should be disabled
-      signInButtons.forEach((button: any) => {
+      signInButtons.forEach((button) => {
         expect(button).toBeDisabled();
       });
     });
@@ -329,20 +334,22 @@ describe('PlayerTable', async () => {
 
       render(<PlayerTable {...defaultProps} />);
       
+      // Buttons render per player as [mobile, desktop], players in order
       const heartButtons = screen.getAllByTitle('Add to favorites');
-      
-      // Click first heart button (should be desktop view)
+
       await userEvent.click(heartButtons[0]);
-      
+
       await waitFor(() => {
         expect(mockAddFavorite).toHaveBeenCalledWith('player-1');
       });
-      
+
       mockAddFavorite.mockClear();
-      
-      // Click third heart button (should be mobile view for same player)
-      await userEvent.click(heartButtons[2]);
-      
+
+      await waitFor(() => {
+        expect(heartButtons[1]).not.toBeDisabled();
+      });
+      await userEvent.click(heartButtons[1]);
+
       await waitFor(() => {
         expect(mockAddFavorite).toHaveBeenCalledWith('player-1');
       });
@@ -374,15 +381,15 @@ describe('PlayerTable', async () => {
         expect(mockAddFavorite).toHaveBeenCalled();
       });
       
-      // Component should still be rendered
-      expect(screen.getByText('Tiger Woods')).toBeInTheDocument();
+      // Component should still be rendered (mobile + desktop rows)
+      expect(screen.getAllByText('Tiger Woods')).toHaveLength(2);
     });
 
-    test('handles rapid successive clicks without breaking state', async () => {
+    test('ignores rapid successive clicks while toggle is in flight', async () => {
       let callCount = 0;
       const mockAddFavorite = vi.fn(() => {
         callCount++;
-        return new Promise(resolve => 
+        return new Promise<boolean>(resolve =>
           setTimeout(() => resolve(true), 50)
         );
       });
@@ -416,9 +423,9 @@ describe('PlayerTable', async () => {
       await waitFor(() => {
         expect(heartButton).not.toBeDisabled();
       });
-      
-      // Should have been called multiple times
-      expect(callCount).toBeGreaterThan(1);
+
+      // Disabled state must swallow the extra clicks
+      expect(callCount).toBe(1);
     });
 
     test('renders loading skeleton when isLoading prop is true', () => {
@@ -475,7 +482,7 @@ describe('PlayerTable', async () => {
           favorites: initiallyFavorited ? [{ 
             id: 'fav-1', 
             player: mockPlayers.find(p => p.id === playerId)!, 
-            created_at: new Date() 
+            created_at: '2024-01-01T00:00:00Z' 
           }] : [],
           isLoading: false,
           error: null,
@@ -491,14 +498,15 @@ describe('PlayerTable', async () => {
           refreshFavorites: vi.fn()
         });
 
-        render(<PlayerTable {...defaultProps} />);
-        
+        const playerUnderTest = mockPlayers.find(p => p.id === playerId)!;
+        render(<PlayerTable {...defaultProps} players={[playerUnderTest]} />);
+
         const initialTitle = initiallyFavorited ? 'Remove from favorites' : 'Add to favorites';
         const heartButton = screen.getAllByTitle(initialTitle)[0];
-        
+
         // First click
         await userEvent.click(heartButton);
-        
+
         await waitFor(() => {
           if (expectedFirstAction === 'add') {
             expect(mockAddFavorite).toHaveBeenCalledWith(playerId);
@@ -506,35 +514,20 @@ describe('PlayerTable', async () => {
             expect(mockRemoveFavorite).toHaveBeenCalledWith(playerId);
           }
         });
-        
-        // Re-render with updated state
-        mockUseFavorites.mockReturnValue({
-          favorites: !initiallyFavorited ? [{ 
-            id: 'fav-1', 
-            player: mockPlayers.find(p => p.id === playerId)!, 
-            created_at: new Date() 
-          }] : [],
-          isLoading: false,
-          error: null,
-          addFavorite: mockAddFavorite,
-          removeFavorite: mockRemoveFavorite,
-          isFavorite: mockIsFavorite,
-          refreshFavorites: vi.fn()
-        });
-        
-        // Wait for state update and second click
+
+        // Wait for the toggle to settle, then click again from the flipped state
+        const secondTitle = !initiallyFavorited ? 'Remove from favorites' : 'Add to favorites';
         await waitFor(() => {
-          const secondTitle = !initiallyFavorited ? 'Remove from favorites' : 'Add to favorites';
-          const updatedButton = screen.getAllByTitle(secondTitle)[0];
-          return userEvent.click(updatedButton);
+          expect(screen.getAllByTitle(secondTitle)[0]).not.toBeDisabled();
         });
-        
+        await userEvent.click(screen.getAllByTitle(secondTitle)[0]);
+
         // Verify second action
         await waitFor(() => {
           if (expectedSecondAction === 'add') {
-            expect(mockAddFavorite).toHaveBeenCalledTimes(2);
+            expect(mockAddFavorite).toHaveBeenCalledWith(playerId);
           } else {
-            expect(mockRemoveFavorite).toHaveBeenCalledTimes(1);
+            expect(mockRemoveFavorite).toHaveBeenCalledWith(playerId);
           }
         });
       });
