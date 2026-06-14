@@ -10,6 +10,7 @@ import models
 from custom_types import PlayerId
 from repositories.player_repository import PlayerRepository
 from repositories.witb_repository import WITBRepository
+from services.bag_change import BagChange, BagItem, compute_bag_changes
 from services.scraper_service import EquipmentItem, WITBData
 
 
@@ -86,7 +87,15 @@ class WITBSyncService:
                 player_id, {"last_updated": scraped_data.last_updated or datetime.now()}
             )
 
-            # Replace all equipment for this player
+            # Compute and stage the bag diff before the destructive replace.
+            # Suppress a player's first-ever scrape (no prior items) so the feed
+            # is not flooded with "added" events that carry no change history.
+            if existing_player.witb_items:
+                self._stage_bag_changes(
+                    player_id, existing_player.witb_items, scraped_data.equipment
+                )
+
+            # Replace all equipment for this player (commits staged changes too)
             await self.witb_repo.replace_player_equipment(player_id, new_witb_items)
 
             return SyncResult(
@@ -100,6 +109,45 @@ class WITBSyncService:
             return SyncResult(
                 action=SyncAction.ERROR, items_count=0, message=f"Sync failed: {str(e)}"
             )
+
+    def _stage_bag_changes(
+        self,
+        player_id: PlayerId,
+        old_items: list[models.WITBItem],
+        new_equipment: list[EquipmentItem],
+    ) -> None:
+        """Diff old vs. new bag and stage resulting change records for commit."""
+        old_bag = [
+            BagItem(i.category, i.brand, i.model, i.loft, i.shaft) for i in old_items
+        ]
+        new_bag = [
+            BagItem(i.category, i.brand, i.model, i.loft, i.shaft)
+            for i in new_equipment
+        ]
+        changes = compute_bag_changes(old_bag, new_bag)
+        if changes:
+            self.witb_repo.stage_changes(
+                [self._to_change_model(player_id, change) for change in changes]
+            )
+
+    def _to_change_model(
+        self, player_id: PlayerId, change: BagChange
+    ) -> models.WITBChange:
+        """Flatten a BagChange onto a persistable WITBChange row."""
+        old, new = change.old, change.new
+        return models.WITBChange(
+            player_id=player_id,
+            category=change.category,
+            change_type=change.change_type.value,
+            old_brand=old.brand if old else None,
+            old_model=old.model if old else None,
+            old_loft=old.loft if old else None,
+            old_shaft=old.shaft if old else None,
+            new_brand=new.brand if new else None,
+            new_model=new.model if new else None,
+            new_loft=new.loft if new else None,
+            new_shaft=new.shaft if new else None,
+        )
 
     def _should_update_data(
         self, existing_date: datetime | None, scraped_date: datetime | None

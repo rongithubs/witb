@@ -6,6 +6,7 @@ from uuid import UUID
 # Branded types for IDs
 PlayerId = NewType("PlayerId", UUID)
 WITBItemId = NewType("WITBItemId", UUID)
+WITBChangeId = NewType("WITBChangeId", UUID)
 UserId = NewType("UserId", UUID)
 SupabaseUserId = NewType("SupabaseUserId", UUID)
 FavoritePlayerId = NewType("FavoritePlayerId", UUID)

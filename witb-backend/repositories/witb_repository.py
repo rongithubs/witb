@@ -1,5 +1,6 @@
 """WITB repository for database operations following CLAUDE.md D-4."""
 
+from datetime import datetime
 from typing import Any
 
 from sqlalchemy import delete, func
@@ -47,6 +48,29 @@ class WITBRepository:
             self.db.add(item)
 
         await self.db.commit()
+
+    def stage_changes(self, changes: list[models.WITBChange]) -> None:
+        """Add change records to the session without committing.
+
+        Persisting is left to the subsequent ``replace_player_equipment`` commit
+        so a player's diff and equipment update land in a single transaction.
+        """
+        self.db.add_all(changes)
+
+    async def get_recent_changes(
+        self, since: datetime | None = None, limit: int = 50
+    ) -> list[models.WITBChange]:
+        """Get recent equipment changes (newest first) with player info loaded."""
+        query = (
+            select(models.WITBChange)
+            .order_by(models.WITBChange.detected_at.desc())
+            .limit(limit)
+        )
+        if since is not None:
+            query = query.where(models.WITBChange.detected_at >= since)
+
+        result = await self.db.execute(query)
+        return list(result.scalars().all())
 
     async def get_club_usage_leaderboard(
         self, category_filter: str | None = None, limit: int | None = None

@@ -2,6 +2,9 @@
 
 import pytest
 from fastapi.testclient import TestClient
+from sqlalchemy.ext.asyncio import AsyncSession
+
+import models
 
 
 class TestWitbRoutes:
@@ -58,6 +61,54 @@ class TestWitbRoutes:
         # Test valid limit
         response = client.get("/witb/leaderboard?limit=10")
         assert response.status_code == 200
+
+    def test_get_bag_changes_empty_db_returns_empty_feed(self, client: TestClient):
+        """Test GET /witb/changes returns an empty feed when no changes exist."""
+        response = client.get("/witb/changes")
+
+        assert response.status_code == 200
+        assert response.json() == {"changes": [], "total": 0}
+
+    def test_get_bag_changes_validates_limit_parameter(self, client: TestClient):
+        """Test /witb/changes enforces limit bounds (1..200)."""
+        assert client.get("/witb/changes?limit=0").status_code == 422
+        assert client.get("/witb/changes?limit=201").status_code == 422
+        assert client.get("/witb/changes?limit=200").status_code == 200
+
+    @pytest.mark.asyncio
+    async def test_get_bag_changes_returns_seeded_change_with_player(
+        self, client: TestClient, db_session: AsyncSession
+    ):
+        """Test GET /witb/changes returns a persisted change joined to its player."""
+        player = models.Player(name="Rory McIlroy", tour="OGWR")
+        db_session.add(player)
+        await db_session.flush()
+        db_session.add(
+            models.WITBChange(
+                player_id=player.id,
+                category="Driver",
+                change_type="switched",
+                old_brand="TaylorMade",
+                old_model="Stealth 2",
+                new_brand="TaylorMade",
+                new_model="Qi10",
+            )
+        )
+        await db_session.commit()
+
+        response = client.get("/witb/changes")
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data["total"] == 1
+        item = data["changes"][0]
+        assert (
+            item["player_name"],
+            item["category"],
+            item["change_type"],
+            item["old_model"],
+            item["new_model"],
+        ) == ("Rory McIlroy", "Driver", "switched", "Stealth 2", "Qi10")
 
     def test_get_brands_returns_valid_response(self, client: TestClient):
         """Test GET /witb/brands returns brand list with static brands."""

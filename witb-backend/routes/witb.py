@@ -1,5 +1,7 @@
 """WITB routes following CLAUDE.md O-4 (thin route handlers)."""
 
+from datetime import datetime
+
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -21,6 +23,19 @@ async def get_club_leaderboard(
     return await service.get_club_usage_leaderboard(
         category_filter=category, limit=limit
     )
+
+
+@router.get("/changes", response_model=schemas.BagChangesResponse)
+async def get_bag_changes(
+    since: datetime | None = Query(
+        None, description="Only return changes detected at or after this timestamp"
+    ),
+    limit: int = Query(50, ge=1, le=200, description="Max number of changes to return"),
+    db: AsyncSession = Depends(get_db),
+):
+    """Get the weekly bag-change feed (newest first)."""
+    service = WitbService(db)
+    return await service.get_recent_changes(since=since, limit=limit)
 
 
 @router.get("/brands", response_model=schemas.BrandResponse)

@@ -88,6 +88,35 @@ class BrandResponse(BaseModel):
     total: int
 
 
+class BagChangeItem(BaseModel):
+    """Schema for a single detected equipment change in the bag-change feed."""
+
+    id: UUID
+    player_id: UUID
+    player_name: str | None = None
+    player_photo_url: str | None = None
+    category: str
+    change_type: str  # "added" | "removed" | "switched"
+    old_brand: str | None = None
+    old_model: str | None = None
+    old_loft: str | None = None
+    old_shaft: str | None = None
+    new_brand: str | None = None
+    new_model: str | None = None
+    new_loft: str | None = None
+    new_shaft: str | None = None
+    detected_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class BagChangesResponse(BaseModel):
+    """Schema for the bag-change feed (newest first)."""
+
+    changes: list[BagChangeItem]
+    total: int
+
+
 class UserBase(BaseModel):
     email: str | None = None
     phone: str | None = None

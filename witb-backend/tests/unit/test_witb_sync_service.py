@@ -125,6 +125,75 @@ class TestWITBSyncService:
         mock_witb_repo.replace_player_equipment.assert_called_once()
 
     @pytest.mark.asyncio
+    async def test_sync_stages_switched_change_when_prior_equipment_exists(self):
+        """A driver swap on an existing bag stages one 'switched' change record."""
+        mock_player_repo = AsyncMock()
+        mock_witb_repo = AsyncMock()
+        mock_witb_repo.stage_changes = Mock()
+
+        sync_service = WITBSyncService(Mock())
+        sync_service.player_repo = mock_player_repo
+        sync_service.witb_repo = mock_witb_repo
+
+        player_id = PlayerId(uuid4())
+        existing_player = models.Player(
+            id=player_id, name="Rory", last_updated=datetime(2025, 1, 1)
+        )
+        existing_player.witb_items = [
+            models.WITBItem(
+                category="Driver", brand="TaylorMade", model="Stealth 2", loft="9"
+            )
+        ]
+        mock_player_repo.get_player_by_id.return_value = existing_player
+
+        scraped_data = WITBData(
+            last_updated=datetime(2025, 1, 15),
+            equipment=[
+                EquipmentItem("Driver", "TaylorMade", "Qi10", loft="10.5"),
+            ],
+            source_url="https://example.com",
+        )
+
+        await sync_service.sync_player_equipment(player_id, scraped_data)
+
+        staged = mock_witb_repo.stage_changes.call_args.args[0]
+        assert len(staged) == 1
+        change = staged[0]
+        assert (change.change_type, change.old_model, change.new_model) == (
+            "switched",
+            "Stealth 2",
+            "Qi10",
+        )
+
+    @pytest.mark.asyncio
+    async def test_sync_suppresses_changes_on_first_scrape(self):
+        """A player's first-ever scrape (no prior items) stages no change records."""
+        mock_player_repo = AsyncMock()
+        mock_witb_repo = AsyncMock()
+        mock_witb_repo.stage_changes = Mock()
+
+        sync_service = WITBSyncService(Mock())
+        sync_service.player_repo = mock_player_repo
+        sync_service.witb_repo = mock_witb_repo
+
+        player_id = PlayerId(uuid4())
+        existing_player = models.Player(
+            id=player_id, name="Rookie", last_updated=datetime(2025, 1, 1)
+        )
+        existing_player.witb_items = []
+        mock_player_repo.get_player_by_id.return_value = existing_player
+
+        scraped_data = WITBData(
+            last_updated=datetime(2025, 1, 15),
+            equipment=[EquipmentItem("Driver", "TaylorMade", "Qi10")],
+            source_url="https://example.com",
+        )
+
+        await sync_service.sync_player_equipment(player_id, scraped_data)
+
+        mock_witb_repo.stage_changes.assert_not_called()
+
+    @pytest.mark.asyncio
     async def test_sync_player_equipment_skips_older_data(self):
         """Test that sync skips when scraped data is older."""
         mock_player_repo = AsyncMock()

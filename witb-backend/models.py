@@ -9,8 +9,8 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
-    func,
     UniqueConstraint,
+    func,
 )
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_base, relationship
@@ -46,6 +46,26 @@ class WITBItem(Base):
     source_url = Column(String, nullable=True)
     last_updated = Column(DateTime, default=func.now())
     player = relationship("Player", back_populates="witb_items")
+
+
+class WITBChange(Base):
+    """Append-only record of a single equipment change detected between scrapes."""
+
+    __tablename__ = "witb_changes"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    player_id = Column(UUID(as_uuid=True), ForeignKey("players.id"), nullable=False)
+    category = Column(String, nullable=False)
+    change_type = Column(String, nullable=False)  # "added" | "removed" | "switched"
+    old_brand = Column(String, nullable=True)
+    old_model = Column(String, nullable=True)
+    old_loft = Column(String, nullable=True)
+    old_shaft = Column(String, nullable=True)
+    new_brand = Column(String, nullable=True)
+    new_model = Column(String, nullable=True)
+    new_loft = Column(String, nullable=True)
+    new_shaft = Column(String, nullable=True)
+    detected_at = Column(DateTime, default=func.now())
+    player = relationship("Player", lazy="selectin")
 
 
 class SystemUpdate(Base):

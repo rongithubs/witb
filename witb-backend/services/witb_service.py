@@ -1,7 +1,10 @@
 """WITB service for business logic following CLAUDE.md O-4."""
 
+from datetime import datetime
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
+import models
 import schemas
 from brand_urls import BRAND_URLS, get_brand_url
 from repositories.witb_repository import WITBRepository
@@ -45,6 +48,36 @@ class WitbService:
             categories=categories,
             total_categories=total_categories,
             total_unique_combinations=total_unique_combinations,
+        )
+
+    async def get_recent_changes(
+        self, since: datetime | None = None, limit: int = 50
+    ) -> schemas.BagChangesResponse:
+        """Get the recent bag-change feed (newest first) with player info."""
+        changes = await self.witb_repo.get_recent_changes(since=since, limit=limit)
+        items = [self._to_change_item(change) for change in changes]
+        return schemas.BagChangesResponse(changes=items, total=len(items))
+
+    @staticmethod
+    def _to_change_item(change: models.WITBChange) -> schemas.BagChangeItem:
+        """Map a WITBChange row plus its player onto the feed schema."""
+        player = change.player
+        return schemas.BagChangeItem(
+            id=change.id,
+            player_id=change.player_id,
+            player_name=player.name if player else None,
+            player_photo_url=player.photo_url if player else None,
+            category=change.category,
+            change_type=change.change_type,
+            old_brand=change.old_brand,
+            old_model=change.old_model,
+            old_loft=change.old_loft,
+            old_shaft=change.old_shaft,
+            new_brand=change.new_brand,
+            new_model=change.new_model,
+            new_loft=change.new_loft,
+            new_shaft=change.new_shaft,
+            detected_at=change.detected_at,
         )
 
     async def get_brands(self) -> schemas.BrandResponse:
