@@ -1,10 +1,13 @@
 """Unit tests for the bag-change diff algorithm following CLAUDE.md T-1, T-5."""
 
+import pytest
+
 from services.bag_change import (
     BagChange,
     BagItem,
     ChangeType,
     compute_bag_changes,
+    normalize_category,
 )
 
 
@@ -15,6 +18,26 @@ def _driver(
     return BagItem(
         category="Driver", brand="TaylorMade", model=model, loft=loft, shaft=shaft
     )
+
+
+class TestNormalizeCategory:
+    """Unit tests for normalize_category."""
+
+    @pytest.mark.parametrize(
+        ("raw", "expected"),
+        [
+            ("Iron", "iron"),
+            ("Irons", "iron"),
+            ("  Wedges ", "wedge"),
+            ("GRIPS", "grip"),
+            ("Driver", "driver"),
+            ("Ball", "ball"),
+            ("Balls", "ball"),
+            ("3-Wood", "3-wood"),
+        ],
+    )
+    def test_canonicalizes_case_whitespace_and_plurality(self, raw, expected):
+        assert normalize_category(raw) == expected
 
 
 class TestComputeBagChanges:
@@ -89,3 +112,25 @@ class TestComputeBagChanges:
         result = compute_bag_changes(old, new)
 
         assert result == []
+
+    def test_plural_and_singular_category_are_the_same_club(self):
+        """Stored plural 'Irons' and scraped singular 'Iron' must not diff as a change.
+
+        Guards the real-world artifact where historical data used plural club
+        categories but the current scraper emits singular ones.
+        """
+        old = [BagItem("Irons", "Titleist", "T200")]
+        new = [BagItem("Iron", "Titleist", "T200")]
+
+        result = compute_bag_changes(old, new)
+
+        assert result == []
+
+    def test_single_slot_swap_matches_across_plural_singular(self):
+        """A ball swap still coalesces to one switch when categories differ in plurality."""
+        previous = BagItem("Balls", "Titleist", "Pro V1")
+        current = BagItem("Ball", "Titleist", "Pro V1x")
+
+        result = compute_bag_changes([previous], [current])
+
+        assert result == [BagChange(ChangeType.SWITCHED, old=previous, new=current)]

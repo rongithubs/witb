@@ -153,12 +153,17 @@ class PlayerRepository:
                 setattr(player, key, value)
             await self.db.commit()
 
-    async def get_top_ranked_players(self, limit: int) -> list[models.Player]:
-        """Get top ranked players ordered by ranking."""
-        result = await self.db.execute(
+    async def get_top_ranked_players(
+        self, limit: int, tour: str | None = None
+    ) -> list[models.Player]:
+        """Get top ranked players ordered by ranking, optionally filtered by tour."""
+        query = (
             select(models.Player)
             .where(models.Player.ranking.isnot(None))
             .order_by(models.Player.ranking.asc())
-            .limit(limit)
         )
-        return result.scalars().all()
+        if tour:
+            query = query.where(models.Player.tour == tour)
+
+        result = await self.db.execute(query.limit(limit))
+        return list(result.scalars().all())

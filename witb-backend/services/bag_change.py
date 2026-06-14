@@ -14,6 +14,18 @@ from enum import Enum
 SINGLE_SLOT_CATEGORIES = frozenset({"driver", "putter", "ball"})
 
 
+def normalize_category(category: str) -> str:
+    """Canonicalize a club category for diffing: lowercased, trimmed, de-pluralized.
+
+    The current scraper emits singular categories (Iron, Wedge, Grip) while
+    historical stored data used plurals (Irons, Wedges, Grips). Collapsing a
+    trailing "s" keeps a re-scrape from surfacing phantom add/remove pairs.
+    No real golf category is singular and ends in "s", so this is safe here.
+    """
+    normalized = category.strip().lower()
+    return normalized[:-1] if normalized.endswith("s") else normalized
+
+
 class ChangeType(str, Enum):
     """Kind of bag change detected between two scrapes."""
 
@@ -37,9 +49,9 @@ class BagItem:
     shaft: str | None = None
 
     def identity(self) -> tuple[str, str, str]:
-        """v1 identity key: category/brand/model, normalized for case and whitespace."""
+        """v1 identity key: category/brand/model, normalized for case and plurality."""
         return (
-            self.category.strip().lower(),
+            normalize_category(self.category),
             self.brand.strip().lower(),
             self.model.strip().lower(),
         )
@@ -62,7 +74,7 @@ class BagChange:
 
 
 def _is_single_slot(category: str) -> bool:
-    return category.strip().lower() in SINGLE_SLOT_CATEGORIES
+    return normalize_category(category) in SINGLE_SLOT_CATEGORIES
 
 
 def compute_bag_changes(
@@ -108,8 +120,12 @@ def _find_single_slot_swap(
     """Return a removed item that pairs with ``new_item`` as a single-slot swap."""
     if not _is_single_slot(new_item.category):
         return None
-    new_category = new_item.category.strip().lower()
+    new_category = normalize_category(new_item.category)
     return next(
-        (item for item in candidates if item.category.strip().lower() == new_category),
+        (
+            item
+            for item in candidates
+            if normalize_category(item.category) == new_category
+        ),
         None,
     )

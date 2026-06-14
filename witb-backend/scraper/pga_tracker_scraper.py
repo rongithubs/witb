@@ -65,22 +65,26 @@ class PGATrackerScraper:
         self.html_scraper = HTMLScraper(request_delay=request_delay)
         self.sync_service = WITBSyncService(db)
 
-    async def scrape_top_players(self, limit: int = 50) -> ScrapingReport:
+    async def scrape_top_players(
+        self, limit: int = 50, tour: str | None = None
+    ) -> ScrapingReport:
         """
         Scrape WITB data for top ranked players.
 
         Args:
             limit: Number of top players to scrape (default: 50)
+            tour: Optional tour filter (e.g. "OGWR" for PGA-only)
 
         Returns:
             ScrapingReport with results for all players
         """
         start_time = datetime.now()
 
-        print(f"Starting scrape of top {limit} players...")
+        scope = f" on tour {tour}" if tour else ""
+        print(f"Starting scrape of top {limit} players{scope}...")
 
         # Get top players from database
-        players = await self._get_top_players(limit)
+        players = await self._get_top_players(limit, tour)
 
         if not players:
             print("No players found in database")
@@ -136,9 +140,11 @@ class PGATrackerScraper:
             player_results=player_results,
         )
 
-    async def _get_top_players(self, limit: int) -> list[models.Player]:
-        """Get top ranked players from database."""
-        return await self.player_repo.get_top_ranked_players(limit)
+    async def _get_top_players(
+        self, limit: int, tour: str | None = None
+    ) -> list[models.Player]:
+        """Get top ranked players from database, optionally filtered by tour."""
+        return await self.player_repo.get_top_ranked_players(limit, tour)
 
     async def _scrape_single_player(
         self, player: models.Player

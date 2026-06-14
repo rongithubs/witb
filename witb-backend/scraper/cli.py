@@ -12,7 +12,9 @@ from database import SessionLocal
 from scraper.pga_tracker_scraper import PGATrackerScraper
 
 
-async def run_scraper(players_count: int, delay: float, dry_run: bool) -> None:
+async def run_scraper(
+    players_count: int, delay: float, dry_run: bool, tour: str | None = None
+) -> None:
     """
     Run the PGA Club Tracker scraper.
 
@@ -20,16 +22,21 @@ async def run_scraper(players_count: int, delay: float, dry_run: bool) -> None:
         players_count: Number of top players to scrape
         delay: Delay between requests in seconds
         dry_run: If True, only show what would be scraped without making changes
+        tour: Optional tour filter (e.g. "OGWR" for PGA-only)
     """
     if dry_run:
-        print(f"[DRY RUN] Would scrape top {players_count} players with {delay}s delay")
+        scope = f" on tour {tour}" if tour else ""
+        print(
+            f"[DRY RUN] Would scrape top {players_count} players{scope} "
+            f"with {delay}s delay"
+        )
         return
 
     async with SessionLocal() as db:
         scraper = PGATrackerScraper(db, request_delay=delay)
 
         try:
-            report = await scraper.scrape_top_players(players_count)
+            report = await scraper.scrape_top_players(players_count, tour)
 
             # Print summary
             print(f"\n{'='*60}")
@@ -91,6 +98,13 @@ Examples:
         help="Show what would be scraped without making changes",
     )
 
+    parser.add_argument(
+        "--tour",
+        type=str,
+        default=None,
+        help='Only scrape players on this tour (e.g. "OGWR" for PGA-only)',
+    )
+
     args = parser.parse_args()
 
     # Validate arguments
@@ -104,7 +118,7 @@ Examples:
 
     # Run scraper
     try:
-        asyncio.run(run_scraper(args.players, args.delay, args.dry_run))
+        asyncio.run(run_scraper(args.players, args.delay, args.dry_run, args.tour))
     except KeyboardInterrupt:
         print("\nExiting...")
         sys.exit(0)
