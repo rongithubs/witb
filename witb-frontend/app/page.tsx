@@ -3,6 +3,7 @@
 import Header from "@/components/ui/Header";
 import TournamentWinnerWithBag from "@/components/TournamentWinnerWithBag";
 import { ClubLeaderboard } from "@/components/ClubLeaderboard";
+import { BagChangeFeed } from "@/components/witb/BagChangeFeed";
 import { useState } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePlayerSearch } from "@/hooks/usePlayerSearch";
@@ -14,13 +15,16 @@ import { useAuth } from "@/providers/auth-provider";
 export default function Home() {
   const [query, setQuery] = useState("");
   const { user } = useAuth();
-  
+
   // Custom hooks for state management
   const { page, setPage } = usePagination();
-  
+
   // Data fetching - only OGWR data
-  const { playersResponse, players, error, isLoading } = usePlayersData(page, "OGWR");
-  
+  const { playersResponse, players, error, isLoading } = usePlayersData(
+    page,
+    "OGWR",
+  );
+
   // Player search
   const filteredPlayers = usePlayerSearch(players, query);
 
@@ -28,19 +32,20 @@ export default function Home() {
     <ErrorBoundary>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Header onSearch={setQuery} />
-        
+
         <main className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Sign-in Banner for non-authenticated users */}
           {!user && (
             <div className="py-4">
               <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                 <p className="text-blue-800 dark:text-blue-200">
-                  Sign in to save your favorite players and get personalized golf equipment recommendations!
+                  Sign in to save your favorite players and get personalized
+                  golf equipment recommendations!
                 </p>
               </div>
             </div>
           )}
-          
+
           {/* Tournament Winner Banner */}
           <div className="mb-6 pt-6">
             <ErrorBoundary>
@@ -64,9 +69,12 @@ export default function Home() {
               </ErrorBoundary>
             </div>
 
-            {/* Sidebar: Club Leaderboard */}
+            {/* Sidebar: Recent Changes + Club Leaderboard */}
             <div className="lg:col-span-4 xl:col-span-3">
-              <div className="sticky top-24">
+              <div className="sticky top-24 space-y-6">
+                <ErrorBoundary>
+                  <BagChangeFeed limit={5} showViewAll />
+                </ErrorBoundary>
                 <ErrorBoundary>
                   <ClubLeaderboard />
                 </ErrorBoundary>

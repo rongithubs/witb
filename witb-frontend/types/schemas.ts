@@ -161,3 +161,28 @@ export type UserBagResponse = {
   items: UserWITBItem[];
   total: number;
 };
+
+export type ChangeType = "added" | "removed" | "switched";
+
+export type BagChangeItem = {
+  id: string;
+  player_id: string;
+  player_name?: string;
+  player_photo_url?: string;
+  category: string;
+  change_type: ChangeType;
+  old_brand?: string;
+  old_model?: string;
+  old_loft?: string;
+  old_shaft?: string;
+  new_brand?: string;
+  new_model?: string;
+  new_loft?: string;
+  new_shaft?: string;
+  detected_at: string;
+};
+
+export type BagChangesResponse = {
+  changes: BagChangeItem[];
+  total: number;
+};
