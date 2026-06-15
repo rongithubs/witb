@@ -63,8 +63,10 @@ class WITBSyncService:
                     message=f"Player not found: {player_id}",
                 )
 
-            # Check if we should update based on dates
-            should_update = self._should_update_data(
+            # Always (re)scrape players we have no equipment for yet (e.g. newly
+            # promoted into the rankings, inserted with last_updated = now);
+            # otherwise fall back to the scraped-vs-stored timestamp comparison.
+            should_update = not existing_player.witb_items or self._should_update_data(
                 existing_player.last_updated, scraped_data.last_updated
             )
 

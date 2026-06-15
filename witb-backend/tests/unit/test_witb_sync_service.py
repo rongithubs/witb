@@ -194,17 +194,55 @@ class TestWITBSyncService:
         mock_witb_repo.stage_changes.assert_not_called()
 
     @pytest.mark.asyncio
+    async def test_sync_updates_player_with_no_equipment_despite_newer_timestamp(self):
+        """A player with zero stored items is always scraped, even if last_updated is newer.
+
+        Guards newly-promoted ranking players (inserted with last_updated=now)
+        from being permanently skipped and never getting equipment.
+        """
+        mock_player_repo = AsyncMock()
+        mock_witb_repo = AsyncMock()
+        mock_witb_repo.stage_changes = Mock()
+
+        sync_service = WITBSyncService(Mock())
+        sync_service.player_repo = mock_player_repo
+        sync_service.witb_repo = mock_witb_repo
+
+        player_id = PlayerId(uuid4())
+        newcomer = models.Player(
+            id=player_id, name="Rookie", last_updated=datetime(2026, 6, 13)
+        )
+        newcomer.witb_items = []  # promoted into the rankings, no equipment yet
+        mock_player_repo.get_player_by_id.return_value = newcomer
+
+        # Scraped page date is OLDER than the player's last_updated.
+        scraped_data = WITBData(
+            last_updated=datetime(2025, 1, 1),
+            equipment=[EquipmentItem("Driver", "TaylorMade", "Qi10")],
+            source_url="https://example.com",
+        )
+
+        result = await sync_service.sync_player_equipment(player_id, scraped_data)
+
+        assert result.action == SyncAction.UPDATED
+        mock_witb_repo.replace_player_equipment.assert_called_once()
+
+    @pytest.mark.asyncio
     async def test_sync_player_equipment_skips_older_data(self):
         """Test that sync skips when scraped data is older."""
         mock_player_repo = AsyncMock()
         sync_service = WITBSyncService(Mock())
         sync_service.player_repo = mock_player_repo
 
-        # Mock existing player with newer data
+        # Mock existing player with newer data AND existing equipment (so the
+        # no-equipment force-update path does not apply).
         player_id = PlayerId(uuid4())
         existing_player = models.Player(
             id=player_id, name="Test Player", last_updated=datetime(2025, 1, 15)
         )
+        existing_player.witb_items = [
+            models.WITBItem(category="Driver", brand="TaylorMade", model="Qi10")
+        ]
         mock_player_repo.get_player_by_id.return_value = existing_player
 
         # Mock scraped data with older date
