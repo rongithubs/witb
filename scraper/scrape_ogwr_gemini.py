@@ -27,7 +27,7 @@ _COUNTRY_CODES: Dict[str, str] = {
 _NAME_CORRECTIONS: Dict[str, str] = {
     "Mcilroy": "McIlroy", "Macintyre": "MacIntyre", "Mcnealy": "McNealy",
     "Mccarty": "McCarty", "Aberg": "Åberg", "Hojgaard": "Højgaard",
-    "Valimaki": "Välimäki", "Mckim": "McKim",
+    "Valimaki": "Välimäki", "Mckim": "McKim", "Dechambeau": "DeChambeau",
 }
 
 
