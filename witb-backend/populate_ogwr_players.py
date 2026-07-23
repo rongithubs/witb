@@ -8,7 +8,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import uuid
 
-from sqlalchemy import delete, select
+from sqlalchemy import delete, func, select
 
 from database import SessionLocal
 from models import Player, SystemUpdate, WITBItem
@@ -18,6 +18,16 @@ sys.path.append(
     os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scraper")
 )
 from scrape_ogwr_gemini import fetch_ogwr_with_gemini
+
+
+def normalize_player_name(name: str) -> str:
+    """Matching key for a player name, tolerant of casing and spacing only.
+
+    Accents stay significant so two genuinely different players are never
+    merged; casing does not, so a scraper re-casing fix cannot make an existing
+    player look like a new arrival and a dropout at the same time.
+    """
+    return " ".join(name.split()).lower()
 
 
 async def populate_ogwr_players():
@@ -43,9 +53,12 @@ async def populate_ogwr_players():
 
         for player_data in players_data:
             try:
-                # Check if player already exists (by name)
+                # Check if player already exists (by name, ignoring casing)
                 result = await session.execute(
-                    select(Player).filter(Player.name == player_data["name"])
+                    select(Player).filter(
+                        func.lower(Player.name)
+                        == normalize_player_name(player_data["name"])
+                    )
                 )
                 existing_player = result.scalar_one_or_none()
 
@@ -81,6 +94,11 @@ async def populate_ogwr_players():
                         added_count += 1
                     else:
                         # Update existing OGWR entry
+                        if existing_player.name != player_data["name"]:
+                            print(
+                                f"✏️  Corrected name: {existing_player.name} → {player_data['name']}"
+                            )
+                            existing_player.name = player_data["name"]
                         existing_player.ranking = ranking
                         existing_player.country = (
                             player_data.get("country") or existing_player.country
@@ -112,15 +130,13 @@ async def populate_ogwr_players():
                 continue
 
         # Remove OGWR players who dropped out of the fresh top 50
-        fresh_names = {p["name"] for p in players_data}
-        result = await session.execute(
-            select(Player).filter(Player.tour == "OGWR")
-        )
+        fresh_names = {normalize_player_name(p["name"]) for p in players_data}
+        result = await session.execute(select(Player).filter(Player.tour == "OGWR"))
         all_ogwr = result.scalars().all()
 
         deleted_count = 0
         for player in all_ogwr:
-            if player.name not in fresh_names:
+            if normalize_player_name(player.name) not in fresh_names:
                 await session.execute(
                     delete(WITBItem).where(WITBItem.player_id == player.id)
                 )
