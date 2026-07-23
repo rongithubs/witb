@@ -132,38 +132,55 @@ class TestCacheLogic:
         assert not scraper._is_cache_valid()
 
 
-class TestFallbackSystem:
-    """Test fallback winner functionality."""
+class TestFallbackToDatabase:
+    """Fallback contract: an unusable ESPN result falls back to stored data."""
 
-    def test_fallback_winner_structure(self):
-        """Test fallback winner returns correct structure."""
+    STORED_WINNER = {
+        "winner": "Stored Player",
+        "tournament": "Stored Open",
+        "date": "June 1, 2025",
+        "score": "-12",
+    }
+
+    @pytest.mark.asyncio
+    async def test_api_exception_falls_back_to_database(self):
+        """scrape_and_store_winner returns stored data when the ESPN call raises."""
         scraper = SimpleTournamentScraper()
-        result = scraper._get_fallback_winner()
 
-        # Check required fields
-        required_fields = ["winner", "tournament", "date", "score"]
-        for field in required_fields:
-            assert field in result, f"Missing required field: {field}"
+        with (
+            patch.object(
+                scraper,
+                "_get_current_winner_from_api",
+                side_effect=Exception("ESPN unreachable"),
+            ),
+            patch.object(
+                scraper, "_get_winner_from_db", return_value=self.STORED_WINNER
+            ) as mock_db,
+        ):
+            result = await scraper.scrape_and_store_winner()
 
-        # Check data types
-        assert isinstance(result["winner"], str)
-        assert isinstance(result["tournament"], str)
-        assert isinstance(result["date"], str)
-        assert isinstance(result["score"], str)
+        assert result == self.STORED_WINNER
+        mock_db.assert_awaited_once()
 
-        # Check values are not empty
-        assert result["winner"] != ""
-        assert result["tournament"] != ""
-        assert result["date"] != ""
-
-    def test_fallback_winner_uses_first_fallback(self):
-        """Test fallback uses first winner from FALLBACK_WINNERS."""
+    @pytest.mark.asyncio
+    async def test_winner_not_found_falls_back_to_database(self):
+        """scrape_and_store_winner returns stored data when ESPN has no winner."""
         scraper = SimpleTournamentScraper()
-        result = scraper._get_fallback_winner()
 
-        expected_winner, expected_tournament = scraper.FALLBACK_WINNERS[0]
-        assert result["winner"] == expected_winner
-        assert result["tournament"] == expected_tournament
+        with (
+            patch.object(
+                scraper,
+                "_get_current_winner_from_api",
+                return_value={"winner": "Not found"},
+            ),
+            patch.object(
+                scraper, "_get_winner_from_db", return_value=self.STORED_WINNER
+            ) as mock_db,
+        ):
+            result = await scraper.scrape_and_store_winner()
+
+        assert result == self.STORED_WINNER
+        mock_db.assert_awaited_once()
 
 
 class TestDataExtraction:

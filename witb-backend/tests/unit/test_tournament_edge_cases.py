@@ -1,7 +1,7 @@
 """Property-based and edge case tests for tournament scraper following CLAUDE.md T-6."""
 
 from datetime import datetime
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
 
 import pytest
 
@@ -318,18 +318,6 @@ class TestCacheEdgeCases:
 class TestErrorRecovery:
     """Test error recovery and fallback scenarios."""
 
-    def test_fallback_after_multiple_failures(self):
-        """Test that fallback system works after multiple API failures."""
-        scraper = SimpleTournamentScraper()
-
-        # Test that fallback winner is consistent
-        fallback1 = scraper._get_fallback_winner()
-        fallback2 = scraper._get_fallback_winner()
-
-        assert fallback1 == fallback2  # Should be deterministic
-        assert fallback1["winner"] != ""
-        assert fallback1["tournament"] != ""
-
     def test_graceful_degradation_with_partial_data(self):
         """Test graceful handling of partial ESPN API data."""
         scraper = SimpleTournamentScraper()
@@ -358,18 +346,3 @@ class TestErrorRecovery:
             assert result["winner"] == "Not found"
             assert isinstance(result, dict)
             assert "tournament" in result
-
-    @pytest.mark.asyncio
-    async def test_network_timeout_recovery(self):
-        """Test recovery from network timeouts."""
-        scraper = SimpleTournamentScraper()
-
-        with patch("aiohttp.ClientSession") as mock_session:
-            # Mock session that raises timeout
-            mock_session.side_effect = Exception("Network timeout")
-
-            # Should not crash, should return fallback
-            result = await scraper._get_current_winner_from_api()
-
-            assert result["winner"] in [w for w, _ in scraper.FALLBACK_WINNERS]
-            assert result["winner"] != "Not found"

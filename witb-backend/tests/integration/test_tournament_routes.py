@@ -263,10 +263,8 @@ class TestTournamentErrorHandling:
 
             result = await scraper._get_current_winner_from_api()
 
-            # Should fall back to fallback winner
-            assert result["winner"] in [
-                winner for winner, _ in scraper.FALLBACK_WINNERS
-            ]
+            # Signals "no winner" to the caller, which then falls back to the DB
+            assert result["winner"] == "Not found"
 
     async def test_espn_api_404_handling(self):
         """Test handling of ESPN API 404 errors."""
@@ -284,10 +282,8 @@ class TestTournamentErrorHandling:
 
             result = await scraper._get_current_winner_from_api()
 
-            # Should fall back to fallback winner
-            assert result["winner"] in [
-                winner for winner, _ in scraper.FALLBACK_WINNERS
-            ]
+            # Signals "no winner" to the caller, which then falls back to the DB
+            assert result["winner"] == "Not found"
 
     async def test_malformed_json_handling(self):
         """Test handling of malformed JSON from ESPN API."""
@@ -308,7 +304,5 @@ class TestTournamentErrorHandling:
 
             result = await scraper._get_current_winner_from_api()
 
-            # Should fall back to fallback winner
-            assert result["winner"] in [
-                winner for winner, _ in scraper.FALLBACK_WINNERS
-            ]
+            # Signals "no winner" to the caller, which then falls back to the DB
+            assert result["winner"] == "Not found"
