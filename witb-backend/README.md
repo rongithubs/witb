@@ -10,13 +10,29 @@ The backend follows a clean architecture pattern with separation of concerns:
 witb-backend/
 ├── main.py                 # FastAPI app entry point
 ├── routes/                 # API route handlers (thin layer)
-│   ├── players.py         
-│   └── tournaments.py     
+│   ├── ebay.py             # /ebay
+│   ├── players.py          # /players
+│   ├── tournaments.py      # /tournament-winner
+│   ├── user_bag.py         # /user-bag
+│   └── witb.py             # /witb
+├── auth/                   # Supabase JWT verification + /auth routes
+│   ├── dependencies.py     # get_current_user_from_db
+│   ├── routes.py
+│   └── service.py
 ├── services/               # Business logic layer
-│   ├── player_service.py  
-│   └── tournament_service.py
+│   ├── bag_change.py       # Pure diff algorithm (no ORM imports)
+│   ├── ebay_service.py
+│   ├── player_service.py
+│   ├── tournament_service.py
+│   ├── tournament_scraper_service.py
+│   ├── user_witb_service.py
+│   ├── witb_service.py
+│   └── witb_sync_service.py
 ├── repositories/           # Data access layer
+│   ├── ebay_repository.py
+│   ├── favorite_player_repository.py
 │   ├── player_repository.py
+│   ├── user_witb_repository.py
 │   └── witb_repository.py
 ├── models.py              # SQLAlchemy database models
 ├── schemas.py             # Pydantic request/response models
@@ -86,6 +102,30 @@ make run
 ### Tournaments
 - `GET /tournament-winner` - Get latest tournament winner
 - `GET /tournament-winner/debug` - Debug tournament scraping
+
+### WITB
+- `GET /witb/leaderboard` - Most-used equipment across players
+- `GET /witb/changes` - Weekly bag-change feed
+- `GET /witb/brands` - Brand list
+
+### User Bag (authenticated)
+- `GET /user-bag` - Get the current user's bag
+- `POST /user-bag` - Add an item
+- `GET /user-bag/{item_id}` - Get one item
+- `PUT /user-bag/{item_id}` - Update an item
+- `DELETE /user-bag/{item_id}` - Remove an item
+
+### Auth (authenticated)
+- `GET /auth/me` - Current user
+- `POST /auth/verify-token` - Verify a Supabase JWT
+- `GET /auth/me/favorites` - List favorite players
+- `POST /auth/me/favorites` - Add a favorite
+- `DELETE /auth/me/favorites/{player_id}` - Remove a favorite
+
+### eBay
+- `GET /ebay/search` - Search listings
+- `GET /ebay/product/{product_id}` - Get one listing
+- `POST /ebay/enrich-witb` - Attach pricing to WITB items
 
 ## Code Quality Standards
 

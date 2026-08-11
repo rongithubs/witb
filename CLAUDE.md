@@ -1,11 +1,95 @@
 # Claude Code Guidelines - Python/FastAPI
 
+## Orientation
+
+WITB ("What's In The Bag") tracks the equipment professional golfers carry. It
+scrapes tour and equipment sources, stores players and their bag items, and
+serves them to a Next.js frontend.
+
+**Request path:** `routes/` → `services/` → `repositories/` → `models.py`.
+Routers wired in `main.py`: `auth`, `ebay`, `players`, `tournaments`,
+`user_bag`, `witb`.
+
+**Data:** `database.py` reads `DATABASE_URL` (Supabase Postgres via asyncpg) and
+falls back to `LOCAL_DATABASE_URL` (SQLite). It builds a single module-level
+`engine`; request code should reach the DB through `Depends(get_db)`, not that
+engine.
+
+**Auth:** Supabase issues the JWT; the backend verifies it locally in
+`auth/service.py` using `python-jose`. Protected routes depend on
+`auth.dependencies.get_current_user_from_db`.
+
+**Background work:** `main.py` starts an `AsyncIOScheduler` in the app lifespan
+for the weekly OGWR ranking refresh.
+
+### What you cannot infer by reading the code
+
+- **Tests must never touch the production database.** `conftest.py` swaps the app
+  lifespan for a no-op, because the real one runs `create_all` against
+  `DATABASE_URL` and shares one asyncpg connection across per-test event loops
+  ("another operation is in progress"). Do not remove that override.
+- **`patch("auth.dependencies.get_current_user_from_db")` silently does nothing.**
+  FastAPI resolves dependencies at route-definition time, so the patch never
+  takes effect. Use `app.dependency_overrides[...]` instead. Several existing
+  tests still get this wrong and fail because of it.
+- **`services/tournament_scraper_service.py` bypasses the layering** — it imports
+  `engine` directly and runs raw SQL rather than accepting an `AsyncSession`.
+  Tests that patch `engine.begin` fail for this reason; it is a known wart, not a
+  pattern to copy.
+- **A few `node_modules/` files are committed at the repo root** (`react`, `swr`,
+  `dequal`, `use-sync-external-store`, `.package-lock.json`). They were added
+  before `.gitignore` covered them, and git keeps tracking already-committed
+  files. They are not the real dependency tree — the frontend's lives in
+  `witb-frontend/node_modules/`. Ignore them; don't sync or edit them.
+- **The suite is not green.** As of 2026-08 it runs 24–25 failed / 167–168 passed
+  / 2 skipped in ~11s. Those failures are tracked work, not necessarily damage
+  from your change — run `pytest` before and after and compare the two counts.
+- **One test is genuinely flaky**, which is why the count above is a range:
+  `test_favorite_player_repository.py::test_get_user_favorites_returns_ordered_list`
+  inserts rows that share a `CURRENT_TIMESTAMP` and then asserts an order the DB
+  never promised. It fails roughly 1 run in 3. A one-test change in the failure
+  count is probably this, not you.
+
+### Frontend orientation
+
+Next.js 15 App Router + React 19 in `witb-frontend/`. Pages: `/` (players),
+`/changes` (weekly bag-change feed), `/my-bag`, `/profile`.
+
+- `lib/api.ts` and `lib/fetcher.ts` reach the backend at `NEXT_PUBLIC_API_URL`
+  (default `http://localhost:8000`) — so the backend must be running separately.
+- Server state lives in SWR hooks under `hooks/` (`usePlayersData`, `useUserBag`,
+  `useWITBChanges`, …), not in component state. Add a hook rather than fetching
+  inside a component.
+- Cross-cutting state is in `providers/` (`auth-provider`, `favorites-provider`,
+  `theme-provider`), wired in `app/layout.tsx`.
+- `lib/supabase.ts` holds the browser Supabase client; it issues the JWT the
+  backend verifies.
+- Tests are Vitest, colocated in `__tests__/` next to what they cover. Run with
+  `npm test` from `witb-frontend/`. Unlike the backend suite, this one is green
+  (103/103 when last run, 2026-08).
+
+Two traps when running the frontend:
+
+- **A fresh git worktree has no frontend deps.** `witb-frontend/node_modules` is
+  gitignored, so `npm test` there dies with `vitest: command not found` until you
+  run `npm install`. Don't reach for `npx vitest` instead — it silently installs a
+  *different* major version into an npx cache and fails on unrelated errors.
+- **`npm test` alone watches and never exits.** Use `npm test -- --run` for a
+  single pass; a bare `npm test` will hang a scripted session.
+
+### Reference docs
+
+`contextlog.md` and `OPT-CONTEXTLOG.md` are historical architecture notes last
+updated 2025-09. They predate the `user_bag`, `bag_change`, and `witb_sync`
+subsystems. Where they disagree with the code, the code wins.
+
 ## Implementation Best Practices
 
 ### 0 — Purpose  
 
 These rules ensure maintainability, safety, and developer velocity for Python/FastAPI applications.
-**MUST** rules are enforced by CI; **SHOULD** rules are strongly recommended.
+**MUST** rules are strongly enforced by review; **SHOULD** rules are strongly recommended.
+(There is no CI pipeline yet — see the tooling gates in §6 and run them locally.)
 
 ---
 
@@ -72,7 +156,9 @@ These rules ensure maintainability, safety, and developer velocity for Python/Fa
 
 ### 5 — Code Organization
 
-- **O-1 (MUST)** Place code in `shared/` only if used by ≥ 2 modules.
+- **O-1 (MUST)** Keep helpers next to their only caller; promote to a shared module
+  only once ≥ 2 modules use them. (There is no `shared/` package today — don't
+  create one for a single consumer.)
 - **O-2 (MUST)** Separate concerns: models, schemas, routes, services, repositories.
 - **O-3 (SHOULD)** Use dependency injection for services and repositories.
 - **O-4 (MUST)** Keep route handlers thin - delegate business logic to service functions.
@@ -162,12 +248,13 @@ def test_concatenation_length_property(a: str, b: str):
   - `witb-backend/routes/` - API route handlers
   - `witb-backend/services/` - Business logic
   - `witb-backend/repositories/` - Database operations
-  - `witb-backend/models/` - SQLAlchemy models
-  - `witb-backend/schemas/` - Pydantic models
-  - `witb-backend/tests/` - Test files
+  - `witb-backend/auth/` - Supabase JWT verification and auth routes
+  - `witb-backend/models.py` - SQLAlchemy models
+  - `witb-backend/schemas.py` - Pydantic models
+  - `witb-backend/custom_types.py` - Branded ID types
+  - `witb-backend/tests/` - Test files (`unit/`, `integration/`, `fixtures/`)
 - `witb-frontend/` - Next.js frontend
 - `scraper/` - Web scraping utilities
-- `shared/` - Shared utilities and types
 
 ## Remember Shortcuts
 

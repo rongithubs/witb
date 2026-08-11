@@ -1,6 +1,12 @@
 # OPT-CONTEXTLOG.md
 # WITB Database Project Memory Document
 
+> **Historical — last updated 2025-09. Do not trust this as current.**
+> It predates the `user_bag`, `bag_change`, and `witb_sync` subsystems and
+> describes routes and files that have since changed. Read `CLAUDE.md` for
+> current orientation; where this file and the code disagree, the code wins.
+> Kept for the "why we did it that way" history, not as a map.
+
 ## 🏗️ Architecture Foundation
 
 ### Project Overview
