@@ -1,5 +1,11 @@
 # WITB (What's In The Bag) Application - Context Analysis
 
+> **Historical — last updated 2025-09. Do not trust this as current.**
+> It predates the `user_bag`, `bag_change`, and `witb_sync` subsystems and
+> describes routes and files that have since changed. Read `CLAUDE.md` for
+> current orientation; where this file and the code disagree, the code wins.
+> Kept for the "why we did it that way" history, not as a map.
+
 ## Project Overview
 
 The WITB application is a golf equipment tracking system that allows users to explore professional golfers' equipment setups. The system consists of a Python FastAPI backend and a Next.js React frontend, following modern best practices for separation of concerns and clean architecture.
