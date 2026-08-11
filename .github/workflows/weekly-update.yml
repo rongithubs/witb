@@ -1,0 +1,50 @@
+name: Weekly leaderboard & bag update
+
+# Refreshes the OWGR top-50 rankings and re-scrapes those players' bags.
+# Runs on a weekly schedule and can also be triggered by hand from the
+# Actions tab ("Run workflow"), which replaces running the scripts locally.
+
+on:
+  schedule:
+    # Mondays at 14:00 UTC (~06:00 America/Los_Angeles, matching the old
+    # in-process scheduler). GitHub cron is UTC-only and may start late
+    # under load; that is fine for a weekly job.
+    - cron: "0 14 * * 1"
+  workflow_dispatch: {}
+
+# Never let two runs update the database at the same time.
+concurrency:
+  group: weekly-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Playwright browser
+        run: python -m playwright install --with-deps chromium
+
+      - name: Update OWGR top-50 rankings
+        working-directory: witb-backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python populate_ogwr_players.py
+
+      - name: Scrape top-50 bags
+        working-directory: witb-backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python scraper/cli.py --players 50 --tour OGWR --delay 2.0

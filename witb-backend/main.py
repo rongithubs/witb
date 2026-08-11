@@ -1,22 +1,15 @@
 """FastAPI application entry point following CLAUDE.md best practices."""
 
-import logging
 import os
 from contextlib import asynccontextmanager
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-logging.getLogger("apscheduler").setLevel(logging.INFO)
-
 import models
-from database import engine
-from populate_ogwr_players import populate_ogwr_players
-from routes import ebay, players, tournaments, user_bag, witb
 from auth import routes as auth_routes
-
-scheduler = AsyncIOScheduler()
+from database import engine
+from routes import ebay, players, tournaments, user_bag, witb
 
 
 @asynccontextmanager
@@ -27,22 +20,11 @@ async def lifespan(app: FastAPI):
         await conn.run_sync(models.Base.metadata.create_all)
     print("Database tables created successfully")
 
-    # Schedule OGWR rankings update every Monday at 6am
-    scheduler.add_job(
-        populate_ogwr_players,
-        "cron",
-        day_of_week="mon",
-        hour=6,
-        minute=0,
-        timezone="America/Los_Angeles",
-    )
-    scheduler.start()
-    print("Scheduler started: OGWR rankings update every Monday at 6:00am")
+    # The weekly OWGR ranking + bag refresh runs as a scheduled GitHub
+    # Actions workflow (.github/workflows/weekly-update.yml), not in-process,
+    # so it fires reliably regardless of whether this server is running.
 
     yield
-
-    scheduler.shutdown()
-    print("Scheduler stopped")
 
 
 app = FastAPI(
