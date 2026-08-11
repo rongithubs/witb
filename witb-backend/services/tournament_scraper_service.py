@@ -253,14 +253,14 @@ class SimpleTournamentScraper:
                         text(
                             """
                         UPDATE tournament_winners
-                        SET updated_at = CURRENT_TIMESTAMP
+                        SET date = :date, score = :score, updated_at = CURRENT_TIMESTAMP
                         WHERE winner = :winner AND tournament = :tournament
                     """
                         ),
                         winner_data,
                     )
                     print(
-                        f"Refreshed timestamp for existing winner: {winner_data['winner']} - {winner_data['tournament']}"
+                        f"Updated tournament winner: {winner_data['winner']} - {winner_data['tournament']}"
                     )
                 else:
                     # New winner confirmed — remove stale entries then insert
