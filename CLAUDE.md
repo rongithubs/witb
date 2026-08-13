@@ -44,6 +44,20 @@ for the weekly OGWR ranking refresh.
 - **The suite is not green.** As of 2026-08 it runs 24–25 failed / 167–168 passed
   / 2 skipped in ~11s. Those failures are tracked work, not necessarily damage
   from your change — run `pytest` before and after and compare the two counts.
+- **`scraper/__init__.py` must exist.** Without it mypy resolves
+  `pga_tracker_scraper` under two module names and aborts before checking
+  anything — which silently disabled the type gate for months. Deleting that file
+  does not "clean up an empty module"; it turns type checking off.
+- **The other gates are not clean either.** Current baselines, same caveat as the
+  test counts — compare before and after your change rather than assuming you
+  caused them:
+  - `mypy .` → 393 errors (89 in source, rest are untyped test functions). Most
+    source errors are SQLAlchemy `Column[str]` vs `str` where model attributes
+    are passed into Pydantic constructors — noise, not bugs.
+  - `ruff check .` → 77 in source; 34 are `B904` (`raise` inside `except` without
+    `from`), concentrated in `auth/service.py`. These do cost real debuggability:
+    they discard the original traceback.
+  - `black --check .` → 2 files.
 - **One test is genuinely flaky**, which is why the count above is a range:
   `test_favorite_player_repository.py::test_get_user_favorites_returns_ordered_list`
   inserts rows that share a `CURRENT_TIMESTAMP` and then asserts an order the DB
