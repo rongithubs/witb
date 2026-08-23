@@ -21,7 +21,7 @@ export function BrandLogo({
   if (!logoPath) {
     // Fallback to brand name text
     return (
-      <span className={`font-bold text-gray-900 dark:text-white ${fallbackClassName}`}>
+      <span className={`font-bold text-ink ${fallbackClassName}`}>
         {brandName}
       </span>
     );

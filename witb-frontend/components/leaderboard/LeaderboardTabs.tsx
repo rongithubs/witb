@@ -26,24 +26,24 @@ export function LeaderboardTabs({
   return (
     <div className="w-full">
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-ink-secondary mb-2">
           Filter by Category
         </label>
         <Select value={selectedCategory} onValueChange={onCategoryChange}>
-          <SelectTrigger className="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+          <SelectTrigger className="w-full bg-surface border border-hairline">
             <SelectValue placeholder="Select category">
               {getDisplayValue(selectedCategory)}
             </SelectValue>
           </SelectTrigger>
-          <SelectContent className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-            <SelectItem value="all" className="hover:bg-gray-50 dark:hover:bg-gray-700">
+          <SelectContent className="bg-surface border border-hairline">
+            <SelectItem value="all" className="hover:bg-surface-hover">
               All Categories
             </SelectItem>
             {availableCategories.map(category => (
               <SelectItem 
                 key={category} 
                 value={category}
-                className="hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="hover:bg-surface-hover"
               >
                 {category}
               </SelectItem>

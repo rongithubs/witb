@@ -17,11 +17,12 @@ const CHANGE_ICON: Record<ChangeType, typeof Plus> = {
   switched: ArrowLeftRight,
 };
 
+// Reserved status tokens, never the brand accent — each pill also carries an
+// icon and a text headline, so state is never encoded by colour alone.
 const CHANGE_ACCENT: Record<ChangeType, string> = {
-  added:
-    "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
-  removed: "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300",
-  switched: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
+  added: "bg-status-good-surface text-status-good",
+  removed: "bg-status-critical-surface text-status-critical",
+  switched: "bg-status-info-surface text-status-info",
 };
 
 function ChangeRow({ change }: { change: BagChangeItem }) {
@@ -36,18 +37,18 @@ function ChangeRow({ change }: { change: BagChangeItem }) {
         <Icon className="h-4 w-4" />
       </span>
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-medium text-gray-900 dark:text-white">
+        <p className="text-sm font-medium text-ink">
           {headline}
         </p>
         {detail && (
-          <p className="truncate text-sm text-gray-600 dark:text-gray-400">
+          <p className="truncate text-sm text-ink-secondary">
             {detail}
           </p>
         )}
       </div>
       <time
         dateTime={change.detected_at}
-        className="flex-shrink-0 text-xs text-gray-400 dark:text-gray-500"
+        className="flex-shrink-0 text-xs text-ink-muted"
       >
         {formatRelativeTime(change.detected_at)}
       </time>
@@ -56,7 +57,7 @@ function ChangeRow({ change }: { change: BagChangeItem }) {
 }
 
 const cardClasses =
-  "bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6";
+  "bg-surface rounded-lg shadow-sm border border-hairline p-6";
 
 export function BagChangeFeed({
   limit = 50,
@@ -70,10 +71,10 @@ export function BagChangeFeed({
         <div className="space-y-4">
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="flex animate-pulse gap-3">
-              <div className="h-8 w-8 flex-shrink-0 rounded-full bg-gray-200 dark:bg-gray-700" />
+              <div className="h-8 w-8 flex-shrink-0 rounded-full bg-skeleton" />
               <div className="flex-1 space-y-2">
-                <div className="h-3 w-1/2 rounded bg-gray-200 dark:bg-gray-700" />
-                <div className="h-3 w-2/3 rounded bg-gray-200 dark:bg-gray-700" />
+                <div className="h-3 w-1/2 rounded-md bg-skeleton" />
+                <div className="h-3 w-2/3 rounded-md bg-skeleton" />
               </div>
             </div>
           ))}
@@ -86,15 +87,15 @@ export function BagChangeFeed({
     return (
       <div className={cardClasses}>
         <div className="text-center">
-          <h3 className="mb-2 text-lg font-semibold text-red-600 dark:text-red-400">
+          <h3 className="mb-2 text-lg font-semibold text-status-critical">
             Failed to load recent changes
           </h3>
-          <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mb-4 text-sm text-ink-secondary">
             {error.message || "Network error occurred"}
           </p>
           <button
             onClick={() => refetch()}
-            className="rounded-md bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-800"
+            className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90"
           >
             Retry
           </button>
@@ -106,10 +107,10 @@ export function BagChangeFeed({
   if (isEmpty) {
     return (
       <div className={cardClasses}>
-        <h2 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
+        <h2 className="mb-1 text-lg font-semibold text-ink">
           Recent Equipment Changes
         </h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-sm text-ink-muted">
           No equipment changes yet. Check back after the next weekly update.
         </p>
       </div>
@@ -119,19 +120,19 @@ export function BagChangeFeed({
   return (
     <div className={cardClasses}>
       <div className="mb-2 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+        <h2 className="text-lg font-semibold text-ink">
           Recent Equipment Changes
         </h2>
         {showViewAll && (
           <Link
             href="/changes"
-            className="text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400"
+            className="text-sm font-medium text-brand-strong hover:opacity-80"
           >
             View all
           </Link>
         )}
       </div>
-      <ul className="divide-y divide-gray-100 dark:divide-gray-700">
+      <ul className="divide-y divide-hairline">
         {changes.map((change) => (
           <ChangeRow key={change.id} change={change} />
         ))}

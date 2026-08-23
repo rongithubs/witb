@@ -21,16 +21,16 @@ const tabsListVariants = cva(
 )
 
 const tabsTriggerVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:ring-offset-2",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:ring-offset-2",
   {
     variants: {
       variant: {
         default:
-          "data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs hover:bg-background/60 hover:text-foreground",
+          "data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm hover:bg-background/60 hover:text-foreground",
         underline:
           "rounded-none border-b-2 border-transparent bg-transparent px-4 py-2 data-[state=active]:border-primary data-[state=active]:text-primary hover:text-primary/80",
         pills:
-          "data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-xs hover:bg-accent hover:text-accent-foreground",
+          "data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm hover:bg-accent hover:text-accent-foreground",
       },
     },
     defaultVariants: {

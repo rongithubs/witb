@@ -7,10 +7,10 @@ interface LeaderboardHeaderProps {
 export function LeaderboardHeader({ leaderboardData }: LeaderboardHeaderProps) {
   return (
     <div className="flex items-center gap-3 mb-6">
-      <div className="bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">
-        <TrophyIcon className="h-5 w-5 text-yellow-500 dark:text-yellow-400" />
+      <div className="bg-surface-subtle p-2 rounded-lg">
+        <TrophyIcon className="h-5 w-5 text-ink" />
       </div>
-      <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+      <h2 className="text-xl font-bold text-ink">
         Club Usage Leaderboard
       </h2>
     </div>

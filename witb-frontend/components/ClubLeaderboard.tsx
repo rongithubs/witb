@@ -43,17 +43,17 @@ export function ClubLeaderboard() {
 
   if (error) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-surface rounded-lg shadow-sm border border-hairline p-6">
         <div className="text-center">
-          <h3 className="text-lg font-semibold text-red-600 dark:text-red-400 mb-2">
+          <h3 className="text-lg font-semibold text-status-critical mb-2">
             Failed to load leaderboard data
           </h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          <p className="text-sm text-ink-secondary mb-4">
             {error.message || "Network error occurred"}
           </p>
           <button
             onClick={() => refetch()}
-            className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 text-sm rounded-md"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 text-sm rounded-md"
           >
             Retry
           </button>
@@ -64,17 +64,17 @@ export function ClubLeaderboard() {
 
   if (hasInvalidData) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-surface rounded-lg shadow-sm border border-hairline p-6">
         <div className="text-center">
-          <h3 className="text-lg font-semibold text-amber-600 dark:text-amber-400 mb-2">
+          <h3 className="text-lg font-semibold text-ink mb-2">
             Invalid data received
           </h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          <p className="text-sm text-ink-secondary mb-4">
             The server returned malformed data. Please try again.
           </p>
           <button
             onClick={() => refetch()}
-            className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 text-sm rounded-md"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 text-sm rounded-md"
           >
             Retry
           </button>
@@ -85,8 +85,8 @@ export function ClubLeaderboard() {
 
   if (!validatedData || displayItems.length === 0) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-        <div className="text-center text-gray-500 dark:text-gray-400">
+      <div className="bg-surface rounded-lg shadow-sm border border-hairline p-6">
+        <div className="text-center text-ink-muted">
           No leaderboard data available
         </div>
       </div>
@@ -97,7 +97,7 @@ export function ClubLeaderboard() {
     <ErrorBoundary>
       <div
         data-testid="club-leaderboard"
-        className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
+        className="bg-surface rounded-lg shadow-sm border border-hairline"
       >
         <div className="p-6">
           <LeaderboardHeader leaderboardData={validatedData} />

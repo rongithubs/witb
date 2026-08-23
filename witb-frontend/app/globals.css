@@ -41,6 +41,38 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* App semantic tokens. Each resolves per mode below, so components never
+     write a `dark:` colour variant. */
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-subtle: var(--surface-subtle);
+  --color-surface-hover: var(--surface-hover);
+  --color-hairline: var(--hairline);
+
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-muted: var(--ink-muted);
+
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-subtle: var(--brand-subtle);
+
+  --color-status-good: var(--status-good);
+  --color-status-good-surface: var(--status-good-surface);
+  --color-status-critical: var(--status-critical);
+  --color-status-critical-surface: var(--status-critical-surface);
+  --color-status-info: var(--status-info);
+  --color-status-info-surface: var(--status-info-surface);
+
+  --color-data-magnitude: var(--data-magnitude);
+  --color-data-track: var(--data-track);
+
+  --color-skeleton: var(--skeleton);
+  --color-skeleton-strong: var(--skeleton-strong);
+
+  --color-favorite: var(--favorite);
+  --color-favorite-subtle: var(--favorite-subtle);
 }
 
 :root {
@@ -76,6 +108,43 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Surfaces */
+  --page: #f9fafb;
+  --surface: #ffffff;
+  --surface-subtle: #f9fafb;
+  --surface-hover: #f9fafb;
+  --hairline: #e5e7eb;
+
+  /* Ink */
+  --ink: #111827;
+  --ink-secondary: #4b5563;
+  --ink-muted: #6b7280;
+
+  /* Brand — chrome only, never an encoding */
+  --brand: #059669;
+  --brand-strong: #047857;
+  --brand-subtle: #ecfdf5;
+
+  /* Status — reserved meaning, always paired with an icon + label */
+  --status-good: #0f7a34;
+  --status-good-surface: #dcfce7;
+  --status-critical: #b91c1c;
+  --status-critical-surface: #fee2e2;
+  --status-info: #1d4ed8;
+  --status-info-surface: #dbeafe;
+
+  /* Data — magnitude encoding; one hue, never varied by rank */
+  --data-magnitude: #2a78d6;
+  --data-track: #e5e7eb;
+
+  /* Loading placeholders */
+  --skeleton: #e5e7eb;
+  --skeleton-strong: #d1d5db;
+
+  /* Favourite affordance — an action, deliberately not status-critical */
+  --favorite: #e11d48;
+  --favorite-subtle: #ffe4e6;
 }
 
 .dark {
@@ -110,6 +179,43 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Surfaces */
+  --page: #111827;
+  --surface: #1f2937;
+  --surface-subtle: #1a222f;
+  --surface-hover: #263244;
+  --hairline: #374151;
+
+  /* Ink */
+  --ink: #ffffff;
+  --ink-secondary: #d1d5db;
+  --ink-muted: #9ca3af;
+
+  /* Brand — chrome only, never an encoding */
+  --brand: #34d399;
+  --brand-strong: #6ee7b7;
+  --brand-subtle: #064e3b;
+
+  /* Status — reserved meaning, always paired with an icon + label */
+  --status-good: #4ade80;
+  --status-good-surface: #14532d;
+  --status-critical: #fca5a5;
+  --status-critical-surface: #7f1d1d;
+  --status-info: #93c5fd;
+  --status-info-surface: #1e3a8a;
+
+  /* Data — magnitude encoding; one hue, never varied by rank */
+  --data-magnitude: #3987e5;
+  --data-track: #374151;
+
+  /* Loading placeholders */
+  --skeleton: #374151;
+  --skeleton-strong: #4b5563;
+
+  /* Favourite affordance — an action, deliberately not status-critical */
+  --favorite: #fb7185;
+  --favorite-subtle: #4c0519;
 }
 
 @layer base {
@@ -155,10 +261,10 @@
 
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.3);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand) 30%, transparent);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    box-shadow: 0 0 0 8px transparent;
   }
 }
 
@@ -188,7 +294,7 @@
 /* Mobile Touch Improvements */
 @media (max-width: 768px) {
   * {
-    -webkit-tap-highlight-color: rgba(16, 185, 129, 0.1);
+    -webkit-tap-highlight-color: color-mix(in srgb, var(--brand) 10%, transparent);
   }
   
   input, button, select, textarea {
@@ -211,6 +317,6 @@ html {
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 2px solid #10b981;
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
 }

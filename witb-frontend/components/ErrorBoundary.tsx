@@ -36,11 +36,11 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="min-h-[200px] flex items-center justify-center">
           <div className="text-center p-6">
-            <div className="text-red-500 text-4xl mb-4">⚠️</div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            <div className="text-favorite text-4xl mb-4">⚠️</div>
+            <h2 className="text-xl font-semibold text-ink mb-2">
               Something went wrong
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-ink-secondary mb-4">
               We encountered an error while loading this section.
             </p>
             <Button 

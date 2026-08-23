@@ -20,7 +20,7 @@ export function WITBExpansionControls({
         onClick={onToggle}
         variant="default"
         size="sm"
-        className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-4 py-2 h-9 rounded-lg font-medium shadow-sm transition-all duration-200"
+        className="bg-brand hover:bg-brand/90 text-white text-sm px-4 py-2 h-9 rounded-lg font-medium shadow-sm transition-all duration-200"
       >
         <span className="mr-2">
           {isExpanded ? "Hide" : "View"} Full Bag
@@ -39,7 +39,7 @@ export function WITBExpansionControls({
       onClick={onToggle}
       variant="ghost" 
       size="sm"
-      className="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-sm px-2 py-1 h-8 rounded-md transition-all duration-200"
+      className="text-brand-strong hover:text-brand-strong hover:bg-brand-subtle text-sm px-2 py-1 h-8 rounded-md transition-all duration-200"
     >
       <span className="mr-1">View WITB</span>
       {isExpanded ? (

@@ -73,28 +73,28 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
   const getCategoryColor = (category: string) => {
     const colors = {
       Driver:
-        "bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-300",
+        "bg-surface-subtle text-ink",
       Fairway:
-        "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300",
+        "bg-status-info-surface text-status-info",
       "5-Wood":
-        "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300",
+        "bg-status-info-surface text-status-info",
       Hybrid:
-        "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300",
-      Iron: "bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-300",
+        "bg-status-good-surface text-status-good",
+      Iron: "bg-surface-subtle text-ink",
       Wedge:
-        "bg-amber-100 text-amber-800 dark:bg-amber-900/20 dark:text-amber-300",
+        "bg-surface-subtle text-ink",
       Putter:
-        "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-300",
-      Ball: "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300",
+        "bg-brand-subtle text-brand-strong",
+      Ball: "bg-surface-subtle text-ink-secondary",
     };
     return (
       colors[category as keyof typeof colors] ||
-      "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300"
+      "bg-surface-subtle text-ink-secondary"
     );
   };
 
   return (
-    <Card className="relative p-4 pr-16 hover:shadow-lg transition-all duration-200 hover:scale-[1.01] border-0 shadow-sm bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+    <Card className="relative p-4 pr-16 hover:shadow-lg transition-all duration-200 hover:scale-[1.01] border-0 shadow-sm bg-surface/80 backdrop-blur-sm">
       {/* Top-Right Action Menu */}
       <div className="absolute top-3 right-3 z-10">
         <DropdownMenu>
@@ -102,7 +102,7 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
             <Button
               variant="ghost"
               size="sm"
-              className="h-7 w-7 p-0 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
+              className="h-7 w-7 p-0 hover:bg-surface-hover rounded-full"
             >
               <MoreVertical className="h-3.5 w-3.5" />
               <span className="sr-only">Equipment options</span>
@@ -122,10 +122,10 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
             <DropdownMenuItem
               onClick={handleDelete}
               disabled={isDeleting}
-              className="flex items-center gap-2 text-red-600 focus:text-red-600 dark:text-red-500 dark:focus:text-red-400"
+              className="flex items-center gap-2 text-status-critical focus:text-status-critical"
             >
               {isDeleting ? (
-                <div className="h-4 w-4 animate-spin border border-red-500 border-t-transparent rounded-full" />
+                <div className="h-4 w-4 animate-spin border border-favorite border-t-transparent rounded-full" />
               ) : (
                 <Trash2 className="h-4 w-4" />
               )}
@@ -140,7 +140,7 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
         {/* Category Badge - Leftmost Position */}
         <div className="flex-shrink-0">
           <div
-            className={`w-16 h-12 rounded-xl p-2 shadow-sm overflow-hidden flex items-center justify-center ${getCategoryColor(item.category)}`}
+            className={`w-16 h-12 rounded-lg p-2 shadow-sm overflow-hidden flex items-center justify-center ${getCategoryColor(item.category)}`}
           >
             <span className="text-sm font-bold text-center whitespace-nowrap">
               {item.category}
@@ -153,9 +153,9 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
           {/* Header Row */}
           <div className="flex items-center gap-2 mb-2 flex-wrap">
             {item.carry_distance && (
-              <div className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-50 dark:bg-emerald-900/20 rounded-md whitespace-nowrap overflow-hidden">
-                <Target className="h-3 w-3 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
-                <span className="text-xs font-medium text-emerald-700 dark:text-emerald-300">
+              <div className="inline-flex items-center gap-1 px-2 py-1 bg-brand-subtle rounded-md whitespace-nowrap overflow-hidden">
+                <Target className="h-3 w-3 text-brand-strong flex-shrink-0" />
+                <span className="text-xs font-medium text-brand-strong">
                   {item.carry_distance}y
                 </span>
               </div>
@@ -163,10 +163,10 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
           </div>
 
           {/* Equipment Name - Brand & Model */}
-          <h4 className="font-semibold text-lg text-gray-900 dark:text-white mb-1 truncate">
+          <h4 className="font-semibold text-lg text-ink mb-1 truncate">
             {item.model}
           </h4>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 truncate">
+          <p className="text-sm text-ink-secondary mb-3 truncate">
             by {item.brand}
           </p>
 
@@ -175,20 +175,20 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
             <div className="flex flex-wrap gap-3 mb-3">
               {item.loft && (
                 <div className="flex items-center gap-1 text-sm whitespace-nowrap">
-                  <span className="text-gray-500 dark:text-gray-400">
+                  <span className="text-ink-muted">
                     Loft:
                   </span>
-                  <span className="font-medium text-gray-900 dark:text-white">
+                  <span className="font-medium text-ink">
                     {item.loft}
                   </span>
                 </div>
               )}
               {item.shaft && (
                 <div className="flex items-center gap-1 text-sm">
-                  <span className="text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                  <span className="text-ink-muted whitespace-nowrap">
                     Shaft:
                   </span>
-                  <span className="font-medium text-gray-900 dark:text-white truncate max-w-[120px]">
+                  <span className="font-medium text-ink truncate max-w-[120px]">
                     {item.shaft}
                   </span>
                 </div>
@@ -198,7 +198,7 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
 
           {/* Notes */}
           {item.notes && (
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2 italic">
+            <p className="text-sm text-ink-secondary mb-3 line-clamp-2 italic">
               &ldquo;{item.notes}&rdquo;
             </p>
           )}
@@ -217,7 +217,7 @@ function UserWITBItemCard({ item, onUpdate }: UserWITBItemCardProps) {
             />
 
             {/* Purchase Info */}
-            <div className="flex flex-wrap gap-3 text-xs text-gray-500 dark:text-gray-500">
+            <div className="flex flex-wrap gap-3 text-xs text-ink-muted">
               {item.purchase_date && (
                 <div className="flex items-center gap-1">
                   <Calendar className="h-3 w-3" />

@@ -115,7 +115,7 @@ export function PlayerTable({
     const animation = favoriteAnimations.get(playerId);
     const isAnimating = animatingFavorites.has(playerId);
 
-    let classes = `${baseClasses} text-red-500`;
+    let classes = `${baseClasses} text-favorite`;
 
     // Add animation classes
     if (animation === "filling") {
@@ -210,13 +210,13 @@ export function PlayerTable({
 
   if (isLoading) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+      <div className="bg-surface rounded-lg shadow-sm border border-hairline">
         <div className="p-6">
           <div className="animate-pulse space-y-4">
             {Array.from({ length: 5 }).map((_, i) => (
               <div
                 key={i}
-                className="h-16 bg-gray-200 dark:bg-gray-700 rounded"
+                className="h-16 bg-skeleton rounded-md"
               ></div>
             ))}
           </div>
@@ -227,8 +227,8 @@ export function PlayerTable({
 
   if (error) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-        <div className="text-center text-red-500">
+      <div className="bg-surface rounded-lg shadow-sm border border-hairline p-6">
+        <div className="text-center text-favorite">
           Error loading players: {error.message}
         </div>
       </div>
@@ -236,9 +236,9 @@ export function PlayerTable({
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+    <div className="bg-surface rounded-lg shadow-sm border border-hairline">
       {/* Desktop Table Header */}
-      <div className="hidden md:grid grid-cols-12 gap-4 p-4 pr-8 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 text-sm font-semibold text-gray-700 dark:text-gray-300">
+      <div className="hidden md:grid grid-cols-12 gap-4 p-4 pr-8 border-b border-hairline bg-surface-subtle text-sm font-semibold text-ink-secondary">
         <div className="col-span-1">Rank</div>
         <div className="col-span-3">Player</div>
         <div className="col-span-1">Country</div>
@@ -249,8 +249,8 @@ export function PlayerTable({
 
       {/* OWGR Update Info Subheader - Mobile */}
       {owgrInfo && (
-        <div className="md:hidden bg-blue-50 dark:bg-blue-950/30 border-b border-blue-200 dark:border-blue-800 px-4 py-3">
-          <div className="text-center text-sm text-blue-700 dark:text-blue-300">
+        <div className="md:hidden bg-status-info-surface border-b border-status-info/30 px-4 py-3">
+          <div className="text-center text-sm text-status-info">
             <div className="font-medium">OWGR Rankings</div>
             <div className="text-xs mt-1">Last updated {formatLastUpdated}</div>
           </div>
@@ -259,13 +259,13 @@ export function PlayerTable({
 
       {/* OWGR Update Info Subheader - Desktop */}
       {owgrInfo && (
-        <div className="hidden md:block bg-blue-50 dark:bg-blue-950/30 border-b border-blue-200 dark:border-blue-800 px-4 py-3">
+        <div className="hidden md:block bg-status-info-surface border-b border-status-info/30 px-4 py-3">
           <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-2 text-blue-700 dark:text-blue-300">
+            <div className="flex items-center gap-2 text-status-info">
               <span className="font-medium">OWGR Rankings:</span>
               <span>Last updated {formatLastUpdated}</span>
             </div>
-            <div className="flex items-center gap-4 text-xs text-blue-600 dark:text-blue-400">
+            <div className="flex items-center gap-4 text-xs text-ink">
               <span>{owgrInfo.updated_count} players updated</span>
             </div>
           </div>
@@ -273,25 +273,25 @@ export function PlayerTable({
       )}
 
       {/* Table Body */}
-      <div className="divide-y divide-gray-200 dark:divide-gray-700">
+      <div className="divide-y divide-hairline">
         {players.map((player) => (
           <div key={player.id}>
             {/* Player Row */}
-            <div className="md:py-2 md:px-4 md:pr-6 sm:md:pr-8 md:lg:pr-12 md:hover:bg-gray-50 md:dark:hover:bg-gray-700/50 md:transition-colors">
+            <div className="md:py-2 md:px-4 md:pr-6 sm:md:pr-8 md:lg:pr-12 md:hover:bg-surface-hover md:transition-colors">
               {/* Mobile Minimal List Layout */}
               <div className="md:hidden">
-                <div className="flex items-center justify-between py-3 px-4 hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                <div className="flex items-center justify-between py-3 px-4 hover:bg-surface-hover transition-colors">
                   {/* Left side: Rank + Name + Date */}
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <span className="text-sm font-bold text-emerald-600 w-7 flex-shrink-0">
+                    <span className="text-sm font-bold text-brand-strong w-7 flex-shrink-0">
                       #{player.ranking || "-"}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <span className="font-medium text-gray-900 dark:text-white block truncate text-sm">
+                      <span className="font-medium text-ink block truncate text-sm">
                         {player.name}
                       </span>
                     </div>
-                    <span className="text-xs text-gray-500 dark:text-gray-400 flex-shrink-0">
+                    <span className="text-xs text-ink-muted flex-shrink-0">
                       {getCompactDate(player)}
                     </span>
                   </div>
@@ -303,7 +303,7 @@ export function PlayerTable({
                       variant="ghost"
                       size="sm"
                       disabled={togglingFavorites.has(player.id) || !user}
-                      className="h-8 w-8 p-0 hover:bg-red-50 dark:hover:bg-red-900/20"
+                      className="h-8 w-8 p-0 hover:bg-favorite-subtle"
                       title={
                         !user
                           ? "Sign in to add favorites"
@@ -318,12 +318,12 @@ export function PlayerTable({
                       onClick={() => toggleRowExpansion(player.id)}
                       variant="ghost"
                       size="sm"
-                      className="h-8 w-8 p-0 hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                      className="h-8 w-8 p-0 hover:bg-brand-subtle"
                     >
                       {expandedRows.has(player.id) ? (
-                        <ChevronUpIcon className="h-4 w-4 text-emerald-600" />
+                        <ChevronUpIcon className="h-4 w-4 text-brand-strong" />
                       ) : (
-                        <ChevronDownIcon className="h-4 w-4 text-emerald-600" />
+                        <ChevronDownIcon className="h-4 w-4 text-brand-strong" />
                       )}
                     </Button>
                   </div>
@@ -334,24 +334,24 @@ export function PlayerTable({
               <div className="hidden md:grid grid-cols-12 gap-4">
                 {/* Rank */}
                 <div className="col-span-1 flex items-center">
-                  <span className="font-bold text-gray-900 dark:text-white">
+                  <span className="font-bold text-ink">
                     {player.ranking ? `#${player.ranking}` : "-"}
                   </span>
                 </div>
 
                 {/* Player */}
                 <div className="col-span-3 flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-blue-200 dark:bg-blue-800 flex items-center justify-center text-blue-700 dark:text-blue-200 text-xs font-bold flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-surface-subtle flex items-center justify-center text-ink-secondary text-xs font-bold flex-shrink-0">
                     {player.name
                       .split(" ")
                       .map((n) => n[0])
                       .join("")}
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-900 dark:text-white">
+                    <div className="font-semibold text-ink">
                       {player.name}
                     </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                    <div className="text-xs text-ink-muted">
                       Primary brand: {getPrimaryBrand(player.witb_items)}
                     </div>
                   </div>
@@ -359,7 +359,7 @@ export function PlayerTable({
 
                 {/* Country */}
                 <div className="col-span-1 flex items-center">
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300 uppercase">
+                  <span className="text-sm font-medium text-ink-secondary uppercase">
                     {player.country.slice(0, 3)}
                   </span>
                 </div>
@@ -371,14 +371,14 @@ export function PlayerTable({
                       <Badge
                         key={index}
                         variant="secondary"
-                        className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-1.5 py-0.5"
+                        className="bg-surface-subtle text-ink-secondary text-xs px-1.5 py-0.5"
                       >
                         {club.category}: {club.brand} {club.model.slice(0, 10)}
                         {club.model.length > 10 ? "..." : ""}
                       </Badge>
                     ))}
                     {getKeyClubs(player.witb_items).length === 0 && (
-                      <span className="text-sm text-gray-400 dark:text-gray-500">
+                      <span className="text-sm text-ink-muted">
                         No key clubs
                       </span>
                     )}
@@ -387,7 +387,7 @@ export function PlayerTable({
 
                 {/* Updated */}
                 <div className="col-span-2 flex items-center">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                  <span className="text-sm text-ink-secondary">
                     {getLastUpdated(player)}
                   </span>
                 </div>
@@ -401,7 +401,7 @@ export function PlayerTable({
                     disabled={togglingFavorites.has(player.id) || !user}
                     className={getButtonClasses(
                       player.id,
-                      "h-8 px-2 border-gray-200 dark:border-gray-700 hover:border-red-300 hover:bg-red-50 dark:hover:bg-red-900/20",
+                      "h-8 px-2 border-hairline hover:border-favorite hover:bg-favorite-subtle",
                     )}
                     title={
                       !user
@@ -417,7 +417,7 @@ export function PlayerTable({
                     onClick={() => toggleRowExpansion(player.id)}
                     variant="default"
                     size="sm"
-                    className="bg-gray-900 hover:bg-gray-800 text-white text-xs px-3 py-1 h-8"
+                    className="text-xs px-3 py-1 h-8"
                   >
                     <span className="mr-1">View WITB</span>
                     {expandedRows.has(player.id) ? (
@@ -438,7 +438,7 @@ export function PlayerTable({
                   : "max-h-0 opacity-0"
               }`}
             >
-              <div className="bg-gray-50 dark:bg-gray-900/30 border-t border-gray-200 dark:border-gray-700">
+              <div className="bg-surface-subtle border-t border-hairline">
                 <div
                   className={`p-4 md:p-6 transition-all duration-300 delay-200 ${
                     expandedRows.has(player.id)
@@ -446,26 +446,26 @@ export function PlayerTable({
                       : "translate-y-4"
                   }`}
                 >
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                  <h3 className="text-lg font-semibold text-ink mb-4">
                     Complete WITB - {player.name}
                   </h3>
 
                   {/* Player Details - Mobile Only */}
-                  <div className="md:hidden mb-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                  <div className="md:hidden mb-6 p-4 bg-surface-subtle rounded-lg border border-hairline">
                     <div className="space-y-2">
                       <div className="flex items-center gap-4">
-                        <span className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                        <span className="flex items-center gap-2 text-ink-secondary">
                           <span className="text-lg">🌍</span>
                           <span className="font-medium">{player.country}</span>
                         </span>
-                        <span className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                        <span className="flex items-center gap-2 text-ink-secondary">
                           <span className="text-lg">🏌️</span>
                           <span className="font-medium">
                             {getPrimaryBrand(player.witb_items)}
                           </span>
                         </span>
                       </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                      <div className="text-sm text-ink-muted">
                         <span className="font-medium">Last Updated:</span>{" "}
                         {getLastUpdated(player)}
                       </div>
@@ -474,8 +474,8 @@ export function PlayerTable({
 
                   {player.witb_items.length === 0 ? (
                     <div className="text-center py-8">
-                      <div className="text-gray-400 text-3xl mb-2">⛳</div>
-                      <p className="text-gray-500 dark:text-gray-400">
+                      <div className="text-ink-muted text-3xl mb-2">⛳</div>
+                      <p className="text-ink-muted">
                         No equipment data available
                       </p>
                     </div>
@@ -486,7 +486,7 @@ export function PlayerTable({
                         {player.witb_items.map((club, index) => (
                           <div
                             key={index}
-                            className="flex items-start justify-between py-4 px-4 border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50/30 dark:hover:bg-gray-700/10 transition-colors last:border-b-0"
+                            className="flex items-start justify-between py-4 px-4 border-b border-hairline hover:bg-surface-hover transition-colors last:border-b-0"
                             style={{
                               animationDelay: `${index * 50}ms`,
                               animation: expandedRows.has(player.id)
@@ -497,18 +497,18 @@ export function PlayerTable({
                             {/* Left: Category + Brand/Model + Specs */}
                             <div className="flex-1 min-w-0">
                               <div className="flex items-start gap-3">
-                                <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 dark:bg-emerald-900/30 dark:text-emerald-300 px-2 py-1 rounded-md w-16 text-center flex-shrink-0">
+                                <span className="text-xs font-semibold text-brand-strong bg-brand-subtle px-2 py-1 rounded-md w-16 text-center flex-shrink-0">
                                   {club.category}
                                 </span>
                                 <div className="flex-1 min-w-0">
-                                  <div className="font-semibold text-gray-900 dark:text-white text-sm">
+                                  <div className="font-semibold text-ink text-sm">
                                     {club.brand}
                                   </div>
-                                  <div className="text-sm text-gray-600 dark:text-gray-400 truncate">
+                                  <div className="text-sm text-ink-secondary truncate">
                                     {club.model}
                                   </div>
                                   {(club.loft || club.shaft) && (
-                                    <div className="text-xs text-gray-500 dark:text-gray-400 truncate mt-1">
+                                    <div className="text-xs text-ink-muted truncate mt-1">
                                       {club.loft}
                                       {club.loft && club.shaft && " • "}
                                       {club.shaft}
@@ -524,7 +524,7 @@ export function PlayerTable({
                                 witbItem={club}
                                 variant="ghost"
                                 size="sm"
-                                className="text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                                className="text-brand-strong hover:bg-brand-subtle"
                               />
                             </div>
                           </div>
@@ -536,48 +536,48 @@ export function PlayerTable({
                         <table className="w-full">
                           {/* Table Header */}
                           <thead>
-                            <tr className="border-b border-gray-200 dark:border-gray-600">
-                              <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                            <tr className="border-b border-hairline">
+                              <th className="text-left py-3 px-4 text-sm font-semibold text-ink-secondary">
                                 Club
                               </th>
-                              <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                              <th className="text-left py-3 px-4 text-sm font-semibold text-ink-secondary">
                                 Brand
                               </th>
-                              <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                              <th className="text-left py-3 px-4 text-sm font-semibold text-ink-secondary">
                                 Model
                               </th>
-                              <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                              <th className="text-left py-3 px-4 text-sm font-semibold text-ink-secondary">
                                 Loft/Grind
                               </th>
-                              <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                              <th className="text-left py-3 px-4 text-sm font-semibold text-ink-secondary">
                                 Shaft
                               </th>
-                              <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                              <th className="text-left py-3 px-4 text-sm font-semibold text-ink-secondary">
                                 Actions
                               </th>
                             </tr>
                           </thead>
 
                           {/* Table Body */}
-                          <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
+                          <tbody className="divide-y divide-hairline">
                             {player.witb_items.map((club, index) => (
                               <tr
                                 key={index}
-                                className="hover:bg-gray-50 dark:hover:bg-gray-800/50"
+                                className="hover:bg-surface-hover"
                               >
-                                <td className="py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">
+                                <td className="py-3 px-4 text-sm font-medium text-ink">
                                   {club.category}
                                 </td>
-                                <td className="py-3 px-4 text-sm text-gray-700 dark:text-gray-300">
+                                <td className="py-3 px-4 text-sm text-ink-secondary">
                                   {club.brand}
                                 </td>
-                                <td className="py-3 px-4 text-sm text-blue-600 dark:text-blue-400 font-medium">
+                                <td className="py-3 px-4 text-sm text-ink font-medium">
                                   {club.model}
                                 </td>
-                                <td className="py-3 px-4 text-sm text-gray-600 dark:text-gray-400">
+                                <td className="py-3 px-4 text-sm text-ink-secondary">
                                   {club.loft || "-"}
                                 </td>
-                                <td className="py-3 px-4 text-sm text-gray-600 dark:text-gray-400">
+                                <td className="py-3 px-4 text-sm text-ink-secondary">
                                   {club.shaft || "-"}
                                 </td>
                                 <td className="py-3 px-4">
@@ -603,7 +603,7 @@ export function PlayerTable({
                                         View
                                       </Button>
                                     ) : (
-                                      <span className="text-xs text-gray-400">
+                                      <span className="text-xs text-ink-muted">
                                         -
                                       </span>
                                     )}
@@ -625,16 +625,16 @@ export function PlayerTable({
 
       {/* Pagination Controls - Mobile-Optimized */}
       {playersResponse && playersResponse.total_pages > 1 && (
-        <div className="border-t border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+        <div className="border-t border-hairline p-4 sm:p-6">
           {/* Mobile Pagination */}
           <div className="flex sm:hidden flex-col gap-4">
             <div className="text-center">
-              <div className="text-lg font-semibold text-gray-900 dark:text-white">
+              <div className="text-lg font-semibold text-ink">
                 {isLoading
                   ? "Loading..."
                   : `Page ${page} of ${playersResponse.total_pages}`}
               </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
+              <div className="text-sm text-ink-muted">
                 {isLoading ? "" : `${playersResponse.total} players total`}
               </div>
             </div>
@@ -644,7 +644,7 @@ export function PlayerTable({
                 size="lg"
                 onClick={() => onPageChange(page - 1)}
                 disabled={page <= 1 || isLoading}
-                className="flex-1 h-12 text-base font-medium disabled:opacity-50 disabled:cursor-not-allowed rounded-xl"
+                className="flex-1 h-12 text-base font-medium disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
               >
                 {isLoading ? "..." : "← Previous"}
               </Button>
@@ -653,7 +653,7 @@ export function PlayerTable({
                 size="lg"
                 onClick={() => onPageChange(page + 1)}
                 disabled={page >= playersResponse.total_pages || isLoading}
-                className="flex-1 h-12 text-base font-medium disabled:opacity-50 disabled:cursor-not-allowed rounded-xl"
+                className="flex-1 h-12 text-base font-medium disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
               >
                 {isLoading ? "..." : "Next →"}
               </Button>
@@ -672,12 +672,12 @@ export function PlayerTable({
               {isLoading ? "..." : "← Previous"}
             </Button>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-500 dark:text-gray-400">
+              <span className="text-sm text-ink-muted">
                 {isLoading
                   ? "Loading..."
                   : `Page ${page} of ${playersResponse.total_pages}`}
               </span>
-              <span className="text-sm text-gray-500 dark:text-gray-400">
+              <span className="text-sm text-ink-muted">
                 {isLoading ? "" : `${playersResponse.total} players total`}
               </span>
             </div>
@@ -695,26 +695,12 @@ export function PlayerTable({
       )}
 
       {/* Data Source Disclaimer */}
-      <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-900/30">
-        <p className="text-sm text-gray-500 dark:text-gray-400 italic text-center">
+      <div className="border-t border-hairline p-4 bg-surface-subtle">
+        <p className="text-sm text-ink-muted italic text-center">
           Equipment data scraped from PGA Club Tracker with intelligent sync
           technology.
         </p>
       </div>
-
-      {/* CSS Animations */}
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 }

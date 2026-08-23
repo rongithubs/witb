@@ -88,11 +88,3 @@ function getAllCategoriesDisplay(
 export function isChampionItem(item: ClubUsageItem): boolean {
   return item.rank === 1;
 }
-
-/**
- * Gets the rank badge variant for styling
- */
-export function getRankBadgeVariant(rank: number): string {
-  if (rank <= 3) return `rank-${rank}`;
-  return 'rank-other';
-}

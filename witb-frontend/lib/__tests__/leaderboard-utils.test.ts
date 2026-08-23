@@ -4,7 +4,6 @@ import {
   getAvailableCategories,
   getDisplayItems,
   isChampionItem,
-  getRankBadgeVariant,
   MAJOR_CATEGORIES
 } from '../leaderboard-utils';
 import type { LeaderboardData, ClubUsageItem } from '@/hooks/useLeaderboardData';
@@ -182,17 +181,4 @@ describe('leaderboard-utils', () => {
     });
   });
 
-  describe('getRankBadgeVariant', () => {
-    test('returns specific rank classes for top 3', () => {
-      expect(getRankBadgeVariant(1)).toBe('rank-1');
-      expect(getRankBadgeVariant(2)).toBe('rank-2');
-      expect(getRankBadgeVariant(3)).toBe('rank-3');
-    });
-
-    test('returns other class for ranks > 3', () => {
-      expect(getRankBadgeVariant(4)).toBe('rank-other');
-      expect(getRankBadgeVariant(10)).toBe('rank-other');
-      expect(getRankBadgeVariant(100)).toBe('rank-other');
-    });
-  });
 });

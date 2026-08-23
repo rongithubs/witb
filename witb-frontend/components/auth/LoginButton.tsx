@@ -52,7 +52,7 @@ export function LoginButton() {
 
   if (loading) {
     return (
-      <Button disabled className="bg-gray-400">
+      <Button disabled className="bg-ink-muted">
         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
         Loading...
       </Button>
@@ -79,12 +79,12 @@ export function LoginButton() {
         </Button>
         
         {isDropdownOpen && (
-          <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
+          <div className="absolute right-0 mt-2 w-48 bg-surface rounded-lg shadow-lg border border-hairline z-50">
             <div className="py-2">
               <Link
                 href="/profile"
                 onClick={() => setIsDropdownOpen(false)}
-                className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="flex items-center gap-3 px-4 py-2 text-sm text-ink-secondary hover:bg-surface-hover transition-colors"
               >
                 <User className="h-4 w-4" />
                 Profile
@@ -92,19 +92,19 @@ export function LoginButton() {
               <Link
                 href="/my-bag"
                 onClick={() => setIsDropdownOpen(false)}
-                className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="flex items-center gap-3 px-4 py-2 text-sm text-ink-secondary hover:bg-surface-hover transition-colors"
               >
                 <Target className="h-4 w-4" />
                 My Bag
               </Link>
             </div>
             {/* Separator line */}
-            <div className="border-t border-gray-200 dark:border-gray-600"></div>
+            <div className="border-t border-hairline"></div>
             <div className="py-2">
               <button
                 onClick={handleSignOut}
                 disabled={isLoading}
-                className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors disabled:opacity-50"
+                className="w-full flex items-center gap-3 px-4 py-2 text-sm text-status-critical hover:bg-favorite-subtle transition-colors disabled:opacity-50"
               >
                 <LogOut className="h-4 w-4" />
                 {isLoading ? 'Signing out...' : 'Sign Out'}
@@ -120,7 +120,7 @@ export function LoginButton() {
     <Button 
       onClick={handleGoogleSignIn}
       disabled={isLoading}
-      className="bg-blue-600 hover:bg-blue-700 text-white"
+      className="bg-primary hover:bg-primary/90 text-white"
     >
       {isLoading ? (
         <>

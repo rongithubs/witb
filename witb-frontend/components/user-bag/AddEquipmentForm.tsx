@@ -78,14 +78,14 @@ export function AddEquipmentForm({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Category */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-ink-secondary mb-1">
             Category *
           </label>
           <select
             value={formData.category}
             onChange={(e) => handleInputChange("category", e.target.value)}
             required
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
+            className="w-full px-3 py-2 bg-surface text-ink border border-hairline rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand"
           >
             <option value="">Select category</option>
             {CATEGORIES.map((category) => (
@@ -98,7 +98,7 @@ export function AddEquipmentForm({
 
         {/* Brand */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-ink-secondary mb-1">
             Brand *
           </label>
           <input
@@ -108,7 +108,7 @@ export function AddEquipmentForm({
             onChange={(e) => handleInputChange("brand", e.target.value)}
             required
             placeholder="e.g., TaylorMade, Callaway"
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
+            className="w-full px-3 py-2 bg-surface text-ink border border-hairline rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand"
             disabled={brandsLoading}
           />
           <datalist id="brand-suggestions">
@@ -120,7 +120,7 @@ export function AddEquipmentForm({
 
         {/* Model */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-ink-secondary mb-1">
             Model *
           </label>
           <input
@@ -129,13 +129,13 @@ export function AddEquipmentForm({
             onChange={(e) => handleInputChange("model", e.target.value)}
             required
             placeholder="e.g., Qi10, Stealth 2"
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
+            className="w-full px-3 py-2 bg-surface text-ink border border-hairline rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand"
           />
         </div>
 
         {/* Loft */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-ink-secondary mb-1">
             Loft
           </label>
           <input
@@ -143,13 +143,13 @@ export function AddEquipmentForm({
             value={formData.loft}
             onChange={(e) => handleInputChange("loft", e.target.value)}
             placeholder="e.g., 9°, 15°"
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
+            className="w-full px-3 py-2 bg-surface text-ink border border-hairline rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand"
           />
         </div>
 
         {/* Shaft */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-ink-secondary mb-1">
             Shaft
           </label>
           <input
@@ -157,13 +157,13 @@ export function AddEquipmentForm({
             value={formData.shaft}
             onChange={(e) => handleInputChange("shaft", e.target.value)}
             placeholder="e.g., Fujikura Ventus Blue"
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
+            className="w-full px-3 py-2 bg-surface text-ink border border-hairline rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand"
           />
         </div>
 
         {/* Carry Distance */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-ink-secondary mb-1">
             Carry Distance (yards)
           </label>
           <input
@@ -178,14 +178,14 @@ export function AddEquipmentForm({
             placeholder="250"
             min="0"
             max="400"
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
+            className="w-full px-3 py-2 bg-surface text-ink border border-hairline rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand"
           />
         </div>
       </div>
 
       {/* Notes */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label className="block text-sm font-medium text-ink-secondary mb-1">
           Notes
         </label>
         <textarea
@@ -193,26 +193,26 @@ export function AddEquipmentForm({
           onChange={(e) => handleInputChange("notes", e.target.value)}
           placeholder="Any additional notes about this club..."
           rows={3}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
+          className="w-full px-3 py-2 bg-surface text-ink border border-hairline rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand"
         />
       </div>
 
       {/* Purchase Info */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-ink-secondary mb-1">
             Purchase Date
           </label>
           <input
             type="date"
             value={formData.purchase_date}
             onChange={(e) => handleInputChange("purchase_date", e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
+            className="w-full px-3 py-2 bg-surface text-ink border border-hairline rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-ink-secondary mb-1">
             Purchase Price ($)
           </label>
           <input
@@ -227,14 +227,14 @@ export function AddEquipmentForm({
             placeholder="299.99"
             min="0"
             step="0.01"
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white"
+            className="w-full px-3 py-2 bg-surface text-ink border border-hairline rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand"
           />
         </div>
       </div>
 
       {/* Error Message */}
       {error && (
-        <div className="text-red-600 dark:text-red-400 text-sm">{error}</div>
+        <div className="text-status-critical text-sm">{error}</div>
       )}
 
       {/* Form Actions */}

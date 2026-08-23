@@ -30,15 +30,15 @@ export default function Home() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen bg-page">
         <Header onSearch={setQuery} />
 
         <main className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Sign-in Banner for non-authenticated users */}
           {!user && (
             <div className="py-4">
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                <p className="text-blue-800 dark:text-blue-200">
+              <div className="bg-status-info-surface border border-status-info/30 rounded-lg p-4">
+                <p className="text-status-info">
                   Sign in to save your favorite players and get personalized
                   golf equipment recommendations!
                 </p>

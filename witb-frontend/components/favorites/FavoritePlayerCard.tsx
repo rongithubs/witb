@@ -53,14 +53,14 @@ export function FavoritePlayerCard({
   if (variant === 'list') {
     // Simple list view (existing design)
     return (
-      <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+      <div className="flex items-center justify-between p-3 bg-surface-subtle rounded-lg">
         <div>
           <h4 className="font-medium">{player.name}</h4>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-ink-secondary">
             {player.country} • {player.tour}
             {player.ranking && ` • Rank #${player.ranking}`}
           </p>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-ink-muted">
             Added {new Date(favorite.created_at).toLocaleDateString()}
           </p>
         </div>
@@ -69,7 +69,7 @@ export function FavoritePlayerCard({
           size="sm"
           onClick={handleRemove}
           disabled={isRemoving}
-          className="text-red-600 hover:text-red-700 hover:bg-red-50 disabled:opacity-50"
+          className="text-status-critical hover:bg-status-critical-surface disabled:opacity-50"
         >
           {isRemoving ? 'Removing...' : 'Remove'}
         </Button>
@@ -83,24 +83,24 @@ export function FavoritePlayerCard({
       {/* Player Header */}
       <div className="flex items-center gap-2">
         <div className="flex-shrink-0">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center text-white font-bold text-xs">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand to-status-good-surface flex items-center justify-center text-white font-bold text-xs">
             {player.name.split(" ").map(n => n[0]).join("")}
           </div>
         </div>
         
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5">
-            <h3 className="font-bold text-base text-gray-900 dark:text-white truncate">
+            <h3 className="font-bold text-base text-ink truncate">
               {player.name}
             </h3>
             {player.ranking && (
-              <span className="flex-shrink-0 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 text-xs font-bold px-1.5 py-0.5 rounded-full">
+              <span className="flex-shrink-0 bg-brand-subtle text-brand-strong text-xs font-bold px-1.5 py-0.5 rounded-full">
                 #{player.ranking}
               </span>
             )}
           </div>
           
-          <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+          <div className="flex items-center gap-2 text-xs text-ink-secondary">
             <span>{player.country}</span>
             <span>•</span>
             <span>{player.tour}</span>
@@ -115,7 +115,7 @@ export function FavoritePlayerCard({
             size="sm"
             onClick={handleRemove}
             disabled={isRemoving}
-            className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 disabled:opacity-50 h-6 w-6 p-0"
+            className="text-favorite hover:text-favorite hover:bg-favorite-subtle disabled:opacity-50 h-6 w-6 p-0"
           >
             <Heart className="h-3 w-3 fill-current" />
           </Button>
@@ -124,9 +124,9 @@ export function FavoritePlayerCard({
 
       {/* Key Equipment Preview (when collapsed) */}
       {!isExpanded && player.witb_items.length > 0 && (
-        <div className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
+        <div className="flex items-center gap-1 text-xs text-ink-secondary">
           {getKeyClubs(player.witb_items).slice(0, 3).map((club, index) => (
-            <span key={index} className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-xs">
+            <span key={index} className="bg-surface-subtle px-2 py-1 rounded-md text-xs">
               {club.category}: {club.brand}
             </span>
           ))}

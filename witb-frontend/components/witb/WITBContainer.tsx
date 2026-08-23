@@ -33,7 +33,7 @@ export function WITBContainer({
       <div className="space-y-4">
         {/* Header with expansion controls */}
         <div className="flex items-center justify-between">
-          <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <h4 className="text-sm font-medium text-ink-secondary">
             Equipment Bag
           </h4>
           <WITBExpansionControls
@@ -51,13 +51,13 @@ export function WITBContainer({
               : 'max-h-0 opacity-0'
           }`}
         >
-          <div className="bg-gray-50 dark:bg-gray-900/30 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div className="bg-surface-subtle rounded-lg border border-hairline">
             <div 
               className={`p-4 transition-all duration-300 delay-200 ${
                 isExpanded ? 'translate-y-0' : 'translate-y-4'
               }`}
             >
-              <h5 className="text-base font-semibold text-gray-900 dark:text-white mb-4">
+              <h5 className="text-base font-semibold text-ink mb-4">
                 Complete WITB - {playerName}
               </h5>
               <WITBItemList
@@ -80,13 +80,13 @@ export function WITBContainer({
           : 'max-h-0 opacity-0'
       }`}
     >
-      <div className="bg-gray-50 dark:bg-gray-900/30 border-t border-gray-200 dark:border-gray-700">
+      <div className="bg-surface-subtle border-t border-hairline">
         <div 
           className={`p-4 md:p-6 transition-all duration-300 delay-200 ${
             isExpanded ? 'translate-y-0' : 'translate-y-4'
           }`}
         >
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          <h3 className="text-lg font-semibold text-ink mb-4">
             Complete WITB - {playerName}
           </h3>
           <WITBItemList

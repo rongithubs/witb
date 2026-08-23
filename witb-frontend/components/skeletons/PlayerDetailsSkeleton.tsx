@@ -3,9 +3,9 @@ import { Card } from "@/components/ui/card"
 
 export function PlayerDetailsSkeleton() {
   return (
-    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex flex-col">
+    <div className="bg-surface border border-hairline rounded-lg shadow-sm flex flex-col">
       {/* Header skeleton */}
-      <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
+      <div className="p-6 border-b border-hairline bg-gradient-to-r from-status-info-surface to-surface-subtle">
         <div className="flex items-center gap-4">
           <Skeleton className="w-16 h-16 rounded-full" />
           <div>
@@ -22,17 +22,17 @@ export function PlayerDetailsSkeleton() {
         
         <div className="grid gap-3">
           {Array.from({ length: 8 }).map((_, index) => (
-            <Card key={index} className="p-4 bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600">
+            <Card key={index} className="p-4 bg-surface border-hairline">
               <div className="flex justify-between items-start">
                 <div className="flex-1">
                   <Skeleton className="h-5 w-24 mb-2" />
                   <Skeleton className="h-4 w-32 mb-2" />
                   <div className="flex gap-2 mt-2">
-                    <Skeleton className="h-6 w-16 rounded" />
-                    <Skeleton className="h-6 w-20 rounded" />
+                    <Skeleton className="h-6 w-16 rounded-md" />
+                    <Skeleton className="h-6 w-20 rounded-md" />
                   </div>
                 </div>
-                <Skeleton className="h-8 w-20 rounded ml-4" />
+                <Skeleton className="h-8 w-20 rounded-md ml-4" />
               </div>
             </Card>
           ))}

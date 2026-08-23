@@ -161,17 +161,17 @@ export function PricingModal({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[85vh] overflow-hidden flex flex-col">
-        <DialogHeader className="flex-shrink-0 border-b border-gray-200 dark:border-gray-700 pb-3">
+        <DialogHeader className="flex-shrink-0 border-b border-hairline pb-3">
           <div>
-            <DialogTitle className="text-xl font-semibold text-gray-900 dark:text-white mb-1">
+            <DialogTitle className="text-xl font-semibold text-ink mb-1">
               Current Market Pricing
             </DialogTitle>
             <div className="space-y-1">
-              <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">
+              <h3 className="text-lg font-medium text-ink-secondary">
                 {witbItem.brand} {witbItem.model}
               </h3>
               <div className="flex items-center gap-2">
-                <Badge className="bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300">
+                <Badge className="bg-brand-subtle text-brand-strong">
                   {witbItem.category}
                 </Badge>
                 {witbItem.loft && (
@@ -191,35 +191,35 @@ export function PricingModal({
           {/* Price Summary */}
           {priceStats && (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-2">
-              <div className="text-center py-2 px-3 bg-emerald-50 dark:bg-emerald-900/20 rounded">
-                <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
+              <div className="text-center py-2 px-3 bg-brand-subtle rounded-md">
+                <div className="text-lg font-bold text-brand-strong">
                   {formatPrice(priceStats.min)}
                 </div>
-                <div className="text-xs text-emerald-700 dark:text-emerald-300 font-medium">
+                <div className="text-xs text-brand-strong font-medium">
                   Lowest
                 </div>
               </div>
-              <div className="text-center py-2 px-3 bg-blue-50 dark:bg-blue-900/20 rounded">
-                <div className="text-lg font-bold text-blue-600 dark:text-blue-400">
+              <div className="text-center py-2 px-3 bg-status-info-surface rounded-md">
+                <div className="text-lg font-bold text-ink">
                   {formatPrice(priceStats.max)}
                 </div>
-                <div className="text-xs text-blue-700 dark:text-blue-300 font-medium">
+                <div className="text-xs text-status-info font-medium">
                   Highest
                 </div>
               </div>
-              <div className="text-center py-2 px-3 bg-purple-50 dark:bg-purple-900/20 rounded">
-                <div className="text-lg font-bold text-purple-600 dark:text-purple-400">
+              <div className="text-center py-2 px-3 bg-surface-subtle rounded-md">
+                <div className="text-lg font-bold text-ink">
                   {formatPrice(priceStats.average)}
                 </div>
-                <div className="text-xs text-purple-700 dark:text-purple-300 font-medium">
+                <div className="text-xs text-ink font-medium">
                   Average
                 </div>
               </div>
-              <div className="text-center py-2 px-3 bg-gray-50 dark:bg-gray-800 rounded">
-                <div className="text-lg font-bold text-gray-700 dark:text-gray-300">
+              <div className="text-center py-2 px-3 bg-surface-subtle rounded-md">
+                <div className="text-lg font-bold text-ink-secondary">
                   {priceStats.count}
                 </div>
-                <div className="text-xs text-gray-600 dark:text-gray-400 font-medium">
+                <div className="text-xs text-ink-secondary font-medium">
                   Listings
                 </div>
               </div>
@@ -227,10 +227,10 @@ export function PricingModal({
           )}
 
           {/* Filters */}
-          <div className="flex items-center gap-4 mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex items-center gap-4 mt-3 pt-3 border-t border-hairline">
             <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4 text-gray-500" />
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <Filter className="h-4 w-4 text-ink-muted" />
+              <span className="text-sm font-medium text-ink-secondary">
                 Filters:
               </span>
             </div>
@@ -277,19 +277,19 @@ export function PricingModal({
             </div>
           ) : error ? (
             <div className="text-center py-12">
-              <div className="text-red-500 text-4xl mb-4">⚠️</div>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">{error}</p>
+              <div className="text-favorite text-4xl mb-4">⚠️</div>
+              <p className="text-ink-secondary mb-4">{error}</p>
               <Button onClick={fetchPricingData} variant="outline">
                 Try Again
               </Button>
             </div>
           ) : products.length === 0 ? (
             <div className="text-center py-12">
-              <div className="text-gray-400 text-4xl mb-4">🔍</div>
-              <p className="text-gray-600 dark:text-gray-400 mb-2">
+              <div className="text-ink-muted text-4xl mb-4">🔍</div>
+              <p className="text-ink-secondary mb-2">
                 No listings found for your current filters
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-ink-muted">
                 Try adjusting your condition filter or search criteria
               </p>
             </div>

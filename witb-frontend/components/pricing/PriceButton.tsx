@@ -73,21 +73,21 @@ export function PriceButton({
         className={`
           transition-all duration-200 
           hover:scale-105 hover:shadow-sm
-          ${hasError ? 'border-red-200 hover:border-red-300 hover:bg-red-50 dark:border-red-800 dark:hover:bg-red-900/20 text-red-700 dark:text-red-300' : 
-            variant === 'outline' ? 'border-emerald-200 hover:border-emerald-300 hover:bg-emerald-50 dark:border-emerald-800 dark:hover:bg-emerald-900/20' : ''}
+          ${hasError ? 'border-status-critical/30 hover:bg-status-critical-surface text-status-critical' : 
+            variant === 'outline' ? 'border-brand hover:border-brand hover:bg-brand/90' : ''}
           ${className}
         `}
         title={hasError ? `Error loading prices - click to retry` : `Check current eBay prices for ${witbItem.brand} ${witbItem.model}`}
       >
         <div className="flex items-center gap-1.5">
           {isLoading && (
-            <Loader2 className={`${size === 'sm' ? 'h-3 w-3' : 'h-4 w-4'} animate-spin ${hasError ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`} />
+            <Loader2 className={`${size === 'sm' ? 'h-3 w-3' : 'h-4 w-4'} animate-spin ${hasError ? 'text-status-critical' : 'text-brand-strong'}`} />
           )}
           <span className={`${size === 'sm' ? 'text-xs' : 'text-sm'} font-medium`}>
             {isLoading ? 'Loading...' : formatPriceRange()}
           </span>
           {!isLoading && (
-            <ExternalLink className={`${size === 'sm' ? 'h-2.5 w-2.5' : 'h-3 w-3'} text-gray-400`} />
+            <ExternalLink className={`${size === 'sm' ? 'h-2.5 w-2.5' : 'h-3 w-3'} text-ink-muted`} />
           )}
         </div>
       </Button>

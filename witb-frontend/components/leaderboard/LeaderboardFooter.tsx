@@ -8,8 +8,8 @@ export function LeaderboardFooter({ leaderboardData }: LeaderboardFooterProps) {
   if (!leaderboardData) return null;
 
   return (
-    <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-      <div className="text-center text-sm text-gray-500 dark:text-gray-400">
+    <div className="mt-6 pt-4 border-t border-hairline">
+      <div className="text-center text-sm text-ink-muted">
         Data from professional tours
       </div>
     </div>

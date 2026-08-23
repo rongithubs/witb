@@ -24,10 +24,10 @@ export function PriceCard({ product, className = '' }: PriceCardProps) {
 
   const getConditionColor = (condition: string) => {
     const conditionLower = condition.toLowerCase();
-    if (conditionLower.includes('new')) return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300';
-    if (conditionLower.includes('excellent') || conditionLower.includes('like new')) return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300';
-    if (conditionLower.includes('good') || conditionLower.includes('very good')) return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300';
-    return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
+    if (conditionLower.includes('new')) return 'bg-status-good-surface text-status-good';
+    if (conditionLower.includes('excellent') || conditionLower.includes('like new')) return 'bg-status-info-surface text-status-info';
+    if (conditionLower.includes('good') || conditionLower.includes('very good')) return 'bg-surface-subtle text-ink';
+    return 'bg-surface-subtle text-ink-secondary';
   };
 
   const formatFeedbackPercentage = (percentage?: number) => {
@@ -37,8 +37,8 @@ export function PriceCard({ product, className = '' }: PriceCardProps) {
 
   return (
     <div className={`
-      bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 
-      p-4 hover:shadow-lg transition-all duration-300 hover:border-emerald-200 dark:hover:border-emerald-800
+      bg-surface rounded-lg border border-hairline 
+      p-4 hover:shadow-lg transition-all duration-300 hover:border-brand
       ${className}
     `}>
       {/* Header with Image and Title */}
@@ -48,7 +48,7 @@ export function PriceCard({ product, className = '' }: PriceCardProps) {
             <img 
               src={product.image_url} 
               alt={product.title}
-              className="w-16 h-16 object-cover rounded-lg border border-gray-200 dark:border-gray-600"
+              className="w-16 h-16 object-cover rounded-lg border border-hairline"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
@@ -57,7 +57,7 @@ export function PriceCard({ product, className = '' }: PriceCardProps) {
           </div>
         )}
         <div className="flex-1 min-w-0 overflow-hidden">
-          <h3 className="font-medium text-gray-900 dark:text-white text-sm mb-1 overflow-hidden">
+          <h3 className="font-medium text-ink text-sm mb-1 overflow-hidden">
             <div 
               className="leading-tight"
               style={{
@@ -86,16 +86,16 @@ export function PriceCard({ product, className = '' }: PriceCardProps) {
       <div className="mb-3">
         <div className="flex items-baseline justify-between">
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+            <span className="text-2xl font-bold text-brand-strong">
               {formatPrice(product.price_info.current_price)}
             </span>
             {product.price_info.currency !== 'USD' && (
-              <span className="text-sm text-gray-500">{product.price_info.currency}</span>
+              <span className="text-sm text-ink-muted">{product.price_info.currency}</span>
             )}
           </div>
           {product.price_info.buy_it_now_price && 
            product.price_info.buy_it_now_price !== product.price_info.current_price && (
-            <span className="text-sm text-gray-500 line-through">
+            <span className="text-sm text-ink-muted line-through">
               {formatPrice(product.price_info.buy_it_now_price)}
             </span>
           )}
@@ -103,8 +103,8 @@ export function PriceCard({ product, className = '' }: PriceCardProps) {
         
         {product.price_info.shipping_cost && product.price_info.shipping_cost > 0 && (
           <div className="flex items-center gap-1 mt-1">
-            <Truck className="h-3 w-3 text-gray-400" />
-            <span className="text-sm text-gray-500">
+            <Truck className="h-3 w-3 text-ink-muted" />
+            <span className="text-sm text-ink-muted">
               +{formatPrice(product.price_info.shipping_cost)} shipping
             </span>
           </div>
@@ -112,8 +112,8 @@ export function PriceCard({ product, className = '' }: PriceCardProps) {
 
         {product.price_info.shipping_cost === 0 && (
           <div className="flex items-center gap-1 mt-1">
-            <Truck className="h-3 w-3 text-green-500" />
-            <span className="text-sm text-green-600 dark:text-green-400 font-medium">
+            <Truck className="h-3 w-3 text-status-good" />
+            <span className="text-sm text-status-good font-medium">
               Free shipping
             </span>
           </div>
@@ -122,15 +122,15 @@ export function PriceCard({ product, className = '' }: PriceCardProps) {
 
       {/* Seller Info */}
       {product.seller_info && (
-        <div className="flex items-center justify-between mb-3 text-sm text-gray-600 dark:text-gray-400 min-w-0">
+        <div className="flex items-center justify-between mb-3 text-sm text-ink-secondary min-w-0">
           <div className="flex items-center gap-1 min-w-0 flex-1">
             <span className="font-medium truncate max-w-24">{product.seller_info.username}</span>
             {product.seller_info.feedback_percentage && (
               <div className="flex items-center gap-0.5 flex-shrink-0">
-                <Star className="h-3 w-3 text-yellow-400 fill-current" />
+                <Star className="h-3 w-3 text-ink fill-current" />
                 <span>{formatFeedbackPercentage(product.seller_info.feedback_percentage)}</span>
                 {product.seller_info.feedback_score && (
-                  <span className="text-gray-400 hidden sm:inline">
+                  <span className="text-ink-muted hidden sm:inline">
                     ({product.seller_info.feedback_score.toLocaleString()})
                   </span>
                 )}
@@ -149,7 +149,7 @@ export function PriceCard({ product, className = '' }: PriceCardProps) {
       {/* Action Button */}
       <Button
         onClick={handleViewListing}
-        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
+        className="w-full bg-brand hover:bg-brand/90 text-white"
         size="sm"
       >
         <ExternalLink className="h-3 w-3 mr-1.5" />

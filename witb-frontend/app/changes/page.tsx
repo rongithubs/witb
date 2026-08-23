@@ -10,16 +10,16 @@ export default function ChangesPage() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen bg-page">
         <Header onSearch={setQuery} />
 
         <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Page Header */}
           <div className="py-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold tracking-tight text-ink">
               What Changed
             </h1>
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
+            <p className="mt-2 text-ink-secondary">
               Recent equipment changes across the pros, newest first
             </p>
           </div>

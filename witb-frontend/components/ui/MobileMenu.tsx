@@ -122,7 +122,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       {/* Menu Drawer - always render for animation */}
       <div
         ref={menuRef}
-        className={`fixed top-0 left-0 h-full w-80 bg-white dark:bg-gray-900 shadow-2xl z-[70] transform transition-all duration-[400ms] md:hidden flex flex-col ${
+        className={`fixed top-0 left-0 h-full w-80 bg-surface shadow-lg z-[70] transform transition-all duration-[400ms] md:hidden flex flex-col ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         style={{
@@ -133,28 +133,28 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         {user && (
           <>
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between p-4 border-b border-hairline">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
-                  <User className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                <div className="w-8 h-8 bg-surface-subtle rounded-full flex items-center justify-center">
+                  <User className="h-4 w-4 text-ink-secondary" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  <p className="text-sm font-medium text-ink">
                     {user.user_metadata?.full_name?.split(" ")[0] ||
                       user.user_metadata?.name?.split(" ")[0] ||
                       user.email?.split("@")[0] ||
                       "User"}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-ink-muted">
                     {user.email}
                   </p>
                 </div>
               </div>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                className="p-2 hover:bg-surface-hover rounded-lg transition-colors"
               >
-                <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                <X className="h-5 w-5 text-ink-muted" />
               </button>
             </div>
 
@@ -166,7 +166,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   <Link
                     href="/profile"
                     onClick={handleLinkClick}
-                    className="flex items-center gap-3 p-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    className="flex items-center gap-3 p-3 text-ink-secondary hover:bg-surface-hover rounded-lg transition-colors"
                   >
                     <User className="h-5 w-5" />
                     <span className="text-sm font-medium">My Profile</span>
@@ -175,7 +175,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   <Link
                     href="/my-bag"
                     onClick={handleLinkClick}
-                    className="flex items-center gap-3 p-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    className="flex items-center gap-3 p-3 text-ink-secondary hover:bg-surface-hover rounded-lg transition-colors"
                   >
                     <TrendingUp className="h-5 w-5" />
                     <span className="text-sm font-medium">My Bag</span>
@@ -183,7 +183,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
                   <button
                     onClick={handleLeaderboardClick}
-                    className="w-full flex items-center gap-3 p-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    className="w-full flex items-center gap-3 p-3 text-ink-secondary hover:bg-surface-hover rounded-lg transition-colors"
                   >
                     <TrendingUp className="h-5 w-5" />
                     <span className="text-sm font-medium">Club Leaderboard</span>
@@ -192,11 +192,11 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               </div>
 
               {/* Footer - pushed to absolute bottom with no bottom padding */}
-              <div className="flex-shrink-0 border-t border-gray-200 dark:border-gray-700 pt-4 px-4">
+              <div className="flex-shrink-0 border-t border-hairline pt-4 px-4">
                 <button
                   onClick={handleSignOut}
                   disabled={isSigningOut}
-                  className="w-full flex items-center gap-3 p-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors disabled:opacity-50 mb-0"
+                  className="w-full flex items-center gap-3 p-3 text-status-critical hover:bg-favorite-subtle rounded-lg transition-colors disabled:opacity-50 mb-0"
                 >
                   <LogOut className="h-5 w-5" />
                   <span className="text-sm font-medium">
